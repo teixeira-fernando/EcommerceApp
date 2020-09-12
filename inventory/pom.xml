@@ -14,6 +14,7 @@
       </plugin>
     </plugins>
   </build>
+
   <dependencies>
     <dependency>
       <artifactId>spring-boot-starter-actuator</artifactId>
@@ -35,12 +36,26 @@
       <groupId>org.springframework.boot</groupId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <artifactId>persistence-api</artifactId>
+      <groupId>javax.persistence</groupId>
+      <version>1.0.2</version>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>de.flapdoodle.embed.mongo</artifactId>
+      <groupId>de.flapdoodle.embed</groupId>
+      <!-- <scope>test</scope> -->
+    </dependency>
   </dependencies>
+
   <description>Ecommerce Inventory</description>
   <groupId>com.ecommerceapp</groupId>
   <modelVersion>4.0.0</modelVersion>
   <name>inventory</name>
-
   <parent>
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
@@ -51,6 +66,16 @@
   <properties>
     <java.version>1.8</java.version>
   </properties>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>2.22.2</version>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <version>0.0.1-SNAPSHOT</version>
 
