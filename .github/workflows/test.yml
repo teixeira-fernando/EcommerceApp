@@ -28,10 +28,16 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2     
       - name: Test with Maven
-        run: mvn -B test --file pom.xml
+        #run: mvn -B test --file pom.xml
+        run: mvn clean test surefire-report:report -Daggregate=true  
       - name: Publish Test Report
         uses: scacap/action-surefire-report@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}    
+      - name: Archive test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results-report
+          path: target/site/surefire-report.html
 
       
