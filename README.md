@@ -1,6 +1,6 @@
 ![](https://github.com/teixeira-fernando/EcommerceApp/workflows/test/badge.svg)
 
-# E-commerce App - Microservice Java
+# E-commerce App - Microservices Java
 
 ## Microservices
 * Shop
@@ -8,4 +8,4 @@
 
 ## Instructions
 
-Run: spring-boot:run (in source directory)
+> Run: spring-boot:run (in source directory)
