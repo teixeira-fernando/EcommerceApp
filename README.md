@@ -1,4 +1,4 @@
-https://github.com/teixeira-fernando/EcommerceApp/workflows/test/badge.svg
+![](https://github.com/teixeira-fernando/EcommerceApp/workflows/test/badge.svg)
 
 # E-commerce App - Microservice Java
 
