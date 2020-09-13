@@ -1,4 +1,4 @@
-package com.ecommerceapp.inventory.repository;
+package com.ecommerceapp.inventory.unit.repository;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
