@@ -1,7 +1,8 @@
-package com.ecommerceapp.inventory.repository;
+package com.ecommerceapp.inventory.unit.repository;
 
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.inventory.repository.InventoryRepository;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
@@ -118,11 +119,10 @@ public class InventoryRepositoryTest {
   @DisplayName("Test Delete Success")
   @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Products")
   void testDeleteSuccess() {
-    Optional<Product> product = Optional.ofNullable(repository.findAll().get(0));
-    repository.deleteById(product.get().getId());
+    repository.deleteById("1");
 
     // Confirm that it is no longer in the database
-    Optional<Product> returnedProduct = repository.findById(product.get().getId());
+    Optional<Product> returnedProduct = repository.findById("1");
     Assertions.assertFalse(returnedProduct.isPresent());
   }
 }
