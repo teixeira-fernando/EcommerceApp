@@ -93,10 +93,7 @@ public class InventoryController {
     Optional<Product> product = inventoryService.findById(id);
 
     if (product.isPresent()) {
-      // Delete product
       inventoryService.deleteProduct(id);
-
-      // Build a delete response
       return ResponseEntity.ok().build();
     } else {
       return ResponseEntity.notFound().build();

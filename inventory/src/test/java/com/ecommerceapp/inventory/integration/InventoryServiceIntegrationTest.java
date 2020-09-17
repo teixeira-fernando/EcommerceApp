@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.ecommerceapp.inventory.controller.InventoryController;
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.unit.repository.MongoDataFile;
@@ -33,7 +34,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-public class InventoryServiceIntegrationTest {
+class InventoryServiceIntegrationTest {
 
   @Autowired private MockMvc mockMvc;
 

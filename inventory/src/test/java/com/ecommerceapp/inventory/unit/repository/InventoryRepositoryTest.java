@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 @DataMongoTest
 @ExtendWith(MongoSpringExtension.class)
-public class InventoryRepositoryTest {
+class InventoryRepositoryTest {
 
   @Autowired private MongoTemplate mongoTemplate;
 
