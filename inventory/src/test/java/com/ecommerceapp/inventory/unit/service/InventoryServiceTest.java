@@ -24,7 +24,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest(classes = {InventoryService.class})
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-class InventoryServiceTest {
+public class InventoryServiceTest {
 
   /** The service that we want to test. */
   @Autowired private InventoryService service;

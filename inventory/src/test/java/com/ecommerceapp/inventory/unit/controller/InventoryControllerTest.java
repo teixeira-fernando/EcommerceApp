@@ -33,7 +33,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(InventoryController.class)
-class InventoryControllerTest {
+public class InventoryControllerTest {
 
   @MockBean private InventoryService service;
 
