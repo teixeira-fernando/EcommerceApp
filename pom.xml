@@ -14,4 +14,17 @@
 
   <version>0.1.0</version>
 
+  <properties>
+    <sonar.version>3.7.0.1746</sonar.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>${sonar.version}</version>
+      </plugin>
+    </plugins>
+  </build>
 </project>

@@ -12,6 +12,47 @@
         </configuration>
         <groupId>org.springframework.boot</groupId>
       </plugin>
+
+      <!-- Jacoco -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.5</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludes>
+            <exclude>com.ecommerceapp.inventory.service.*</exclude>
+            <exclude>com.ecommerceapp.inventory.InventoryApplication</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+
+      <!-- PITest-->
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.5.2</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>0.12</version>
+          </dependency>
+        </dependencies>
+      </plugin>
     </plugins>
   </build>
 
@@ -65,6 +106,9 @@
 
   <properties>
     <java.version>1.8</java.version>
+    <sonar.coverage.jacoco.xmlReportPaths>
+      ${project.basedir}/../inventory/target/site/jacoco/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 
   <reporting>
