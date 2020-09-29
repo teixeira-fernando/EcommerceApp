@@ -1,4 +1,4 @@
-package com.ecommerceapp.inventory.utils;
+package com.ecommerceapp.shop.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
