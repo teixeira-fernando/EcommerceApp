@@ -37,6 +37,11 @@
       <groupId>org.springframework.boot</groupId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <artifactId>de.flapdoodle.embed.mongo</artifactId>
+      <groupId>de.flapdoodle.embed</groupId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <description>Ecommerce Shop</description>
   <groupId>com.ecommerceapp</groupId>
