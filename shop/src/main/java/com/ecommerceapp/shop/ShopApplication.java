@@ -9,13 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-//@ComponentScan(basePackages = {"com.ecommerceapp.inventory", "com.ecommerceapp.shop"})
-//@EnableMongoRepositories
-//@Configuration
+@EnableMongoRepositories
+@Configuration
 public class ShopApplication {
-
-    //@Autowired
-    //private InventoryRepository repository;
 
     public static void main(String[] args) {
         SpringApplication.run(ShopApplication.class, args);

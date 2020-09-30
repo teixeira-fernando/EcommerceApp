@@ -101,7 +101,7 @@ public class InventoryRepositoryTest {
 
     @Test
     @DisplayName("Test Update Success")
-    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Products")
+    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
     void testUpdateSuccess() {
         // Retrieve the first product
         Optional<Product> product = Optional.ofNullable(repository.findAll().get(0));
