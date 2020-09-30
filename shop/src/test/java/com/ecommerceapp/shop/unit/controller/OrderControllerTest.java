@@ -5,6 +5,7 @@ import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.controller.OrderController;
 import com.ecommerceapp.shop.model.Order;
+import com.ecommerceapp.shop.model.OrderStatus;
 import com.ecommerceapp.shop.service.OrderService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,6 +65,7 @@ public class OrderControllerTest {
                 .andExpect(header().string(HttpHeaders.LOCATION, "/order/" + mockOrder.getId()))
 
                 // Validate the returned fields
+                .andExpect(jsonPath("$.status",is(OrderStatus.CREATED)))
                 .andExpect(jsonPath("$.products[0].id", is(id)))
                 .andExpect(jsonPath("$.products[0].name", is(productName)))
                 .andExpect(jsonPath("$.products[0].quantity", is(quantity)))
@@ -138,6 +140,7 @@ public class OrderControllerTest {
                 .andExpect(header().string(HttpHeaders.LOCATION, "/order/" + mockOrder.getId()))
 
                 // Validate the returned fields
+                .andExpect(jsonPath("$.status",is(OrderStatus.CREATED)))
                 .andExpect(jsonPath("$.products.[0].id", is(id)))
                 .andExpect(jsonPath("$.products[0].name", is(productName)))
                 .andExpect(jsonPath("$.products[0].quantity", is(quantity)))

@@ -24,6 +24,8 @@ public class Order {
 
     private List<Product> products;
 
+    private OrderStatus status;
+
     @CreatedDate
     private Date createDate;
 
@@ -43,16 +45,28 @@ public class Order {
         return createDate;
     }
 
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
     public Order(String id, ArrayList<Product> products) {
         this.id = id;
         this.products = products;
+        this.status = OrderStatus.CREATED;
     }
 
     public Order(List<Product> products) {
         this.products = products;
+        this.status = OrderStatus.CREATED;
     }
 
     public Order() {
         this.products = new ArrayList<>();
+        this.status = OrderStatus.CREATED;
     }
+
 }
