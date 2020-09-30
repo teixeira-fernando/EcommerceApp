@@ -54,7 +54,7 @@ public class InventoryServiceIntegrationTest {
 
     @Test
     @DisplayName("GET /product/{id} - Success")
-    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Products")
+    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
     void testGetProductByIdSuccess() throws Exception {
 
         // Execute the GET request
@@ -77,7 +77,7 @@ public class InventoryServiceIntegrationTest {
 
     @Test
     @DisplayName("GET /product/{id} - Not Found")
-    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Products")
+    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
     void testGetProductByIdNotFound() throws Exception {
 
         // Execute the GET request
@@ -90,7 +90,7 @@ public class InventoryServiceIntegrationTest {
 
     @Test
     @DisplayName("GET /products - Success")
-    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Products")
+    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
     void testGetProductsSuccess() throws Exception {
 
         // Execute the GET request
@@ -107,7 +107,7 @@ public class InventoryServiceIntegrationTest {
 
     @Test
     @DisplayName("POST /product - Success")
-    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Products")
+    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
     void testCreateProduct() throws Exception {
         // Setup product to create
         String productName = "Dark Souls 3";
@@ -138,7 +138,7 @@ public class InventoryServiceIntegrationTest {
 
     @Test
     @DisplayName("DELETE /product/{id} - Success")
-    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Products")
+    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
     void testDeleteProductSuccess() throws Exception {
         mockMvc
                 .perform(delete("/product/{id}", 1).contentType(MediaType.APPLICATION_JSON))
@@ -149,7 +149,7 @@ public class InventoryServiceIntegrationTest {
 
     @Test
     @DisplayName("DELETE /product/{id} - Not Found")
-    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Products")
+    @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
     void testDeleteProductNotFound() throws Exception {
         mockMvc
                 .perform(delete("/product/{id}", 99).contentType(MediaType.APPLICATION_JSON))
