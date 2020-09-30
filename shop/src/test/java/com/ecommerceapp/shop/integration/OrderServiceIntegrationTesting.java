@@ -67,7 +67,7 @@ public class OrderServiceIntegrationTesting {
                 .andExpect(header().string(HttpHeaders.LOCATION, "/order/1"))
 
                 // Validate the returned fields
-                .andExpect(jsonPath("$.status",is(OrderStatus.CREATED.toString())))
+                .andExpect(jsonPath("$.status", is(OrderStatus.CREATED.toString())))
                 .andExpect(jsonPath("$.products[0].id", is("1")))
                 .andExpect(jsonPath("$.products[0].name", is("Samsung TV Led")))
                 .andExpect(jsonPath("$.products[0].quantity", is(50)))
@@ -131,7 +131,7 @@ public class OrderServiceIntegrationTesting {
                 .andExpect(header().exists(HttpHeaders.LOCATION))
 
                 // Validate the returned fields
-                .andExpect(jsonPath("$.status",is(OrderStatus.CREATED.toString())))
+                .andExpect(jsonPath("$.status", is(OrderStatus.CREATED.toString())))
                 .andExpect(jsonPath("$.products[0].name", is(productName)))
                 .andExpect(jsonPath("$.products[0].quantity", is(quantity)))
                 .andExpect(jsonPath("$.products[0].category", is(category.toString())));
