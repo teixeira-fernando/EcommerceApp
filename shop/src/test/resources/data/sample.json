@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "products": [
+      {
+        "id": "1",
+        "name": "Samsung TV Led",
+        "quantity": 50,
+        "category": "ELECTRONICS"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "products": [
+      {
+        "name": "Book Thanks for the feedback",
+        "quantity": 100,
+        "category": "BOOKS"
+      }
+    ]
+  }
+]

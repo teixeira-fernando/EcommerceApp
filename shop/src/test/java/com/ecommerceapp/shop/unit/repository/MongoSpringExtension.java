@@ -1,6 +1,10 @@
-package com.ecommerceapp.inventory.unit.repository;
+package com.ecommerceapp.shop.unit.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -8,11 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.springframework.data.mongodb.core.MongoTemplate;
 
 public class MongoSpringExtension implements BeforeEachCallback, AfterEachCallback {
 

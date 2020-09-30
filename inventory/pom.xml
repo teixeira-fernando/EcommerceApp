@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>inventory</artifactId>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <artifactId>inventory</artifactId>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <groupId>org.springframework.boot</groupId>
+            </plugin>
+
+            <!-- Jacoco -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>com.ecommerceapp.inventory.service.*</exclude>
+                        <exclude>com.ecommerceapp.inventory.InventoryApplication</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- PITest-->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.5.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>0.12</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+        <dependency>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>junit-vintage-engine</artifactId>
+                    <groupId>org.junit.vintage</groupId>
+                </exclusion>
+            </exclusions>
+            <groupId>org.springframework.boot</groupId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <artifactId>persistence-api</artifactId>
+            <groupId>javax.persistence</groupId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+        <dependency>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <groupId>de.flapdoodle.embed</groupId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <description>Ecommerce Inventory</description>
+    <groupId>com.ecommerceapp</groupId>
+    <modelVersion>4.0.0</modelVersion>
+    <name>inventory</name>
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-      </plugin>
+        <relativePath/>
+        <version>2.3.2.RELEASE</version> <!-- lookup parent from repository -->
+    </parent>
 
-      <!-- Jacoco -->
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.5</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <excludes>
-            <exclude>com.ecommerceapp.inventory.service.*</exclude>
-            <exclude>com.ecommerceapp.inventory.InventoryApplication</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
+    <properties>
+        <java.version>1.8</java.version>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/../inventory/target/site/jacoco/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
 
-      <!-- PITest-->
-      <plugin>
-        <groupId>org.pitest</groupId>
-        <artifactId>pitest-maven</artifactId>
-        <version>1.5.2</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.pitest</groupId>
-            <artifactId>pitest-junit5-plugin</artifactId>
-            <version>0.12</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-    </plugins>
-  </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>2.22.2</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
-  <dependencies>
-    <dependency>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-      <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <groupId>org.springframework.boot</groupId>
-    </dependency>
-
-    <dependency>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <exclusions>
-        <exclusion>
-          <artifactId>junit-vintage-engine</artifactId>
-          <groupId>org.junit.vintage</groupId>
-        </exclusion>
-      </exclusions>
-      <groupId>org.springframework.boot</groupId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <artifactId>persistence-api</artifactId>
-      <groupId>javax.persistence</groupId>
-      <version>1.0.2</version>
-    </dependency>
-    <dependency>
-      <artifactId>spring-boot-starter-data-mongodb</artifactId>
-      <groupId>org.springframework.boot</groupId>
-    </dependency>
-    <dependency>
-      <artifactId>de.flapdoodle.embed.mongo</artifactId>
-      <groupId>de.flapdoodle.embed</groupId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
-  <description>Ecommerce Inventory</description>
-  <groupId>com.ecommerceapp</groupId>
-  <modelVersion>4.0.0</modelVersion>
-  <name>inventory</name>
-  <parent>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <groupId>org.springframework.boot</groupId>
-    <relativePath/>
-    <version>2.3.2.RELEASE</version> <!-- lookup parent from repository -->
-  </parent>
-
-  <properties>
-    <java.version>1.8</java.version>
-    <sonar.coverage.jacoco.xmlReportPaths>
-      ${project.basedir}/../inventory/target/site/jacoco/jacoco.xml
-    </sonar.coverage.jacoco.xmlReportPaths>
-  </properties>
-
-  <reporting>
-    <plugins>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <groupId>org.apache.maven.plugins</groupId>
-        <version>2.22.2</version>
-      </plugin>
-    </plugins>
-  </reporting>
-
-  <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
 
 </project>
