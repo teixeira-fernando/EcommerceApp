@@ -65,7 +65,7 @@ public class OrderControllerTest {
                 .andExpect(header().string(HttpHeaders.LOCATION, "/order/" + mockOrder.getId()))
 
                 // Validate the returned fields
-                .andExpect(jsonPath("$.status",is(OrderStatus.CREATED.toString())))
+                .andExpect(jsonPath("$.status", is(OrderStatus.CREATED.toString())))
                 .andExpect(jsonPath("$.products[0].id", is(id)))
                 .andExpect(jsonPath("$.products[0].name", is(productName)))
                 .andExpect(jsonPath("$.products[0].quantity", is(quantity)))
@@ -140,7 +140,7 @@ public class OrderControllerTest {
                 .andExpect(header().string(HttpHeaders.LOCATION, "/order/" + mockOrder.getId()))
 
                 // Validate the returned fields
-                .andExpect(jsonPath("$.status",is(OrderStatus.CREATED.toString())))
+                .andExpect(jsonPath("$.status", is(OrderStatus.CREATED.toString())))
                 .andExpect(jsonPath("$.products.[0].id", is(id)))
                 .andExpect(jsonPath("$.products[0].name", is(productName)))
                 .andExpect(jsonPath("$.products[0].quantity", is(quantity)))

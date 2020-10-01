@@ -4,12 +4,10 @@ package com.ecommerceapp.shop.model;
 import com.ecommerceapp.inventory.model.Product;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +25,14 @@ public class Order {
     private OrderStatus status;
 
     @CreatedDate
-    private Date createDate;
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate = new Date(); // initialize created date;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateDate = new Date(); // initialize updated date;
 
     public String getId() {
         return id;
