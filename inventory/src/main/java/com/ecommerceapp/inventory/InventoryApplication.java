@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableMongoRepositories
-@Configuration
 public class InventoryApplication {
 
     public static void main(String[] args) {
