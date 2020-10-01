@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityExistsException;
+
 @RestController
 public class InventoryController {
 
@@ -76,13 +78,19 @@ public class InventoryController {
                 product.getName(),
                 product.getQuantity());
 
-        // Create the new product
-        Product newProduct = inventoryService.createProduct(product);
-
         try {
+            // Create the new product
+            Product newProduct = inventoryService.createProduct(product);
+
             // Build a created response
             return ResponseEntity.created(new URI("/product/" + newProduct.getId())).body(newProduct);
-        } catch (URISyntaxException e) {
+        }
+        catch (EntityExistsException e){
+            return new ResponseEntity(
+                    "There is a product with the same name already registered",
+                    HttpStatus.BAD_REQUEST);
+        }
+        catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
