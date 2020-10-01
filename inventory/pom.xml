@@ -6,11 +6,8 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
                 <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
             <!-- Jacoco -->
@@ -105,7 +102,8 @@
     </parent>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
+        <maven.compiler.release>11</maven.compiler.release>
         <sonar.coverage.jacoco.xmlReportPaths>
             ${project.basedir}/../inventory/target/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>

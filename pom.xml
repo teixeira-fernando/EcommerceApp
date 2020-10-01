@@ -15,6 +15,7 @@
     <version>0.1.0</version>
 
     <properties>
+        <java.version>11</java.version>
         <sonar.version>3.7.0.1746</sonar.version>
     </properties>
 
