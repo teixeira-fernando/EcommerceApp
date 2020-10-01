@@ -2,7 +2,6 @@ package com.ecommerceapp.shop.model;
 
 
 import com.ecommerceapp.inventory.model.Product;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,8 +1,5 @@
 package com.ecommerceapp.shop.controller;
 
-import com.ecommerceapp.inventory.controller.InventoryController;
-import com.ecommerceapp.inventory.model.Product;
-import com.ecommerceapp.inventory.service.InventoryService;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.service.OrderService;
 import org.apache.logging.log4j.LogManager;
@@ -11,11 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityExistsException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
-import java.util.Optional;
 
 @RestController
 public class OrderController {
@@ -74,20 +69,17 @@ public class OrderController {
                 "Creating new order");
 
 
-
         try {
             // Create the new order
             Order newOrder = orderService.createOrder(order);
 
             // Build a created response
             return ResponseEntity.created(new URI("/order/" + newOrder.getId())).body(newOrder);
-        }
-        catch (InvalidParameterException e){
+        } catch (InvalidParameterException e) {
             return new ResponseEntity(
                     "A product included in the Order was not found in the inventory",
                     HttpStatus.BAD_REQUEST);
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

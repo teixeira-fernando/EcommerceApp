@@ -2,15 +2,11 @@ package com.ecommerceapp.inventory.service;
 
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
-
-import java.security.InvalidParameterException;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
-import javax.management.InstanceAlreadyExistsException;
 import javax.persistence.EntityExistsException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InventoryService {
@@ -32,7 +28,7 @@ public class InventoryService {
     public Product createProduct(Product product) {
         Optional<Product> checkIfProductAlreadyExists = repository.findByName(product.getName());
 
-        if (checkIfProductAlreadyExists.isPresent()){
+        if (checkIfProductAlreadyExists.isPresent()) {
             throw new EntityExistsException();
         }
 

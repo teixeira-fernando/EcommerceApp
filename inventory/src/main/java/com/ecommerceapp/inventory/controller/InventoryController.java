@@ -2,23 +2,16 @@ package com.ecommerceapp.inventory.controller;
 
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Optional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Optional;
 
 @RestController
 public class InventoryController {
@@ -84,13 +77,11 @@ public class InventoryController {
 
             // Build a created response
             return ResponseEntity.created(new URI("/product/" + newProduct.getId())).body(newProduct);
-        }
-        catch (EntityExistsException e){
+        } catch (EntityExistsException e) {
             return new ResponseEntity(
                     "There is a product with the same name already registered",
                     HttpStatus.BAD_REQUEST);
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

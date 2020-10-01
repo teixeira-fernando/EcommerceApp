@@ -1,8 +1,5 @@
 package com.ecommerceapp.shop.service;
 
-import com.ecommerceapp.inventory.model.Product;
-import com.ecommerceapp.inventory.repository.InventoryRepository;
-import com.ecommerceapp.shop.controller.OrderController;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import org.apache.logging.log4j.LogManager;
@@ -11,17 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.security.InvalidParameterException;
-import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
-
-import static java.time.temporal.ChronoUnit.SECONDS;
 
 @Service
 public class OrderService {
@@ -61,7 +52,7 @@ public class OrderService {
             e.printStackTrace();
         }
 
-        if(response.statusCode() != HttpStatus.OK.value()){
+        if (response.statusCode() != HttpStatus.OK.value()) {
             throw new InvalidParameterException("Failed to search for the product in the inventory");
         }
 
