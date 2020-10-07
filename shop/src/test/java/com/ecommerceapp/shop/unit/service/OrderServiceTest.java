@@ -2,6 +2,7 @@ package com.ecommerceapp.shop.unit.service;
 
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import com.ecommerceapp.shop.service.InventoryConnector;
@@ -18,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.net.URISyntaxException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -99,7 +101,7 @@ public class OrderServiceTest {
 
     @Test
     @DisplayName("createOrder sucess")
-    void testCreateOrderSuccess() throws URISyntaxException {
+    void testCreateOrderSuccess() throws URISyntaxException, EmptyOrderException {
         // Arrange: Setup our mock
         Order order = new Order();
         order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
@@ -116,8 +118,33 @@ public class OrderServiceTest {
     }
 
     @Test
+    @DisplayName("createOrder Empty - should return an error")
+    void testCreateOrderEmpty() {
+        // Arrange: Setup our mock
+        Order order = new Order();
+
+        Assertions.assertThrows(EmptyOrderException.class, () -> {
+            service.createOrder(order);
+        });
+    }
+
+    @Test
+    @DisplayName("createOrder Product not found - should return an error")
+    void testCreateOrderProductNotFound() throws URISyntaxException {
+        // Arrange: Setup our mock
+        Order order = new Order();
+        order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
+
+        when(inventoryConnector.checkIfProductExists(any())).thenReturn(false);
+
+        Assertions.assertThrows(InvalidParameterException.class, () -> {
+            service.createOrder(order);
+        });
+    }
+
+    @Test
     @DisplayName("updateOrder sucess")
-    void testUpdateOrderSuccess() throws URISyntaxException {
+    void testUpdateOrderSuccess() throws URISyntaxException, EmptyOrderException {
         // Arrange: Setup our spy
         String productName = "Samsung TV Led";
         Integer quantity = 50;

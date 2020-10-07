@@ -1,5 +1,6 @@
 package com.ecommerceapp.shop.service;
 
+import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import org.apache.logging.log4j.LogManager;
@@ -31,15 +32,20 @@ public class OrderService {
         return this.repository.findAll();
     }
 
-    public Order createOrder(Order order) {
-        try {
-            if (!inventoryConnector.checkIfProductExists(order.getProducts().get(0).getId())) {
-                throw new InvalidParameterException("Failed to search for the product in the inventory");
-            }
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+    public Order createOrder(Order order) throws EmptyOrderException {
+        if (order.getProducts().isEmpty()) {
+            throw new EmptyOrderException();
         }
-
+        order.getProducts().forEach(product -> {
+            try {
+                if (!inventoryConnector.checkIfProductExists(product.getId())) {
+                    throw new InvalidParameterException("Failed to search for the product in the inventory");
+                }
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            ;
+        });
         return this.repository.save(order);
     }
 
