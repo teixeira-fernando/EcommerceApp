@@ -1,5 +1,6 @@
 package com.ecommerceapp.shop.controller;
 
+import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.service.OrderService;
 import org.apache.logging.log4j.LogManager;
@@ -77,6 +78,8 @@ public class OrderController {
             return new ResponseEntity(
                     "A product included in the Order was not found in the inventory",
                     HttpStatus.BAD_REQUEST);
+        } catch (EmptyOrderException e) {
+            return new ResponseEntity("The order does not contain any product", HttpStatus.BAD_REQUEST);
         } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

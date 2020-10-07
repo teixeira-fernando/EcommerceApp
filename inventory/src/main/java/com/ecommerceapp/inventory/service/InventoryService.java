@@ -2,6 +2,7 @@ package com.ecommerceapp.inventory.service;
 
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -11,11 +12,8 @@ import java.util.Optional;
 @Service
 public class InventoryService {
 
+    @Autowired
     private InventoryRepository repository;
-
-    public InventoryService(InventoryRepository repository) {
-        this.repository = repository;
-    }
 
     public Optional<Product> findById(String id) {
         return this.repository.findById(id);
