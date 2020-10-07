@@ -1,22 +1,27 @@
 package com.ecommerceapp.shop.service;
 
-import com.ecommerceapp.inventory.model.Product;
-import com.ecommerceapp.inventory.repository.InventoryRepository;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URISyntaxException;
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class OrderService {
 
+    private static final Logger logger = LogManager.getLogger(OrderService.class);
+
+    @Autowired
     private OrderRepository repository;
 
-    public OrderService(OrderRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private InventoryConnector inventoryConnector;
 
     public Optional<Order> findById(String id) {
         return this.repository.findById(id);
@@ -27,6 +32,14 @@ public class OrderService {
     }
 
     public Order createOrder(Order order) {
+        try {
+            if (!inventoryConnector.checkIfProductExists(order.getProducts().get(0).getId())) {
+                throw new InvalidParameterException("Failed to search for the product in the inventory");
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
         return this.repository.save(order);
     }
 

@@ -2,11 +2,11 @@ package com.ecommerceapp.inventory.service;
 
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
+import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class InventoryService {
@@ -26,6 +26,12 @@ public class InventoryService {
     }
 
     public Product createProduct(Product product) {
+        Optional<Product> checkIfProductAlreadyExists = repository.findByName(product.getName());
+
+        if (checkIfProductAlreadyExists.isPresent()) {
+            throw new EntityExistsException();
+        }
+
         return this.repository.save(product);
     }
 

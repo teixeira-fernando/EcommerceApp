@@ -4,6 +4,7 @@ import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
+import com.ecommerceapp.shop.service.InventoryConnector;
 import com.ecommerceapp.shop.service.OrderService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,8 +25,10 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = {OrderService.class})
+
+@SpringBootTest(classes = {OrderService.class, InventoryConnector.class})
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 public class OrderServiceTest {
 
@@ -36,6 +40,9 @@ public class OrderServiceTest {
 
     @MockBean
     private OrderRepository repository;
+
+    @MockBean
+    private InventoryConnector inventoryConnector;
 
     @Test
     @DisplayName("findById - success")
@@ -92,9 +99,12 @@ public class OrderServiceTest {
 
     @Test
     @DisplayName("createOrder sucess")
-    void testCreateOrderSuccess() {
+    void testCreateOrderSuccess() throws URISyntaxException {
         // Arrange: Setup our mock
         Order order = new Order();
+        order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
+
+        when(inventoryConnector.checkIfProductExists(any())).thenReturn(true);
         doReturn(order).when(repository).save(any());
 
         // Act: Call the service method create product
@@ -107,13 +117,15 @@ public class OrderServiceTest {
 
     @Test
     @DisplayName("updateOrder sucess")
-    void testUpdateOrderSuccess() {
+    void testUpdateOrderSuccess() throws URISyntaxException {
         // Arrange: Setup our spy
         String productName = "Samsung TV Led";
         Integer quantity = 50;
         Category category = Category.ELECTRONICS;
 
         Order order = new Order();
+        order.getProducts().add(new Product(productName, quantity, Category.BOOKS));
+        when(inventoryConnector.checkIfProductExists(any())).thenReturn(true);
 
         // Act: Call the services to save a product and then update it
         service.createOrder(order);

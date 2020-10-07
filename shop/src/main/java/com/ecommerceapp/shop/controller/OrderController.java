@@ -1,30 +1,25 @@
 package com.ecommerceapp.shop.controller;
 
-import com.ecommerceapp.inventory.controller.InventoryController;
-import com.ecommerceapp.inventory.model.Product;
-import com.ecommerceapp.inventory.service.InventoryService;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.service.OrderService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Optional;
+import java.security.InvalidParameterException;
 
 @RestController
 public class OrderController {
 
     private static final Logger logger = LogManager.getLogger(OrderController.class);
 
-    private final OrderService orderService;
-
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
+    @Autowired
+    private OrderService orderService;
 
     /**
      * Returns the product with the specified ID.
@@ -71,12 +66,17 @@ public class OrderController {
         logger.info(
                 "Creating new order");
 
-        // Create the new order
-        Order newOrder = orderService.createOrder(order);
 
         try {
+            // Create the new order
+            Order newOrder = orderService.createOrder(order);
+
             // Build a created response
             return ResponseEntity.created(new URI("/order/" + newOrder.getId())).body(newOrder);
+        } catch (InvalidParameterException e) {
+            return new ResponseEntity(
+                    "A product included in the Order was not found in the inventory",
+                    HttpStatus.BAD_REQUEST);
         } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

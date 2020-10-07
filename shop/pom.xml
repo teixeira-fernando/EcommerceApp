@@ -42,6 +42,12 @@
             <groupId>de.flapdoodle.embed</groupId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
     <description>Ecommerce Shop</description>
     <groupId>com.ecommerceapp</groupId>
@@ -56,7 +62,7 @@
     </parent>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
     </properties>
 
     <version>0.0.1-SNAPSHOT</version>
