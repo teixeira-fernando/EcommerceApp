@@ -1,5 +1,7 @@
 package com.ecommerceapp.inventory.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Entity;
@@ -13,10 +15,17 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private String id;
 
+    @Getter
+    @Setter
     private String name;
+    @Getter
+    @Setter
     private Integer quantity;
+    @Getter
+    @Setter
     private Category category;
 
     public Product() {
@@ -32,34 +41,6 @@ public class Product {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
-        this.category = category;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
         this.category = category;
     }
 

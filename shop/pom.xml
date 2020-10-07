@@ -42,6 +42,12 @@
             <groupId>de.flapdoodle.embed</groupId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
     <description>Ecommerce Shop</description>
     <groupId>com.ecommerceapp</groupId>
