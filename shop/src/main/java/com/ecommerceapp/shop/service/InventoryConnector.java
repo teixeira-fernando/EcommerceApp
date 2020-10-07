@@ -2,6 +2,7 @@ package com.ecommerceapp.shop.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -60,5 +62,22 @@ public class InventoryConnector {
             ex.printStackTrace();
         }
         return prop.getProperty(propertyPath);
+    }
+
+    public HttpResponse<String> executeRequest(HttpRequest request) {
+        HttpResponse<String> response = null;
+        try {
+            response = this.getClient().send(request, HttpResponse.BodyHandlers.ofString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    public boolean checkIfProductExists(String id) throws URISyntaxException {
+        return this.executeRequest(this.searchForProduct(id)).statusCode() == HttpStatus.OK.value();
     }
 }

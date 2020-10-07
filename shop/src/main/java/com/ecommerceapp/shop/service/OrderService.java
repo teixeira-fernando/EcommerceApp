@@ -4,12 +4,10 @@ import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpResponse;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
@@ -19,15 +17,11 @@ public class OrderService {
 
     private static final Logger logger = LogManager.getLogger(OrderService.class);
 
+    @Autowired
     private OrderRepository repository;
 
+    @Autowired
     private InventoryConnector inventoryConnector;
-
-    public OrderService(OrderRepository repository) {
-
-        this.repository = repository;
-        inventoryConnector = new InventoryConnector();
-    }
 
     public Optional<Order> findById(String id) {
         return this.repository.findById(id);
@@ -38,22 +32,12 @@ public class OrderService {
     }
 
     public Order createOrder(Order order) {
-        HttpResponse<String> response = null;
         try {
-            response = inventoryConnector.getClient().send(inventoryConnector.searchForProduct(order.getProducts().get(0).getId()), HttpResponse.BodyHandlers.ofString());
-
-            logger.info("Search for product - Status Code: ", response.statusCode());
-            logger.info("Search for product - Response Body: ", response.body());
+            if (!inventoryConnector.checkIfProductExists(order.getProducts().get(0).getId())) {
+                throw new InvalidParameterException("Failed to search for the product in the inventory");
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if (response.statusCode() != HttpStatus.OK.value()) {
-            throw new InvalidParameterException("Failed to search for the product in the inventory");
         }
 
         return this.repository.save(order);
