@@ -3,6 +3,10 @@
 
 name: MutationAndCodeCoverage
 
+on:
+  release:
+    branches: [ master ]
+
 jobs:
   build:
 
