@@ -61,17 +61,26 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>com.ecommerceapp.inventory.service.*</exclude>
+                        <exclude>com.ecommerceapp.inventory.model.*</exclude>
                         <exclude>com.ecommerceapp.inventory.InventoryApplication</exclude>
                     </excludes>
                 </configuration>
             </plugin>
 
             <!-- PITest-->
+
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.5.2</version>
+                <executions>
+                    <execution>
+                        <id>put-it-together</id>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
@@ -79,6 +88,21 @@
                         <version>0.12</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <excludedTestClasses>com.ecommerceapp.inventory.integration.*</excludedTestClasses>
+                    <excludedClasses>com.ecommerceapp.inventory.model.*</excludedClasses>
+                    <outputFormats>
+                        <param>HTML</param>
+                        <param>XML</param>
+                    </outputFormats>
+                    <!-- omitting mutators, testPlugin and verbose for brevity -->
+                    <exportLineCoverage>true</exportLineCoverage>
+                    <!--
+                        it's currently not possible to aggregate timestamped
+                        reports, so it must be disabled.
+                     -->
+                    <timestampedReports>false</timestampedReports>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -147,7 +171,7 @@
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
     </properties>
 
-    <reporting>
+   <!-- <reporting>
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -155,7 +179,7 @@
                 <version>${maven.surefire.plugin.version}</version>
             </plugin>
         </plugins>
-    </reporting>
+    </reporting> -->
 
     <version>0.0.1-SNAPSHOT</version>
 
