@@ -29,20 +29,20 @@ jobs:
           name: codeCoverage-inventory
           path: inventory/target/site/jacoco
       - name: Archive mutation coverage - Inventory
-          uses: actions/upload-artifact@v2
-          with:
-            name: mutationCoverage-inventory
-            path: inventory/target/pit-reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: mutationCoverage-inventory
+          path: inventory/target/pit-reports
       - name: Archive code coverage - Shop
-          uses: actions/upload-artifact@v2
-          with:
-            name: codeCoverage-shop
-            path: shop/target/site/jacoco
+        uses: actions/upload-artifact@v2
+        with:
+          name: codeCoverage-shop
+          path: shop/target/site/jacoco
       - name: Archive mutation coverage - Shop
-          uses: actions/upload-artifact@v2
-          with:
-            name: mutationCoverage-shop
-            path: shop/target/pit-reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: mutationCoverage-shop
+          path: shop/target/pit-reports
 
 
 
