@@ -2,9 +2,8 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <artifactId>ecomerceapp</artifactId>
-
-    <groupId>org.myecommerce</groupId>
+    <artifactId>ecomerceappParent</artifactId>
+    <groupId>com.ecommerceapp</groupId>
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>shop</module>
@@ -28,4 +27,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
