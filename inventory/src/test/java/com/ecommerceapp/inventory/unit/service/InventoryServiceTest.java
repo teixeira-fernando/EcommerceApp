@@ -83,7 +83,7 @@ public class InventoryServiceTest {
     }
 
     @Test
-    @DisplayName("createProduct sucess")
+    @DisplayName("createProduct success")
     void testCreateProductSuccess() {
         // Arrange: Setup our mock
         String productName = "Samsung TV Led";
@@ -102,7 +102,7 @@ public class InventoryServiceTest {
     }
 
     @Test
-    @DisplayName("updateProduct sucess")
+    @DisplayName("updateProduct success")
     void testUpdateProductSuccess() {
         // Arrange: Setup our spy
         String productName = "Samsung TV Led";
@@ -110,6 +110,7 @@ public class InventoryServiceTest {
         Category category = Category.ELECTRONICS;
 
         Product product = new Product(productName, quantity, category);
+        doReturn(product).when(repository).save(any());
 
         // Act: Call the services to save a product and then update it
         service.createProduct(product);
@@ -119,5 +120,16 @@ public class InventoryServiceTest {
 
         // Assert: verify the updated product
         Mockito.verify(repository, Mockito.times(2)).save(product);
+        Assertions.assertEquals(updatedProduct, product);
+    }
+
+    @Test
+    @DisplayName("deleteProduct success")
+    void testDeleteProductSuccess() {
+        //Act
+        service.deleteProduct("1");
+
+        //Assert
+        Mockito.verify(repository, Mockito.times(1)).deleteById("1");
     }
 }

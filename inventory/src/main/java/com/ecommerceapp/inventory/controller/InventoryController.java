@@ -22,6 +22,7 @@ public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
 
+
     /**
      * Returns the product with the specified ID.
      *
@@ -30,20 +31,20 @@ public class InventoryController {
      */
     @GetMapping("/product/{id}")
     public ResponseEntity<?> getProduct(@PathVariable String id) {
+        try {
+            Optional<Product> product = inventoryService.findById(id);
 
-        return inventoryService
-                .findById(id)
-                .map(
-                        product -> {
-                            try {
-                                return ResponseEntity.ok()
-                                        .location(new URI("/product/" + product.getId()))
-                                        .body(product);
-                            } catch (URISyntaxException e) {
-                                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-                            }
-                        })
-                .orElse(ResponseEntity.notFound().build());
+            if (product.isPresent()) {
+                return ResponseEntity.ok()
+                        .location(new URI("/product/" + product.get().getId()))
+                        .body(product);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (URISyntaxException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
 
     /**

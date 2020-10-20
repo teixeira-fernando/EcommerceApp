@@ -44,7 +44,7 @@ public class OrderService {
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
-            ;
+
         });
         return this.repository.save(order);
     }
