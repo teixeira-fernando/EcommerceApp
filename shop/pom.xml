@@ -77,7 +77,7 @@
                 </dependencies>
                 <configuration>
                     <excludedTestClasses>com.ecommerceapp.shop.integration.*</excludedTestClasses>
-                    <excludedClasses>com.ecommerceapp.inventory.model.*</excludedClasses>
+                    <excludedClasses>com.ecommerceapp.shop.model.*</excludedClasses>
                     <outputFormats>
                         <param>HTML</param>
                         <param>XML</param>

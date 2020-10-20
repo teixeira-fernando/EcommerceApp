@@ -4,6 +4,7 @@ import com.ecommerceapp.inventory.controller.InventoryController;
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.controller.OrderController;
+import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.model.OrderStatus;
 import com.ecommerceapp.shop.service.OrderService;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -24,6 +26,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -124,7 +127,7 @@ public class OrderControllerTest {
         mockOrder.getProducts().add(mockProduct);
         doReturn(mockOrder).when(service).createOrder(any());
 
-        // Execute the GET request
+        // Execute the POST request
         mockMvc
                 .perform(
                         post("/order")
@@ -144,6 +147,49 @@ public class OrderControllerTest {
                 .andExpect(jsonPath("$.products[0].name", is(productName)))
                 .andExpect(jsonPath("$.products[0].quantity", is(quantity)))
                 .andExpect(jsonPath("$.products[0].category", is(category.toString())));
+    }
+
+    @Test
+    @DisplayName("POST /order - Empty Order")
+    void testCreateOrderEmptyError() throws Exception {
+        // Arrange: Setup our mock
+        Order mockOrder = new Order();
+        when(service.createOrder(any())).thenThrow(EmptyOrderException.class);
+
+        // Execute the POST request
+        mockMvc
+                .perform(
+                        post("/order")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(asJsonString(mockOrder)))
+
+                // Validate the response code
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("POST /order - Product not found in the repository")
+    void testCreateOrderProductNotFoundError() throws Exception {
+        // Arrange: Setup our mock
+        String id = "12345";
+        String productName = "Dark Souls 3";
+        Integer quantity = 20;
+        Category category = Category.VIDEOGAMES;
+
+        Product mockProduct = new Product(id, productName, quantity, category);
+        Order mockOrder = new Order();
+        mockOrder.getProducts().add(mockProduct);
+        when(service.createOrder(any())).thenThrow(InvalidParameterException.class);
+
+        // Execute the POST request
+        mockMvc
+                .perform(
+                        post("/order")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(asJsonString(mockOrder)))
+
+                // Validate the response code
+                .andExpect(status().isBadRequest());
     }
 }
 

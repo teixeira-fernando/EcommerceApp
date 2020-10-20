@@ -6,6 +6,7 @@ import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -13,16 +14,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.persistence.EntityExistsException;
 import java.util.Arrays;
 import java.util.Optional;
 
 import static com.ecommerceapp.inventory.utils.Utilities.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.doReturn;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(InventoryController.class)
@@ -110,7 +110,7 @@ public class InventoryControllerTest {
         Product mockProduct = new Product(id, productName, quantity, category);
         doReturn(mockProduct).when(service).createProduct(any());
 
-        // Execute the GET request
+        // Execute the POST request
         mockMvc
                 .perform(
                         post("/product")
@@ -129,5 +129,66 @@ public class InventoryControllerTest {
                 .andExpect(jsonPath("$.name", is(productName)))
                 .andExpect(jsonPath("$.quantity", is(quantity)))
                 .andExpect(jsonPath("$.category", is(category.toString())));
+    }
+
+    @Test
+    @DisplayName("POST /product - Product already exists")
+    void testCreateProductError_ProductAlreadyExists() throws Exception {
+        // Arrange: Setup our mock
+        String id = "12345";
+        String productName = "Dark Souls 3";
+        Integer quantity = 20;
+        Category category = Category.VIDEOGAMES;
+
+        Product mockProduct = new Product(id, productName, quantity, category);
+        when(service.createProduct(any())).thenThrow(EntityExistsException.class);
+
+        // Execute the POST request
+        mockMvc
+                .perform(
+                        post("/product")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(asJsonString(mockProduct)))
+
+                // Validate the response code and content type
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("DELETE /product/{id} - Success")
+    void testDeleteProductSuccess() throws Exception {
+        // Arrange: Setup our mock
+        String id = "12345";
+        String productName = "Dark Souls 3";
+        Integer quantity = 20;
+        Category category = Category.VIDEOGAMES;
+
+        Product mockProduct = new Product(id, productName, quantity, category);
+        doReturn(Optional.of(mockProduct)).when(service).findById(any());
+
+        // Execute the DELETE request
+        mockMvc
+                .perform(
+                        delete("/product/{id}", id))
+
+                // Validate the response code
+                .andExpect(status().isOk());
+
+        Mockito.verify(service, Mockito.times(1)).deleteProduct(id);
+    }
+
+    @Test
+    @DisplayName("DELETE /product/{id} - Not found")
+    void testDeleteProductNotFound() throws Exception {
+        // Arrange: Setup our mock
+        doReturn(Optional.empty()).when(service).findById(any());
+
+        // Execute the DELETE request
+        mockMvc
+                .perform(
+                        delete("/product/{id}", 1))
+
+                // Validate the response code
+                .andExpect(status().isNotFound());
     }
 }

@@ -153,13 +153,15 @@ public class OrderServiceTest {
         Order order = new Order();
         order.getProducts().add(new Product(productName, quantity, Category.BOOKS));
         when(inventoryConnector.checkIfProductExists(any())).thenReturn(true);
+        doReturn(order).when(repository).save(any());
 
         // Act: Call the services to save a product and then update it
         service.createOrder(order);
         order.getProducts().add(new Product(productName, quantity, category));
-        service.updateOrder(order);
+        Order updatedOrder = service.updateOrder(order);
 
         // Assert: verify the updated product
         Mockito.verify(repository, Mockito.times(2)).save(order);
+        Assertions.assertEquals(updatedOrder, order);
     }
 }

@@ -171,16 +171,6 @@
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
     </properties>
 
-   <!-- <reporting>
-        <plugins>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <groupId>org.apache.maven.plugins</groupId>
-                <version>${maven.surefire.plugin.version}</version>
-            </plugin>
-        </plugins>
-    </reporting> -->
-
     <version>0.0.1-SNAPSHOT</version>
 
 </project>

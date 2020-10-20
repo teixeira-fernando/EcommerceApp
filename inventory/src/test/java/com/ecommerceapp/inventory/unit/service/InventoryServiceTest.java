@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityExistsException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -83,7 +84,7 @@ public class InventoryServiceTest {
     }
 
     @Test
-    @DisplayName("createProduct sucess")
+    @DisplayName("createProduct success")
     void testCreateProductSuccess() {
         // Arrange: Setup our mock
         String productName = "Samsung TV Led";
@@ -102,7 +103,23 @@ public class InventoryServiceTest {
     }
 
     @Test
-    @DisplayName("updateProduct sucess")
+    @DisplayName("createProduct already exists error")
+    void testCreateProductAlreadyExists() {
+        String productName = "Samsung TV Led";
+        Integer quantity = 50;
+        Category category = Category.ELECTRONICS;
+
+        Product product = new Product(productName, quantity, category);
+        doReturn(product).when(repository).save(any());
+        doReturn(Optional.of(product)).when(repository).findByName(any());
+
+        Assertions.assertThrows(EntityExistsException.class, () -> {
+            service.createProduct(product);
+        });
+    }
+
+    @Test
+    @DisplayName("updateProduct success")
     void testUpdateProductSuccess() {
         // Arrange: Setup our spy
         String productName = "Samsung TV Led";
@@ -110,6 +127,7 @@ public class InventoryServiceTest {
         Category category = Category.ELECTRONICS;
 
         Product product = new Product(productName, quantity, category);
+        doReturn(product).when(repository).save(any());
 
         // Act: Call the services to save a product and then update it
         service.createProduct(product);
@@ -119,5 +137,16 @@ public class InventoryServiceTest {
 
         // Assert: verify the updated product
         Mockito.verify(repository, Mockito.times(2)).save(product);
+        Assertions.assertEquals(updatedProduct, product);
+    }
+
+    @Test
+    @DisplayName("deleteProduct success")
+    void testDeleteProductSuccess() {
+        //Act
+        service.deleteProduct("1");
+
+        //Assert
+        Mockito.verify(repository, Mockito.times(1)).deleteById("1");
     }
 }
