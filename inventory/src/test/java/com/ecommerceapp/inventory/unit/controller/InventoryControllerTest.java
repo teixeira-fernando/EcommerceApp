@@ -6,6 +6,7 @@ import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -172,6 +173,8 @@ public class InventoryControllerTest {
 
                 // Validate the response code
                 .andExpect(status().isOk());
+
+        Mockito.verify(service, Mockito.times(1)).deleteProduct(id);
     }
 
     @Test

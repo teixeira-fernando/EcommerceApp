@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityExistsException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -99,6 +100,22 @@ public class InventoryServiceTest {
         // Assert: verify the returned product
         Assertions.assertNotNull(createdProduct, "The saved product should not be null");
         Assertions.assertEquals(createdProduct, product, "Product should be the same");
+    }
+
+    @Test
+    @DisplayName("createProduct already exists error")
+    void testCreateProductAlreadyExists() {
+        String productName = "Samsung TV Led";
+        Integer quantity = 50;
+        Category category = Category.ELECTRONICS;
+
+        Product product = new Product(productName, quantity, category);
+        doReturn(product).when(repository).save(any());
+        doReturn(Optional.of(product)).when(repository).findByName(any());
+
+        Assertions.assertThrows(EntityExistsException.class, () -> {
+            service.createProduct(product);
+        });
     }
 
     @Test
