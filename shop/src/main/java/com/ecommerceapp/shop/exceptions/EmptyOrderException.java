@@ -1,4 +1,3 @@
 package com.ecommerceapp.shop.exceptions;
 
-public class EmptyOrderException extends Exception {
-}
+public class EmptyOrderException extends Exception {}
