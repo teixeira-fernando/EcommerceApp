@@ -1,12 +1,23 @@
 package com.ecommerceapp.shop.unit.service;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
+
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
-import com.ecommerceapp.shop.service.InventoryConnector;
+import com.ecommerceapp.shop.service.InventoryClient;
 import com.ecommerceapp.shop.service.OrderService;
+import java.net.URISyntaxException;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,150 +29,157 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.net.URISyntaxException;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
-
-
-@SpringBootTest(classes = {OrderService.class, InventoryConnector.class})
+@SpringBootTest(classes = {OrderService.class, InventoryClient.class})
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 public class OrderServiceTest {
 
-    /**
-     * The service that we want to test.
-     */
-    @Autowired
-    private OrderService service;
+  /** The service that we want to test. */
+  @Autowired private OrderService service;
 
-    @MockBean
-    private OrderRepository repository;
+  @MockBean private OrderRepository repository;
 
-    @MockBean
-    private InventoryConnector inventoryConnector;
+  @MockBean private InventoryClient inventoryClient;
 
-    @Test
-    @DisplayName("findById - success")
-    void testFindByIdSuccess() {
-        // Arrange: Setup our mock
-        String productName = "Samsung TV Led";
-        Integer quantity = 50;
-        Category category = Category.ELECTRONICS;
+  @Test
+  @DisplayName("findById - success")
+  void testFindByIdSuccess() {
+    // Arrange: Setup our mock
+    String productName = "Samsung TV Led";
+    Integer quantity = 50;
+    Category category = Category.ELECTRONICS;
 
-        Order order = new Order(new ArrayList<>());
-        order.getProducts().add(new Product(productName, quantity, category));
-        doReturn(Optional.of(order)).when(repository).findById(order.getId());
+    Order order = new Order(new ArrayList<>());
+    order.getProducts().add(new Product(productName, quantity, category));
+    doReturn(Optional.of(order)).when(repository).findById(order.getId());
 
-        // Act: Call the service method findById
-        Optional<Order> returnedOrder = service.findById(order.getId());
+    // Act: Call the service method findById
+    Optional<Order> returnedOrder = service.findById(order.getId());
 
-        // Assert: verify the returned product
-        Assertions.assertTrue(returnedOrder.isPresent(), "Order was not found");
-        Assertions.assertEquals(returnedOrder.get(), order, "Order should be the same");
-    }
+    // Assert: verify the returned product
+    Assertions.assertTrue(returnedOrder.isPresent(), "Order was not found");
+    Assertions.assertEquals(returnedOrder.get(), order, "Order should be the same");
+  }
 
-    @Test
-    @DisplayName("findById not found")
-    void testFindByIdNotFound() {
-        // Arrange: Setup our mock
-        doReturn(Optional.empty()).when(repository).findById("1");
+  @Test
+  @DisplayName("findById not found")
+  void testFindByIdNotFound() {
+    // Arrange: Setup our mock
+    doReturn(Optional.empty()).when(repository).findById("1");
 
-        // Act: Call the service method findById
-        Optional<Order> returnedOrder = service.findById("1");
+    // Act: Call the service method findById
+    Optional<Order> returnedOrder = service.findById("1");
 
-        // Assert the response
-        Assertions.assertFalse(returnedOrder.isPresent(), "Order was found, when it shouldn't be");
-    }
+    // Assert the response
+    Assertions.assertFalse(returnedOrder.isPresent(), "Order was found, when it shouldn't be");
+  }
 
-    @Test
-    @DisplayName("findAll Success")
-    void testFindAllSuccess() {
-        // Arrange: Setup our mock
-        Product product1 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
-        Product product2 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(product1);
-        products.add(product2);
-        Order order1 = new Order(products);
-        Order order2 = new Order();
-        doReturn(Arrays.asList(order1, order2)).when(repository).findAll();
+  @Test
+  @DisplayName("findAll Success")
+  void testFindAllSuccess() {
+    // Arrange: Setup our mock
+    Product product1 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
+    Product product2 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
+    ArrayList<Product> products = new ArrayList<>();
+    products.add(product1);
+    products.add(product2);
+    Order order1 = new Order(products);
+    Order order2 = new Order();
+    doReturn(Arrays.asList(order1, order2)).when(repository).findAll();
 
-        // Act: Call the service method findAll
-        List<Order> orders = service.findAll();
+    // Act: Call the service method findAll
+    List<Order> orders = service.findAll();
 
-        // Assert the response
-        Assertions.assertEquals(2, orders.size(), "The product list should return 2 items");
-    }
+    // Assert the response
+    Assertions.assertEquals(2, orders.size(), "The product list should return 2 items");
+  }
 
-    @Test
-    @DisplayName("createOrder sucess")
-    void testCreateOrderSuccess() throws URISyntaxException, EmptyOrderException {
-        // Arrange: Setup our mock
-        Order order = new Order();
-        order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
+  @Test
+  @DisplayName("createOrder sucess")
+  void testCreateOrderSuccess() throws URISyntaxException, EmptyOrderException {
+    // Arrange: Setup our mock
+    Order order = new Order();
+    order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
 
-        when(inventoryConnector.checkIfProductExists(any())).thenReturn(true);
-        doReturn(order).when(repository).save(any());
+    when(inventoryClient.checkIfProductExists(any())).thenReturn(true);
+    when(inventoryClient.checkIfProductHaveEnoughStock(any(), anyInt())).thenReturn(true);
+    doReturn(order).when(repository).save(any());
 
-        // Act: Call the service method create product
-        Order createdOrder = service.createOrder(order);
+    // Act: Call the service method create product
+    Order createdOrder = service.createOrder(order);
 
-        // Assert: verify the returned product
-        Assertions.assertNotNull(createdOrder, "The saved order should not be null");
-        Assertions.assertEquals(createdOrder, order, "Order should be the same");
-    }
+    // Assert: verify the returned product
+    Assertions.assertNotNull(createdOrder, "The saved order should not be null");
+    Assertions.assertEquals(createdOrder, order, "Order should be the same");
+  }
 
-    @Test
-    @DisplayName("createOrder Empty - should return an error")
-    void testCreateOrderEmpty() {
-        // Arrange: Setup our mock
-        Order order = new Order();
+  @Test
+  @DisplayName("createOrder Empty - should return an error")
+  void testCreateOrderEmpty() {
+    // Arrange: Setup our mock
+    Order order = new Order();
 
-        Assertions.assertThrows(EmptyOrderException.class, () -> {
-            service.createOrder(order);
+    Assertions.assertThrows(
+        EmptyOrderException.class,
+        () -> {
+          service.createOrder(order);
         });
-    }
+  }
 
-    @Test
-    @DisplayName("createOrder Product not found - should return an error")
-    void testCreateOrderProductNotFound() throws URISyntaxException {
-        // Arrange: Setup our mock
-        Order order = new Order();
-        order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
+  @Test
+  @DisplayName("createOrder Product not found - should return an error")
+  void testCreateOrderProductNotFound() throws URISyntaxException {
+    // Arrange: Setup our mock
+    Order order = new Order();
+    order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
 
-        when(inventoryConnector.checkIfProductExists(any())).thenReturn(false);
+    when(inventoryClient.checkIfProductExists(any())).thenReturn(false);
 
-        Assertions.assertThrows(InvalidParameterException.class, () -> {
-            service.createOrder(order);
+    Assertions.assertThrows(
+        InvalidParameterException.class,
+        () -> {
+          service.createOrder(order);
         });
-    }
+  }
 
-    @Test
-    @DisplayName("updateOrder sucess")
-    void testUpdateOrderSuccess() throws URISyntaxException, EmptyOrderException {
-        // Arrange: Setup our spy
-        String productName = "Samsung TV Led";
-        Integer quantity = 50;
-        Category category = Category.ELECTRONICS;
+  @Test
+  @DisplayName("createOrder Product not in Stock - should return an error")
+  void testCreateOrderProductNotInStock() throws URISyntaxException, EmptyOrderException {
+    // Arrange: Setup our mock
+    Order order = new Order();
+    order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
 
-        Order order = new Order();
-        order.getProducts().add(new Product(productName, quantity, Category.BOOKS));
-        when(inventoryConnector.checkIfProductExists(any())).thenReturn(true);
-        doReturn(order).when(repository).save(any());
+    when(inventoryClient.checkIfProductExists(any())).thenReturn(true);
+    when(inventoryClient.checkIfProductHaveEnoughStock(any(), anyInt())).thenReturn(false);
+    doReturn(order).when(repository).save(any());
 
-        // Act: Call the services to save a product and then update it
-        service.createOrder(order);
-        order.getProducts().add(new Product(productName, quantity, category));
-        Order updatedOrder = service.updateOrder(order);
+    Assertions.assertThrows(
+        InvalidParameterException.class,
+        () -> {
+          service.createOrder(order);
+        });
+  }
 
-        // Assert: verify the updated product
-        Mockito.verify(repository, Mockito.times(2)).save(order);
-        Assertions.assertEquals(updatedOrder, order);
-    }
+  @Test
+  @DisplayName("updateOrder sucess")
+  void testUpdateOrderSuccess() throws URISyntaxException, EmptyOrderException {
+    // Arrange: Setup our spy
+    String productName = "Samsung TV Led";
+    Integer quantity = 50;
+    Category category = Category.ELECTRONICS;
+
+    Order order = new Order();
+    order.getProducts().add(new Product(productName, quantity, Category.BOOKS));
+    when(inventoryClient.checkIfProductExists(any())).thenReturn(true);
+    when(inventoryClient.checkIfProductHaveEnoughStock(any(), anyInt())).thenReturn(true);
+    doReturn(order).when(repository).save(any());
+
+    // Act: Call the services to save a product and then update it
+    service.createOrder(order);
+    order.getProducts().add(new Product(productName, quantity, category));
+    Order updatedOrder = service.updateOrder(order);
+
+    // Assert: verify the updated product
+    Mockito.verify(repository, Mockito.times(2)).save(order);
+    Assertions.assertEquals(updatedOrder, order);
+  }
 }
