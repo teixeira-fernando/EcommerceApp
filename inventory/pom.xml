@@ -104,14 +104,6 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.5.2</version>
-                <executions>
-                    <execution>
-                        <id>put-it-together</id>
-                        <goals>
-                            <goal>mutationCoverage</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
@@ -133,6 +125,20 @@
                         reports, so it must be disabled.
                      -->
                     <timestampedReports>false</timestampedReports>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <pact.provider.name>${pact.provider.name}</pact.provider.name>
+                        <pact.verifier.publishResults>true</pact.verifier.publishResults>
+                        <pact.provider.tag>master</pact.provider.tag>
+                    </systemPropertyVariables>
+                    <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
             </plugin>
 
@@ -186,6 +192,20 @@
             <artifactId>validation-api</artifactId>
             <version>2.0.0.Final</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/au.com.dius.pact.provider/junit5 -->
+        <dependency>
+            <groupId>au.com.dius.pact.provider</groupId>
+            <artifactId>junit5</artifactId>
+            <version>4.1.9</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>au.com.dius</groupId>
+            <artifactId>pact-jvm-provider-junit5-spring</artifactId>
+            <version>4.0.10</version>
+        </dependency>
+
     </dependencies>
 
     <description>Ecommerce Inventory</description>
@@ -208,6 +228,7 @@
         </sonar.coverage.jacoco.xmlReportPaths>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+        <pact.provider.name>ProductModule</pact.provider.name>
     </properties>
 
     <version>0.0.1-SNAPSHOT</version>
