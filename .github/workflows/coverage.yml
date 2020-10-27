@@ -26,11 +26,11 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Maven clean install
-          run: mvn clean install
+        run: mvn clean install
       - name: Mutation tests for shop module
         run: mvn -f shop/ pitest:mutationCoverage
       - name: Mutation tests for inventory module
-          run: mvn -f inventory/ pitest:mutationCoverage
+        run: mvn -f inventory/ pitest:mutationCoverage
       - name: Archive code coverage - Inventory
         uses: actions/upload-artifact@v2
         with:
