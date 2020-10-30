@@ -45,7 +45,7 @@ mvn pact:publish (in the shop module)
 ```
 Then you can run the contract tests in the provider side, where it is already configured to get it from the pact broker
 
-Utils: 
+## Utils 
 
 Install and activate Intellij plugin to format on IDE:
 * https://plugins.jetbrains.com/plugin/8527-google-java-format
