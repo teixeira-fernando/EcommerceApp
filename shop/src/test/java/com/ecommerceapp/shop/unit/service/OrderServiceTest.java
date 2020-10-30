@@ -2,12 +2,12 @@ package com.ecommerceapp.shop.unit.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
+import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import com.ecommerceapp.shop.service.InventoryClient;
@@ -143,7 +143,7 @@ public class OrderServiceTest {
 
   @Test
   @DisplayName("createOrder Product not in Stock - should return an error")
-  void testCreateOrderProductNotInStock() throws URISyntaxException, EmptyOrderException {
+  void testCreateOrderProductNotInStock() throws URISyntaxException {
     // Arrange: Setup our mock
     Order order = new Order();
     order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
@@ -157,6 +157,24 @@ public class OrderServiceTest {
         () -> {
           service.createOrder(order);
         });
+  }
+
+  @Test
+  @DisplayName("createOrder Product not in Stock - should return an error")
+  void testCreateOrderErrorUpdateStock() throws URISyntaxException {
+    // Arrange: Setup our mock
+    Order order = new Order();
+    order.getProducts().add(new Product("1", "test", 50, Category.BOOKS));
+
+    when(inventoryClient.checkIfProductExists(any())).thenReturn(true);
+    when(inventoryClient.checkIfProductHaveEnoughStock(any(), anyInt())).thenReturn(true);
+    doThrow(StockUpdateException.class).when(inventoryClient).updateStock(any(),any());
+
+    Assertions.assertThrows(
+            StockUpdateException.class,
+            () -> {
+              service.createOrder(order);
+            });
   }
 
   @Test

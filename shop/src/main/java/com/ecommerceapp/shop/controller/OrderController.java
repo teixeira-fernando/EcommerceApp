@@ -1,6 +1,7 @@
 package com.ecommerceapp.shop.controller;
 
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
+import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.service.OrderService;
 import java.net.URI;
@@ -73,6 +74,8 @@ public class OrderController {
           "A product included in the Order was not found in the inventory", HttpStatus.BAD_REQUEST);
     } catch (EmptyOrderException e) {
       return new ResponseEntity("The order does not contain any product", HttpStatus.BAD_REQUEST);
+    } catch (StockUpdateException e) {
+      return new ResponseEntity("Something went wrong when trying to communicate with the inventory service", HttpStatus.SERVICE_UNAVAILABLE);
     } catch (URISyntaxException e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
