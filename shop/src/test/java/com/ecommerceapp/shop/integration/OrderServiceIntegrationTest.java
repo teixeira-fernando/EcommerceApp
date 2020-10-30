@@ -1,6 +1,9 @@
 package com.ecommerceapp.shop.integration;
 
-import static com.ecommerceapp.shop.utils.Utilities.asJsonString;
+import static com.ecommerceapp.shop.utils.UtilitiesApplication.asJsonString;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,6 +16,11 @@ import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.model.OrderStatus;
 import com.ecommerceapp.shop.unit.repository.MongoDataFile;
 import com.ecommerceapp.shop.unit.repository.MongoSpringExtension;
+import com.ecommerceapp.shop.utils.UtilitiesApplication;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,11 +38,13 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-public class OrderServiceIntegrationTesting {
+public class OrderServiceIntegrationTest {
 
   @Autowired private MockMvc mockMvc;
 
   @Autowired private MongoTemplate mongoTemplate;
+
+  private WireMockServer wireMockServer;
 
   /**
    * MongoSpringExtension method that returns the autowired MongoTemplate to use for MongoDB
@@ -44,6 +54,19 @@ public class OrderServiceIntegrationTesting {
    */
   public MongoTemplate getMongoTemplate() {
     return mongoTemplate;
+  }
+
+  @BeforeEach
+  void configureSystemUnderTest() {
+    int port = Integer.parseInt(UtilitiesApplication.readPropertyValue("inventory.port"));
+    this.wireMockServer = new WireMockServer(options().port(port));
+    this.wireMockServer.start();
+    configureFor("localhost", this.wireMockServer.port());
+  }
+
+  @AfterEach
+  void stopWireMockServer() {
+    this.wireMockServer.stop();
   }
 
   @Test
@@ -70,7 +93,6 @@ public class OrderServiceIntegrationTesting {
         .andExpect(jsonPath("$.products[0].category", is(Category.ELECTRONICS.toString())));
   }
 
-  @Test
   @DisplayName("GET /order/{id} - Not Found")
   @MongoDataFile(value = "sample.json", classType = Order.class, collectionName = "Order")
   void testGetOrderByIdNotFound() throws Exception {
@@ -105,13 +127,25 @@ public class OrderServiceIntegrationTesting {
   @MongoDataFile(value = "sample.json", classType = Order.class, collectionName = "Order")
   void testCreateOrder() throws Exception {
     // Setup product to create
-    String productName = "Dark Souls 3";
-    Integer quantity = 20;
-    Category category = Category.VIDEOGAMES;
+    String id = "1";
+    String productName = "Samsung TV Led";
+    Integer quantity = 10;
+    Category category = Category.ELECTRONICS;
 
-    Product newProduct = new Product(productName, quantity, category);
+    Product newProduct = new Product(id, productName, quantity, category);
     Order order = new Order();
     order.getProducts().add(newProduct);
+
+    wireMockServer.stubFor(
+        WireMock.get(WireMock.urlEqualTo("/product/" + id))
+            .willReturn(
+                aResponse()
+                    .withStatus(200)
+                    .withBody(UtilitiesApplication.asJsonString(newProduct))));
+
+    wireMockServer.stubFor(
+        WireMock.post(WireMock.urlEqualTo("/product/" + id + "/changeStock"))
+            .willReturn(aResponse().withStatus(200)));
 
     mockMvc
         .perform(
