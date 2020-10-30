@@ -4,19 +4,17 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 import com.ecommerceapp.shop.dto.request.ChangeStockDto;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
-import com.ecommerceapp.shop.utils.Utilities;
-import java.io.FileNotFoundException;
+import com.ecommerceapp.shop.utils.UtilitiesApplication;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -38,7 +36,7 @@ public class InventoryClient {
             .version(HttpClient.Version.HTTP_2)
             .build();
     // get the property value
-    INVENTORYHOST = readPropertyValue("inventory.host");
+    INVENTORYHOST = UtilitiesApplication.readPropertyValue("inventory.host");
   }
 
   private HttpClient getClient() {
@@ -56,27 +54,18 @@ public class InventoryClient {
     return HttpRequest.newBuilder()
         .uri(new URI(INVENTORYHOST + "/product/" + id + "/changeStock"))
         .timeout(Duration.of(TIMEOUT, SECONDS))
-        .POST(HttpRequest.BodyPublishers.ofString(Utilities.asJsonString(stockOperation)))
+        .POST(
+            HttpRequest.BodyPublishers.ofString(UtilitiesApplication.asJsonString(stockOperation)))
         .build();
   }
 
-  private String readPropertyValue(String propertyPath) {
-    Properties prop = new Properties();
+  private HttpRequest getAllProductsRequest() throws URISyntaxException {
 
-    try (InputStream input =
-        InventoryClient.class.getClassLoader().getResourceAsStream("application.properties")) {
-
-      if (input == null) {
-        throw new FileNotFoundException(
-            "unable to find application.properties to read the property value");
-      }
-      // load a properties file from class path, inside static method
-      prop.load(input);
-
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
-    return prop.getProperty(propertyPath);
+    return HttpRequest.newBuilder()
+        .uri(new URI(INVENTORYHOST + "/products"))
+        .timeout(Duration.of(TIMEOUT, SECONDS))
+        .GET()
+        .build();
   }
 
   private HttpResponse<String> executeRequest(HttpRequest request) {
@@ -97,13 +86,14 @@ public class InventoryClient {
         == HttpStatus.OK.value();
   }
 
-  public boolean checkIfProductHaveEnoughStock(String id, int quantity) throws URISyntaxException {
+  public boolean checkIfProductHaveEnoughStock(String id, int desiredQuantity)
+      throws URISyntaxException {
     HttpResponse<String> response = this.executeRequest(this.searchForProductRequest(id));
     JSONObject jsonObject = new JSONObject(response.body());
     int currentStock = (int) jsonObject.get("quantity");
     logger.debug("Value of quantity: " + currentStock);
     logger.debug("My response body: " + response.body());
-    if (quantity > currentStock) {
+    if (desiredQuantity > currentStock) {
       return false;
     } else {
       return true;
@@ -117,5 +107,11 @@ public class InventoryClient {
     if (response.statusCode() != HttpStatus.OK.value()) {
       throw new StockUpdateException();
     }
+  }
+
+  public JSONArray getAllProducts() throws URISyntaxException {
+    HttpResponse<String> response = this.executeRequest(this.getAllProductsRequest());
+    JSONArray jsonArray = new JSONArray(response.body());
+    return jsonArray;
   }
 }

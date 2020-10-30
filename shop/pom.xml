@@ -199,6 +199,13 @@
             <version>1.4.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>2.27.2</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
     <description>Ecommerce Shop</description>
     <groupId>com.ecommerceapp</groupId>

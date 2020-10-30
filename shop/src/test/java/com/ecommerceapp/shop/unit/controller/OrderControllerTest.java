@@ -1,6 +1,6 @@
 package com.ecommerceapp.shop.unit.controller;
 
-import static com.ecommerceapp.shop.utils.Utilities.asJsonString;
+import static com.ecommerceapp.shop.utils.UtilitiesApplication.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
