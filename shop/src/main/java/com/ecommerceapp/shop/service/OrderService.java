@@ -6,14 +6,15 @@ import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
-import java.net.URISyntaxException;
-import java.security.InvalidParameterException;
-import java.util.List;
-import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.net.URISyntaxException;
+import java.security.InvalidParameterException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -36,6 +37,7 @@ public class OrderService {
     if (order.getProducts().isEmpty()) {
       throw new EmptyOrderException();
     }
+
     order
         .getProducts()
         .forEach(
@@ -50,11 +52,12 @@ public class OrderService {
                   throw new InvalidParameterException(
                       "There is not enough stock for this product: " + product.getName());
                 }
-                inventoryClient.changeStock(
+                inventoryClient.updateStock(
                     product.getId(),
                     new ChangeStockDto(product.getQuantity(), StockOperation.DECREMENT));
-              } catch (URISyntaxException | StockUpdateException e) {
+              } catch (URISyntaxException e) {
                 e.printStackTrace();
+                logger.error(e.getStackTrace());
               }
             });
     return this.repository.save(order);

@@ -100,12 +100,13 @@ public class InventoryClient {
     }
   }
 
-  public void changeStock(String id, ChangeStockDto stockOperation)
-      throws URISyntaxException, StockUpdateException {
+  public void updateStock(String id, ChangeStockDto stockOperation)
+      throws URISyntaxException {
     HttpResponse<String> response =
         this.executeRequest(this.changeStockRequest(id, stockOperation));
     if (response.statusCode() != HttpStatus.OK.value()) {
-      throw new StockUpdateException();
+      throw new StockUpdateException(
+              "Something went wrong when trying to update the stock");
     }
   }
 

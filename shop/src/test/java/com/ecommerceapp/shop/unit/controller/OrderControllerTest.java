@@ -15,6 +15,7 @@ import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.controller.OrderController;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
+import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.model.OrderStatus;
 import com.ecommerceapp.shop.service.OrderService;
@@ -156,6 +157,22 @@ public class OrderControllerTest {
 
         // Validate the response code
         .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  @DisplayName("POST /order - Empty Order")
+  void testCreateOrderStockUpdateException() throws Exception {
+    // Arrange: Setup our mock
+    Order mockOrder = new Order();
+    when(service.createOrder(any())).thenThrow(StockUpdateException.class);
+
+    // Execute the POST request
+    mockMvc
+            .perform(
+                    post("/order").contentType(MediaType.APPLICATION_JSON).content(asJsonString(mockOrder)))
+
+            // Validate the response code
+            .andExpect(status().isServiceUnavailable());
   }
 
   @Test
