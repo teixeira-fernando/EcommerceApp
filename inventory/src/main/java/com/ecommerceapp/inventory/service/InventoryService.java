@@ -5,6 +5,7 @@ import com.ecommerceapp.inventory.dto.request.StockOperation;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import javax.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,12 @@ public class InventoryService {
 
   @Autowired private InventoryRepository repository;
 
-  public Optional<Product> findById(String id) {
-    return this.repository.findById(id);
+  public Product findById(String id) {
+    Optional<Product> product = this.repository.findById(id);
+    if (product.isEmpty()) {
+      throw new NoSuchElementException();
+    }
+    return product.get();
   }
 
   public List<Product> findAll() {

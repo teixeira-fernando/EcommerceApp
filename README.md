@@ -47,5 +47,7 @@ Then you can run the contract tests in the provider side, where it is already co
 
 ## Utils 
 
-Install and activate Intellij plugin to format on IDE:
-* https://plugins.jetbrains.com/plugin/8527-google-java-format
+* Install and activate Intellij plugin to format on IDE:
+    * https://plugins.jetbrains.com/plugin/8527-google-java-format
+
+* There is a swagger documentation configured for each module. After running the desired module, you can navigate to: http://localhost:{port}/swagger-ui/

@@ -9,6 +9,7 @@ import com.ecommerceapp.inventory.repository.InventoryRepository;
 import com.ecommerceapp.inventory.service.InventoryService;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import javax.persistence.EntityExistsException;
 import org.junit.jupiter.api.Assertions;
@@ -43,11 +44,11 @@ public class InventoryServiceTest {
     doReturn(Optional.of(product)).when(repository).findById(product.getId());
 
     // Act: Call the service method findById
-    Optional<Product> returnedProduct = service.findById(product.getId());
+    Product returnedProduct = service.findById(product.getId());
 
     // Assert: verify the returned product
-    Assertions.assertTrue(returnedProduct.isPresent(), "Product was not found");
-    Assertions.assertEquals(returnedProduct.get(), product, "Product should be the same");
+    Assertions.assertNotNull(returnedProduct, "Product was not found");
+    Assertions.assertEquals(returnedProduct, product, "Product should be the same");
   }
 
   @Test
@@ -56,11 +57,12 @@ public class InventoryServiceTest {
     // Arrange: Setup our mock
     doReturn(Optional.empty()).when(repository).findById("1");
 
-    // Act: Call the service method findById
-    Optional<Product> returnedProduct = service.findById("1");
-
-    // Assert the response
-    Assertions.assertFalse(returnedProduct.isPresent(), "Product was found, when it shouldn't be");
+    // Verify if findById throws this exception
+    Assertions.assertThrows(
+        NoSuchElementException.class,
+        () -> {
+          service.findById("1");
+        });
   }
 
   @Test

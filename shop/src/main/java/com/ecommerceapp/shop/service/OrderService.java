@@ -3,18 +3,16 @@ package com.ecommerceapp.shop.service;
 import com.ecommerceapp.shop.dto.request.ChangeStockDto;
 import com.ecommerceapp.shop.dto.request.StockOperation;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
-import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderService {
@@ -25,8 +23,11 @@ public class OrderService {
 
   @Autowired private InventoryClient inventoryClient;
 
-  public Optional<Order> findById(String id) {
-    return this.repository.findById(id);
+  public Order findById(String id) {
+    Optional<Order> order = this.repository.findById(id);
+    if (order.isEmpty()) {}
+
+    return order.get();
   }
 
   public List<Order> findAll() {

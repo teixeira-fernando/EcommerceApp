@@ -16,7 +16,6 @@ import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,6 +56,6 @@ public class InventoryProviderPact {
   @State("trying to get a product by id")
   public void getProduct() {
     given(inventoryService.findById("1"))
-        .willReturn(Optional.of(new Product("1", "Samsung TV", 50, Category.ELECTRONICS)));
+        .willReturn(new Product("1", "Samsung TV", 50, Category.ELECTRONICS));
   }
 }
