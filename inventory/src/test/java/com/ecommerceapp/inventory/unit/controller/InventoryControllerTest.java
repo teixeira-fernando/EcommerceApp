@@ -12,7 +12,7 @@ import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import javax.persistence.EntityExistsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ public class InventoryControllerTest {
     Category category = Category.ELECTRONICS;
 
     Product mockProduct = new Product(id, productName, quantity, category);
-    doReturn(Optional.of(mockProduct)).when(service).findById(id);
+    doReturn(mockProduct).when(service).findById(id);
 
     // Execute the GET request
     mockMvc
@@ -85,7 +85,7 @@ public class InventoryControllerTest {
   @DisplayName("GET /product/{id} - Not found")
   void testGetProductByIdNotFound() throws Exception {
     // Arrange: Setup our mock
-    doReturn(Optional.empty()).when(service).findById("9999");
+    doThrow(NoSuchElementException.class).when(service).findById("9999");
 
     // Execute the GET request
     mockMvc
@@ -161,7 +161,7 @@ public class InventoryControllerTest {
     Category category = Category.VIDEOGAMES;
 
     Product mockProduct = new Product(id, productName, quantity, category);
-    doReturn(Optional.of(mockProduct)).when(service).findById(any());
+    doReturn(mockProduct).when(service).findById(any());
 
     // Execute the DELETE request
     mockMvc
@@ -177,7 +177,7 @@ public class InventoryControllerTest {
   @DisplayName("DELETE /product/{id} - Not found")
   void testDeleteProductNotFound() throws Exception {
     // Arrange: Setup our mock
-    doReturn(Optional.empty()).when(service).findById(any());
+    doThrow(NoSuchElementException.class).when(service).findById(any());
 
     // Execute the DELETE request
     mockMvc

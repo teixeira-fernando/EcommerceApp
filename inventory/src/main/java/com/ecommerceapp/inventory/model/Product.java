@@ -1,5 +1,6 @@
 package com.ecommerceapp.inventory.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,11 +18,27 @@ public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Getter
+  @ApiModelProperty(required = false, notes = "Auto generated id")
   private String id;
 
-  @Getter @Setter @NotNull private String name;
-  @Getter @Setter @Positive @NotNull private Integer quantity;
-  @Getter @Setter @NotNull private Category category;
+  @ApiModelProperty(notes = "Product name", required = true)
+  @Getter
+  @Setter
+  @NotNull
+  private String name;
+
+  @ApiModelProperty(notes = "Product quantity", required = true)
+  @Getter
+  @Setter
+  @Positive
+  @NotNull
+  private Integer quantity;
+
+  @ApiModelProperty(notes = "Product category according to Enum Category", required = true)
+  @Getter
+  @Setter
+  @NotNull
+  private Category category;
 
   public Product() {}
 
