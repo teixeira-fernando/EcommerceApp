@@ -18,7 +18,7 @@ public class InventoryService {
 
   public Product findById(String id) {
     Optional<Product> product = this.repository.findById(id);
-    if (!product.isPresent()) {
+    if (product.isEmpty()) {
       throw new NoSuchElementException();
     }
     return product.get();

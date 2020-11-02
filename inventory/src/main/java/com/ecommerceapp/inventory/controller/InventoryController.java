@@ -36,7 +36,7 @@ public class InventoryController {
             code = 200,
             message = "Expected product to a valid request",
             response = Product.class),
-        @ApiResponse(code = 400, message = "Product not found", response = Error.class),
+        @ApiResponse(code = 404, message = "Product not found", response = Error.class),
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @GetMapping("/product/{id}")

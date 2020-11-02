@@ -14,10 +14,7 @@ import com.ecommerceapp.shop.service.InventoryClient;
 import com.ecommerceapp.shop.service.OrderService;
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -53,11 +50,11 @@ public class OrderServiceTest {
     doReturn(Optional.of(order)).when(repository).findById(order.getId());
 
     // Act: Call the service method findById
-    Optional<Order> returnedOrder = service.findById(order.getId());
+    Order returnedOrder = service.findById(order.getId());
 
     // Assert: verify the returned product
-    Assertions.assertTrue(returnedOrder.isPresent(), "Order was not found");
-    Assertions.assertEquals(returnedOrder.get(), order, "Order should be the same");
+    Assertions.assertNotNull(returnedOrder, "Order was not found");
+    Assertions.assertEquals(returnedOrder, order, "Order should be the same");
   }
 
   @Test
@@ -66,11 +63,12 @@ public class OrderServiceTest {
     // Arrange: Setup our mock
     doReturn(Optional.empty()).when(repository).findById("1");
 
-    // Act: Call the service method findById
-    Optional<Order> returnedOrder = service.findById("1");
-
-    // Assert the response
-    Assertions.assertFalse(returnedOrder.isPresent(), "Order was found, when it shouldn't be");
+    // Verify if findById throws this exception
+    Assertions.assertThrows(
+        NoSuchElementException.class,
+        () -> {
+          service.findById("1");
+        });
   }
 
   @Test
@@ -168,13 +166,13 @@ public class OrderServiceTest {
 
     when(inventoryClient.checkIfProductExists(any())).thenReturn(true);
     when(inventoryClient.checkIfProductHaveEnoughStock(any(), anyInt())).thenReturn(true);
-    doThrow(StockUpdateException.class).when(inventoryClient).updateStock(any(),any());
+    doThrow(StockUpdateException.class).when(inventoryClient).updateStock(any(), any());
 
     Assertions.assertThrows(
-            StockUpdateException.class,
-            () -> {
-              service.createOrder(order);
-            });
+        StockUpdateException.class,
+        () -> {
+          service.createOrder(order);
+        });
   }
 
   @Test

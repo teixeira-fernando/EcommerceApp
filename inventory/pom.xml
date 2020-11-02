@@ -11,15 +11,16 @@
                 <version>2.0.2</version>
                 <executions>
                     <execution>
-                        <id>check</id>
+                        <id>apply</id>
+                        <phase>compile</phase>
                         <goals>
-                            <goal>check</goal>
+                            <goal>apply</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>apply</id>
+                        <id>check</id>
                         <goals>
-                            <goal>apply</goal>
+                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>

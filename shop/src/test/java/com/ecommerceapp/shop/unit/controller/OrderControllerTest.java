@@ -4,8 +4,7 @@ import static com.ecommerceapp.shop.utils.UtilitiesApplication.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -21,7 +20,7 @@ import com.ecommerceapp.shop.model.OrderStatus;
 import com.ecommerceapp.shop.service.OrderService;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,7 @@ public class OrderControllerTest {
     Product mockProduct = new Product(id, productName, quantity, category);
     Order mockOrder = new Order();
     mockOrder.getProducts().add(mockProduct);
-    doReturn(Optional.of(mockOrder)).when(service).findById(id);
+    doReturn(mockOrder).when(service).findById(id);
 
     // Execute the GET request
     mockMvc
@@ -99,7 +98,7 @@ public class OrderControllerTest {
   @DisplayName("GET /order/{id} - Not found")
   void testGetOrderByIdNotFound() throws Exception {
     // Arrange: Setup our mock
-    doReturn(Optional.empty()).when(service).findById("9999");
+    doThrow(NoSuchElementException.class).when(service).findById("9999");
 
     // Execute the GET request
     mockMvc
@@ -168,11 +167,11 @@ public class OrderControllerTest {
 
     // Execute the POST request
     mockMvc
-            .perform(
-                    post("/order").contentType(MediaType.APPLICATION_JSON).content(asJsonString(mockOrder)))
+        .perform(
+            post("/order").contentType(MediaType.APPLICATION_JSON).content(asJsonString(mockOrder)))
 
-            // Validate the response code
-            .andExpect(status().isServiceUnavailable());
+        // Validate the response code
+        .andExpect(status().isServiceUnavailable());
   }
 
   @Test
