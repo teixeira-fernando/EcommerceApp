@@ -29,7 +29,6 @@ public class Product {
 
   @ApiModelProperty(notes = "Product quantity", required = true)
   @Getter
-  @Setter
   @Positive
   @NotNull
   private Integer quantity;
@@ -68,5 +67,13 @@ public class Product {
         + ", category="
         + category.toString()
         + '}';
+  }
+
+  public void setQuantity(@Positive int quantity) {
+    if (quantity < 0) {
+      throw new ArithmeticException(
+          "It is not possible that a product contains a stock lower than 0");
+    }
+    this.quantity = quantity;
   }
 }

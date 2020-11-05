@@ -3,6 +3,8 @@ package com.ecommerceapp.inventory.unit.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
+import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
+import com.ecommerceapp.inventory.dto.request.StockOperation;
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
@@ -140,12 +142,104 @@ public class InventoryServiceTest {
   }
 
   @Test
+  @DisplayName("updateStock success Increment")
+  void testUpdateStockSuccess_Increment() {
+    String id = "1";
+    String productName = "Samsung TV Led";
+    Integer quantity = 50;
+    Category category = Category.ELECTRONICS;
+    Integer increasedStockAmount = 30;
+
+    Product product = new Product(id, productName, quantity, category);
+    doReturn(Optional.of(product)).when(repository).findById(id);
+
+    Integer newStock =
+        service.updateStock(
+            product, new ChangeStockDto(increasedStockAmount, StockOperation.INCREMENT));
+
+    Assertions.assertEquals(quantity + increasedStockAmount, newStock);
+  }
+
+  @Test
+  @DisplayName("updateStock success Decrement")
+  void testUpdateStockSuccess_Decrement() {
+    String id = "1";
+    String productName = "Samsung TV Led";
+    Integer quantity = 50;
+    Category category = Category.ELECTRONICS;
+    Integer decreasedStockAmount = 10;
+
+    Product product = new Product(id, productName, quantity, category);
+    doReturn(Optional.of(product)).when(repository).findById(id);
+
+    Integer newStock =
+        service.updateStock(
+            product, new ChangeStockDto(decreasedStockAmount, StockOperation.DECREMENT));
+
+    Assertions.assertEquals(quantity - decreasedStockAmount, newStock);
+  }
+
+  @Test
+  @DisplayName("updateStock failure - trying to update to a negative number")
+  void testUpdateStockNegativeNumber() {
+    String id = "1";
+    String productName = "Samsung TV Led";
+    Integer quantity = 50;
+    Category category = Category.ELECTRONICS;
+    Integer decreasedStockAmount = 100;
+
+    Product product = new Product(id, productName, quantity, category);
+    doReturn(Optional.of(product)).when(repository).findById(id);
+
+    Assertions.assertThrows(
+        ArithmeticException.class,
+        () -> {
+          service.updateStock(
+              product, new ChangeStockDto(decreasedStockAmount, StockOperation.DECREMENT));
+        });
+  }
+
+  @Test
+  @DisplayName(
+      "updateStock failure - trying to update the stock of a product that doensn't exist in the inventory")
+  void testUpdateStockProductNotInInventory() {
+    String id = "1";
+    String productName = "Samsung TV Led";
+    Integer quantity = 50;
+    Category category = Category.ELECTRONICS;
+    Integer decreasedStockAmount = 100;
+
+    Product product = new Product(id, productName, quantity, category);
+    doReturn(Optional.empty()).when(repository).findById(id);
+
+    Assertions.assertThrows(
+        NoSuchElementException.class,
+        () -> {
+          service.updateStock(
+              product, new ChangeStockDto(decreasedStockAmount, StockOperation.DECREMENT));
+        });
+  }
+
+  @Test
   @DisplayName("deleteProduct success")
   void testDeleteProductSuccess() {
+    // Arrange
+    doReturn(Optional.of(new Product())).when(repository).findById("1");
+
     // Act
     service.deleteProduct("1");
 
     // Assert
     Mockito.verify(repository, Mockito.times(1)).deleteById("1");
+  }
+
+  @Test
+  @DisplayName("deleteProduct error - product not found")
+  void testDeleteProductNotFound() {
+    Assertions.assertThrows(
+        NoSuchElementException.class,
+        () -> {
+          service.deleteProduct("1");
+        });
   }
 }

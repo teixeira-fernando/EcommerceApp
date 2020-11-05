@@ -11,6 +11,8 @@ import au.com.dius.pact.provider.junitsupport.VerificationReports;
 import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
 import au.com.dius.pact.provider.junitsupport.loader.VersionSelector;
 import au.com.dius.pact.provider.spring.junit5.PactVerificationSpringProvider;
+import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
+import com.ecommerceapp.inventory.dto.request.StockOperation;
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
@@ -57,5 +59,20 @@ public class InventoryProviderPact {
   public void getProduct() {
     given(inventoryService.findById("1"))
         .willReturn(new Product("1", "Samsung TV", 50, Category.ELECTRONICS));
+  }
+
+  @State("trying to update the stock of a product by id")
+  public void updateStock() {
+    String id = "1";
+    String name = "Samsung TV";
+    int quantity = 50;
+    Category category = Category.ELECTRONICS;
+    int stockUpdateAmount = 30;
+    Product product = new Product(id, name, quantity, category);
+    given(inventoryService.findById("1")).willReturn(product);
+    given(
+            inventoryService.updateStock(
+                product, new ChangeStockDto(stockUpdateAmount, StockOperation.INCREMENT)))
+        .willReturn(quantity + stockUpdateAmount);
   }
 }

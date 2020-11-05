@@ -44,6 +44,9 @@ After that, you can publish the pact into the pact broker with the following com
 mvn pact:publish (in the shop module)
 ```
 Then you can run the contract tests in the provider side, where it is already configured to get it from the pact broker
+``` 
+mvn -Dtest=**/contract/** test
+``` 
 
 ## Utils 
 
