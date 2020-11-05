@@ -10,13 +10,16 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import javax.persistence.EntityExistsException;
+import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Validated
 @RestController
 public class InventoryController {
 
@@ -86,7 +89,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product")
-  public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+  public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product) {
     logger.info(
         "Creating new product with name: {}, quantity: {}",
         product.getName(),
@@ -116,7 +119,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product/{id}/changeStock")
-  public ResponseEntity<Product> changeStock(
+  public ResponseEntity<?> changeStock(
       @PathVariable String id, @RequestBody ChangeStockDto changeStockDto) {
     try {
       Product product = inventoryService.findById(id);
@@ -138,12 +141,9 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @DeleteMapping("/product/{id}")
-  public ResponseEntity<Product> deleteProduct(@PathVariable String id) {
+  public ResponseEntity<?> deleteProduct(@PathVariable String id) {
     logger.info("Deleting product with id: {}", id);
     try {
-      // check if product exists
-      Product product = inventoryService.findById(id);
-
       inventoryService.deleteProduct(id);
       return ResponseEntity.ok().build();
     } catch (NoSuchElementException e) {

@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.ecommerceapp.inventory.controller.InventoryController;
+import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
+import com.ecommerceapp.inventory.dto.request.StockOperation;
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
@@ -152,6 +154,55 @@ public class InventoryControllerTest {
   }
 
   @Test
+  @DisplayName("POST /product/{id}/changeStock - success")
+  void testUpdateStockSuccess() throws Exception {
+    // Arrange: Setup our mock
+    String id = "1";
+    String productName = "Dark Souls 3";
+    Integer quantity = 20;
+    Category category = Category.VIDEOGAMES;
+
+    Product mockProduct = new Product(id, productName, quantity, category);
+    ChangeStockDto updateOperation = new ChangeStockDto(50, StockOperation.INCREMENT);
+    when(service.updateStock(mockProduct, updateOperation)).thenReturn(70);
+
+    // Execute the POST request
+    mockMvc
+        .perform(
+            post("/product/{id}/changeStock", id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(updateOperation)))
+
+        // Validate the response code and content type
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  @DisplayName("POST /product/{id}/changeStock - failure product not in inventory")
+  void testUpdateStockFailureProductNotInInventory() throws Exception {
+    // Arrange: Setup our mock
+    String id = "1";
+    String productName = "Dark Souls 3";
+    Integer quantity = 20;
+    Category category = Category.VIDEOGAMES;
+
+    Product mockProduct = new Product(id, productName, quantity, category);
+    ChangeStockDto updateOperation = new ChangeStockDto(50, StockOperation.INCREMENT);
+    when(service.findById(id)).thenReturn(mockProduct);
+    doThrow(NoSuchElementException.class).when(service).updateStock(any(), any());
+
+    // Execute the POST request
+    mockMvc
+        .perform(
+            post("/product/{id}/changeStock", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(updateOperation)))
+
+        // Validate the response code and content type
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
   @DisplayName("DELETE /product/{id} - Success")
   void testDeleteProductSuccess() throws Exception {
     // Arrange: Setup our mock
@@ -177,7 +228,7 @@ public class InventoryControllerTest {
   @DisplayName("DELETE /product/{id} - Not found")
   void testDeleteProductNotFound() throws Exception {
     // Arrange: Setup our mock
-    doThrow(NoSuchElementException.class).when(service).findById(any());
+    doThrow(NoSuchElementException.class).when(service).deleteProduct(any());
 
     // Execute the DELETE request
     mockMvc

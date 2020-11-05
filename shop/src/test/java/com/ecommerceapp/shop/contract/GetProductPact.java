@@ -23,11 +23,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(PactConsumerTestExt.class)
 @PactTestFor(providerName = "ProductModule")
-public class InventoryConsumerPact {
+public class GetProductPact {
 
   @BeforeAll
   public static void config() {
-    System.setProperty("pact.writer.overwrite", "true");
+    /*System.setProperty("pact.writer.overwrite", "true");*/
   }
 
   @BeforeEach
@@ -39,14 +39,14 @@ public class InventoryConsumerPact {
   public RequestResponsePact getProduct(PactDslWithProvider builder) {
     return builder
         .given("trying to get a product by id")
-        .uponReceiving("ExampleJavaConsumerPactTest test interaction")
+        .uponReceiving("Get a product from inventory module")
         .path("/product/1")
         .method("GET")
         .willRespondWith()
         .status(200)
         .body(
             new PactDslJsonBody()
-                .stringType("id")
+                .stringValue("id", "1")
                 .stringType("name")
                 .integerType("quantity")
                 .stringType("category", Category.ELECTRONICS.toString()))
