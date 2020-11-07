@@ -40,4 +40,4 @@ jobs:
           name: test-results-report
           path: target/site/surefire-report.html
 
-      
+

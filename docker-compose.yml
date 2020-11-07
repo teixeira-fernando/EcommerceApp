@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: 'ecommerceapp-mongodb'
+    ports:
+      - "27017:27017"
+
+  inventory:
+    image: 'teixeirafernando/ecommerceapp-inventory:latest'
+    ports:
+      - "7080:7080"
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    environment:
+      - spring.data.mongodb.host=mongodb
+
+  shop:
+    image: 'teixeirafernando/ecommerceapp-shop:latest'
+    ports:
+      - "7081:7081"
+    depends_on:
+      - mongodb
+      - inventory
+    links:
+      - mongodb
+    environment:
+      - spring.data.mongodb.host=mongodb
