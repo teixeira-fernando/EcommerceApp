@@ -91,7 +91,6 @@ jobs:
           file: inventory/Dockerfile
           platforms: linux/amd64,linux/arm64,linux/386
           push: true
-          load: true
           tags: ecommerceapp/inventory:latest
       - name: Build and push - shop
         uses: docker/build-push-action@v2
@@ -100,7 +99,6 @@ jobs:
           file: ./shop/Dockerfile
           platforms: linux/amd64,linux/arm64,linux/386
           push: true
-          load: true
           tags: ecommerceapp/shop:latest
 
 
