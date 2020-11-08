@@ -87,11 +87,11 @@ jobs:
       - name: Build and push - inventory
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./inventory
           file: inventory/Dockerfile
           platforms: linux/amd64,linux/arm64,linux/386
           push: true
-          tags: ecommerceapp/inventory:latest
+          tags: teixeirafernando/ecommerceapp/inventory:latest
       - name: Build and push - shop
         uses: docker/build-push-action@v2
         with:
