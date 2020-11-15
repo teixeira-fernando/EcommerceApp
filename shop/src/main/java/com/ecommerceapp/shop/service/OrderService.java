@@ -8,7 +8,10 @@ import com.ecommerceapp.shop.repository.OrderRepository;
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import com.ecommerceapp.shop.service.kafka.KafkaProducerConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +26,13 @@ public class OrderService {
 
   @Autowired private InventoryClient inventoryClient;
 
+  @Autowired private KafkaProducerConfig kafkaProducerConfig;
+
   public Order findById(String id) {
     Optional<Order> order = this.repository.findById(id);
-    if (order.isEmpty()) {}
+    if (order.isEmpty()) {
+      throw new NoSuchElementException();
+    }
 
     return order.get();
   }
@@ -61,6 +68,9 @@ public class OrderService {
                 logger.error(e.getStackTrace());
               }
             });
+
+    kafkaProducerConfig.sendMessageAssync("testando kafka");
+
     return this.repository.save(order);
   }
 
