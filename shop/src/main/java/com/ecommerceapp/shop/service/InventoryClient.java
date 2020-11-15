@@ -54,6 +54,7 @@ public class InventoryClient {
     return HttpRequest.newBuilder()
         .uri(new URI(INVENTORYHOST + "/product/" + id + "/changeStock"))
         .timeout(Duration.of(TIMEOUT, SECONDS))
+            .setHeader("Content-Type", "application/json")
         .POST(
             HttpRequest.BodyPublishers.ofString(UtilitiesApplication.asJsonString(stockOperation)))
         .build();
