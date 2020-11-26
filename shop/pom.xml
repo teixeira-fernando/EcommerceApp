@@ -30,9 +30,9 @@
                             <include>src/main/java/**/*.java</include>
                             <include>src/test/java/**/*.java</include>
                         </includes>
-                        <importOrder />
-                        <removeUnusedImports />
-                        <googleJavaFormat />
+                        <importOrder/>
+                        <removeUnusedImports/>
+                        <googleJavaFormat/>
                     </java>
                 </configuration>
             </plugin>
@@ -53,13 +53,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.2</version>
                 <executions>
                     <execution>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>test-jar</goal>
+                            <goal>jar</goal>
                         </goals>
-                        <phase>test-compile</phase>
+                        <configuration>
+                            <classifier>qa</classifier>
+                            <excludes>
+                                <exclude>**/Application*</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -83,7 +88,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>com.ecommerceapp.shop.model.*</exclude>
+                        <exclude>com.ecommerceapp.shop.com.ecommerceapp.shipment.model.*</exclude>
                         <exclude>com.ecommerceapp.shop.ShopApplication</exclude>
                     </excludes>
                 </configuration>
@@ -101,7 +106,7 @@
                 </dependencies>
                 <configuration>
                     <excludedTestClasses>com.ecommerceapp.shop.integration.*</excludedTestClasses>
-                    <excludedClasses>com.ecommerceapp.shop.model.*</excludedClasses>
+                    <excludedClasses>com.ecommerceapp.shop.com.ecommerceapp.shipment.model.*</excludedClasses>
                     <outputFormats>
                         <param>HTML</param>
                         <param>XML</param>
@@ -232,6 +237,12 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

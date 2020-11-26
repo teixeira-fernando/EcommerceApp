@@ -13,22 +13,31 @@ import java.util.Map;
 @Configuration
 public class KafkaTopicConfig {
 
-    @Value(value = "${kafka.bootstrapAddress}")
-    private String bootstrapAddress;
+  @Value(value = "${kafka.bootstrapAddress}")
+  private String bootstrapAddress;
 
-    @Bean
-    public KafkaAdmin kafkaAdmin() {
-        Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        return new KafkaAdmin(configs);
-    }
+  @Value(value = "${message.topic.name}")
+  private String messageTopicName;
 
-    @Bean
-    public NewTopic topic1() {
-        return new NewTopic("baeldung", 1, (short) 1);
-    }
+  @Value(value = "${order.topic.name}")
+  private String orderTopicName;
 
-    public String getBootstrapAddress() {
-        return bootstrapAddress;
-    }
+  @Bean
+  public KafkaAdmin kafkaAdmin() {
+    Map<String, Object> configs = new HashMap<>();
+    configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+    return new KafkaAdmin(configs);
+  }
+
+  @Bean
+  public NewTopic topicString() {
+    System.out.println("created topic: " + messageTopicName);
+    return new NewTopic(messageTopicName, 1, (short) 1);
+  }
+
+  @Bean
+  public NewTopic topicOrder() {
+    System.out.println("created topic: " + orderTopicName);
+    return new NewTopic(orderTopicName, 1, (short) 1);
+  }
 }

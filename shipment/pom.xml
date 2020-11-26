@@ -6,7 +6,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
         <relativePath/>
-        <version>2.3.3.RELEASE</version> <!-- lookup parent from repository -->
+        <version>2.3.3.RELEASE</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -75,18 +75,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>test-jar</goal>
                         </goals>
-                        <configuration>
-                            <classifier>qa</classifier>
-                            <excludes>
-                                <exclude>**/Application*</exclude>
-                            </excludes>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -113,7 +108,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>com.ecommerceapp.shipment.model.*</exclude>
+                        <exclude>com.ecommerceapp.shipment.com.ecommerceapp.shipment.model.*</exclude>
                         <exclude>com.ecommerceapp.shipment.ShipmentApplication</exclude>
                     </excludes>
                 </configuration>
@@ -134,7 +129,7 @@
                 </dependencies>
                 <configuration>
                     <excludedTestClasses>com.ecommerceapp.shipment.integration.*</excludedTestClasses>
-                    <excludedClasses>com.ecommerceapp.shipment.model.*</excludedClasses>
+                    <excludedClasses>com.ecommerceapp.shipment.com.ecommerceapp.shipment.model.*</excludedClasses>
                     <outputFormats>
                         <param>HTML</param>
                         <param>XML</param>
@@ -157,6 +152,7 @@
             <artifactId>shop</artifactId>
             <groupId>com.ecommerceapp</groupId>
             <version>0.0.1-SNAPSHOT</version>
+            <classifier>qa</classifier>
         </dependency>
         <dependency>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -222,6 +218,17 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

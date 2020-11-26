@@ -1,5 +1,28 @@
 package com.ecommerceapp.shop.integration;
 
+import com.ecommerceapp.inventory.model.Category;
+import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.shop.model.Order;
+import com.ecommerceapp.shop.model.OrderStatus;
+import com.ecommerceapp.shop.unit.repository.MongoDataFile;
+import com.ecommerceapp.shop.unit.repository.MongoSpringExtension;
+import com.ecommerceapp.shop.utils.UtilitiesApplication;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.kafka.test.EmbeddedKafkaBroker;
+import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+
 import static com.ecommerceapp.shop.utils.UtilitiesApplication.asJsonString;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
@@ -10,34 +33,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.ecommerceapp.inventory.model.Category;
-import com.ecommerceapp.inventory.model.Product;
-import com.ecommerceapp.shop.model.Order;
-import com.ecommerceapp.shop.model.OrderStatus;
-import com.ecommerceapp.shop.unit.repository.MongoDataFile;
-import com.ecommerceapp.shop.unit.repository.MongoSpringExtension;
-import com.ecommerceapp.shop.utils.UtilitiesApplication;
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
-
 @ExtendWith({SpringExtension.class, MongoSpringExtension.class})
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
+@EmbeddedKafka(ports = 63178)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class OrderServiceIntegrationTest {
 
   @Autowired private MockMvc mockMvc;
@@ -45,6 +46,8 @@ public class OrderServiceIntegrationTest {
   @Autowired private MongoTemplate mongoTemplate;
 
   private WireMockServer wireMockServer;
+
+  final EmbeddedKafkaBroker embeddedKafkaBroker = new EmbeddedKafkaBroker(1);
 
   /**
    * MongoSpringExtension method that returns the autowired MongoTemplate to use for MongoDB
@@ -54,6 +57,12 @@ public class OrderServiceIntegrationTest {
    */
   public MongoTemplate getMongoTemplate() {
     return mongoTemplate;
+  }
+
+  @BeforeAll
+  public void setup() {
+    embeddedKafkaBroker.setZkPort(63178);
+    embeddedKafkaBroker.kafkaPorts(63178);
   }
 
   @BeforeEach
