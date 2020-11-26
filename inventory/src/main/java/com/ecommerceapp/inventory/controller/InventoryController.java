@@ -5,12 +5,6 @@ import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import javax.persistence.EntityExistsException;
-import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityExistsException;
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Validated
 @RestController

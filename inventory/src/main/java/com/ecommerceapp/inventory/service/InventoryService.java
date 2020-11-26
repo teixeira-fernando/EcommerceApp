@@ -4,13 +4,14 @@ import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
 import com.ecommerceapp.inventory.dto.request.StockOperation;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityExistsException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import javax.persistence.EntityExistsException;
-import javax.validation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class InventoryService {
