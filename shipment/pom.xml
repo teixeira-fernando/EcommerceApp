@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <artifactId>shop</artifactId>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <relativePath/>
+        <version>2.3.3.RELEASE</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <description>Ecommerce Shipment Module</description>
+    <groupId>com.ecommerceapp</groupId>
+    <artifactId>shipment</artifactId>
+    <name>shipment</name>
+    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <java.version>11</java.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+    </properties>
+
+
     <build>
         <plugins>
             <plugin>
@@ -38,9 +58,10 @@
             </plugin>
 
             <plugin>
-                <artifactId>spring-boot-maven-plugin</artifactId>
                 <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -50,24 +71,23 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>test-jar</goal>
                         </goals>
-                        <configuration>
-                            <classifier>qa</classifier>
-                            <excludes>
-                                <exclude>**/Application*</exclude>
-                            </excludes>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+
+            <!-- Jacoco -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -88,11 +108,14 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>com.ecommerceapp.shop.com.ecommerceapp.shipment.model.*</exclude>
-                        <exclude>com.ecommerceapp.shop.ShopApplication</exclude>
+                        <exclude>com.ecommerceapp.shipment.com.ecommerceapp.shipment.model.*</exclude>
+                        <exclude>com.ecommerceapp.shipment.ShipmentApplication</exclude>
                     </excludes>
                 </configuration>
             </plugin>
+
+            <!-- PITest-->
+
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
@@ -105,8 +128,8 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <excludedTestClasses>com.ecommerceapp.shop.integration.*</excludedTestClasses>
-                    <excludedClasses>com.ecommerceapp.shop.com.ecommerceapp.shipment.model.*</excludedClasses>
+                    <excludedTestClasses>com.ecommerceapp.shipment.integration.*</excludedTestClasses>
+                    <excludedClasses>com.ecommerceapp.shipment.com.ecommerceapp.shipment.model.*</excludedClasses>
                     <outputFormats>
                         <param>HTML</param>
                         <param>XML</param>
@@ -120,25 +143,13 @@
                     <timestampedReports>false</timestampedReports>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>au.com.dius</groupId>
-                <artifactId>pact-jvm-provider-maven</artifactId>
-                <version>4.0.6</version>
-                <configuration>
-                    <pactBrokerUrl>http://${pact-broker-host}:9292</pactBrokerUrl>
-                    <pactDirectory>target/pacts</pactDirectory>
-                    <tags>
-                        <tag>master</tag>
-                    </tags>
-                    <trimSnapshot>true</trimSnapshot>
-                </configuration>
-            </plugin>
 
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
-            <artifactId>inventory</artifactId>
+            <artifactId>shop</artifactId>
             <groupId>com.ecommerceapp</groupId>
             <version>0.0.1-SNAPSHOT</version>
             <classifier>qa</classifier>
@@ -164,55 +175,26 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <artifactId>persistence-api</artifactId>
+            <groupId>javax.persistence</groupId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <groupId>de.flapdoodle.embed</groupId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20200518</version>
-        </dependency>
-
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.0.Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>au.com.dius.pact.consumer</groupId>
-            <artifactId>junit5</artifactId>
-            <version>4.1.0</version>
-        </dependency>
-
-        <!--sub-dependency from pact.consumer - junit5!-->
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-netty</artifactId>
-            <version>1.4.1</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!--sub-dependency from pact.consumer - junit5!-->
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-network-tls-certificates</artifactId>
-            <version>1.4.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.tomakehurst</groupId>
-            <artifactId>wiremock-jre8</artifactId>
-            <version>2.27.2</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -233,7 +215,6 @@
             <version>3.0.0</version>
         </dependency>
 
-        <!--kafka-->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -245,26 +226,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--faker-->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.17.2</version>
+        </dependency>
+
     </dependencies>
-    <description>Ecommerce Shop</description>
-    <groupId>com.ecommerceapp</groupId>
-    <modelVersion>4.0.0</modelVersion>
-    <name>shop</name>
-    <packaging>jar</packaging>
-
-    <parent>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <groupId>org.springframework.boot</groupId>
-        <relativePath/>
-        <version>2.3.3.RELEASE</version>
-    </parent>
-
-    <properties>
-        <java.version>11</java.version>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <pact-broker-host>localhost</pact-broker-host>
-    </properties>
-
-    <version>0.0.1-SNAPSHOT</version>
 
 </project>

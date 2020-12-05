@@ -1,4 +1,4 @@
-package com.ecommerceapp.inventory;
+package com.ecommerceapp.shipment;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +22,7 @@ public class SwaggerConfig {
     return new Docket(DocumentationType.SWAGGER_2)
         .apiInfo(apiInfo())
         .select()
-        .apis(RequestHandlerSelectors.basePackage("com.ecommerceapp.inventory"))
+        .apis(RequestHandlerSelectors.basePackage("com.ecommerceapp.shipment"))
         .paths(PathSelectors.any())
         .build()
         .useDefaultResponseMessages(false);
@@ -30,8 +30,8 @@ public class SwaggerConfig {
 
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
-        .title("Inventory/Product Backend APIs")
-        .description("Module used to manage the products in stock")
+        .title("Order Shipment Backend APIs")
+        .description("Module used to manage the shipment of all the orders")
         .build();
   }
 }

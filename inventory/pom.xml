@@ -30,9 +30,9 @@
                             <include>src/main/java/**/*.java</include>
                             <include>src/test/java/**/*.java</include>
                         </includes>
-                        <importOrder />
-                        <removeUnusedImports />
-                        <googleJavaFormat />
+                        <importOrder/>
+                        <removeUnusedImports/>
+                        <googleJavaFormat/>
                     </java>
                 </configuration>
             </plugin>
@@ -93,7 +93,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>com.ecommerceapp.inventory.model.*</exclude>
+                        <exclude>com.ecommerceapp.inventory.com.ecommerceapp.shipment.model.*</exclude>
                         <exclude>com.ecommerceapp.inventory.InventoryApplication</exclude>
                     </excludes>
                 </configuration>
@@ -114,7 +114,7 @@
                 </dependencies>
                 <configuration>
                     <excludedTestClasses>com.ecommerceapp.inventory.integration.*</excludedTestClasses>
-                    <excludedClasses>com.ecommerceapp.inventory.model.*</excludedClasses>
+                    <excludedClasses>com.ecommerceapp.inventory.com.ecommerceapp.shipment.model.*</excludedClasses>
                     <outputFormats>
                         <param>HTML</param>
                         <param>XML</param>
@@ -237,7 +237,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
         <relativePath/>
-        <version>2.3.2.RELEASE</version> <!-- lookup parent from repository -->
+        <version>2.3.2.RELEASE</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
     </parent>
 
     <properties>

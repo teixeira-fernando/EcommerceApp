@@ -12,6 +12,7 @@ import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import com.ecommerceapp.shop.service.InventoryClient;
 import com.ecommerceapp.shop.service.OrderService;
+import com.ecommerceapp.shop.service.kafka.MessageProducer;
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
 import java.util.*;
@@ -36,6 +37,8 @@ public class OrderServiceTest {
   @MockBean private OrderRepository repository;
 
   @MockBean private InventoryClient inventoryClient;
+
+  @MockBean private MessageProducer producer;
 
   @Test
   @DisplayName("findById - success")

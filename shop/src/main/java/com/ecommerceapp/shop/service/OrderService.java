@@ -5,9 +5,11 @@ import com.ecommerceapp.shop.dto.request.StockOperation;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
+import com.ecommerceapp.shop.service.kafka.MessageProducer;
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,9 +25,13 @@ public class OrderService {
 
   @Autowired private InventoryClient inventoryClient;
 
+  @Autowired private MessageProducer messageProducer;
+
   public Order findById(String id) {
     Optional<Order> order = this.repository.findById(id);
-    if (order.isEmpty()) {}
+    if (order.isEmpty()) {
+      throw new NoSuchElementException();
+    }
 
     return order.get();
   }
@@ -61,7 +67,14 @@ public class OrderService {
                 logger.error(e.getStackTrace());
               }
             });
-    return this.repository.save(order);
+
+    Order savedOrder = this.repository.save(order);
+
+    // send this to shipment module
+    messageProducer.sendOrderToShipment(savedOrder);
+    messageProducer.sendString("Sending a message with Kafka");
+
+    return savedOrder;
   }
 
   public Order updateOrder(Order order) {

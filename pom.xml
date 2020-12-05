@@ -8,6 +8,7 @@
     <modules>
         <module>shop</module>
         <module>inventory</module>
+        <module>shipment</module>
     </modules>
     <packaging>pom</packaging>
 

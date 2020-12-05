@@ -19,6 +19,7 @@ public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Getter
+  @Setter
   @ApiModelProperty(required = false, notes = "Auto generated id")
   private String id;
 

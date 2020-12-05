@@ -4,7 +4,7 @@
 name: MutationAndCodeCoverage
 
 on:
-  release:
+  push:
     branches: [ master ]
 
 jobs:
