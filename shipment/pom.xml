@@ -180,10 +180,6 @@
             <version>1.0.2</version>
         </dependency>
         <dependency>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-            <groupId>org.springframework.boot</groupId>
-        </dependency>
-        <dependency>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <groupId>de.flapdoodle.embed</groupId>
             <scope>test</scope>
@@ -192,7 +188,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
 
@@ -229,6 +224,13 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!--faker-->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.17.2</version>
         </dependency>
 
     </dependencies>

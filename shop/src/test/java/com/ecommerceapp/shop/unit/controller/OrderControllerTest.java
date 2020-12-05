@@ -1,5 +1,14 @@
 package com.ecommerceapp.shop.unit.controller;
 
+import static com.ecommerceapp.shop.utils.UtilitiesApplication.asJsonString;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.ecommerceapp.inventory.controller.InventoryController;
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
@@ -9,6 +18,9 @@ import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.model.OrderStatus;
 import com.ecommerceapp.shop.service.OrderService;
+import java.security.InvalidParameterException;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +29,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.security.InvalidParameterException;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-
-import static com.ecommerceapp.shop.utils.UtilitiesApplication.asJsonString;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest({OrderController.class, InventoryController.class})
 public class OrderControllerTest {

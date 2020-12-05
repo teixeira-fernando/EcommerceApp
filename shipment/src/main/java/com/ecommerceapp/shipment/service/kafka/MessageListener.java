@@ -1,12 +1,13 @@
 package com.ecommerceapp.shipment.service.kafka;
 
+import com.ecommerceapp.shipment.service.ShipmentService;
 import com.ecommerceapp.shop.model.Order;
+import java.util.concurrent.CountDownLatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.CountDownLatch;
 
 @Component
 public class MessageListener {
@@ -15,21 +16,16 @@ public class MessageListener {
 
   private CountDownLatch orderLatch = new CountDownLatch(1);
 
-  @KafkaListener(
-      topics = "teste",
-      groupId = "${kafka.groupId}",
-      containerFactory = "stringKafkaListenerContainerFactory")
-  public void messageListener(String message) {
-    logger.info("Received message: " + message);
-    this.orderLatch.countDown();
-  }
+  @Autowired private ShipmentService service;
 
   @KafkaListener(
-      topics = "shipment",
+      topics = "${order.topic.name}",
       groupId = "${kafka.groupId}",
       containerFactory = "orderKafkaListenerContainerFactory")
   public void orderListener2(Order order) {
     logger.info("Received Order: " + order);
+    service.createOrderShipment(order);
+    logger.info("Created a new shipment for the order {}", order);
     this.orderLatch.countDown();
   }
 }

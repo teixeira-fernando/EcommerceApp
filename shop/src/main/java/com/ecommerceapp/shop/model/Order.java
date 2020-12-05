@@ -2,16 +2,15 @@ package com.ecommerceapp.shop.model;
 
 import com.ecommerceapp.inventory.model.Product;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Document(collection = "Order")
 @Entity
@@ -20,6 +19,7 @@ public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Getter
+  @Setter
   @ApiModelProperty(required = false, notes = "Auto generated id")
   private String id;
 

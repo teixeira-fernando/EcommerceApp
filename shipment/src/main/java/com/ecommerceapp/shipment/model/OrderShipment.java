@@ -2,14 +2,14 @@ package com.ecommerceapp.shipment.model;
 
 import com.ecommerceapp.shop.model.Order;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDate;
+import java.util.Date;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.*;
-import java.util.Date;
 
 @Document(collection = "OrderShipment")
 @Entity
@@ -43,7 +43,7 @@ public class OrderShipment {
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
   @ApiModelProperty(required = false, notes = "Auto generated date for the shipment")
-  private Date estimatedDeliveryDate = new Date();
+  private LocalDate estimatedDeliveryDate;
 
   @Getter
   @Setter
@@ -51,16 +51,18 @@ public class OrderShipment {
   private Location deliveryLocation;
 
   public OrderShipment(
-      String id, Order order, Date estimatedDeliveryDate, Location deliveryLocation) {
+      String id, Order order, LocalDate estimatedDeliveryDate, Location deliveryLocation) {
     this.id = id;
     this.order = order;
     this.estimatedDeliveryDate = estimatedDeliveryDate;
     this.deliveryLocation = deliveryLocation;
   }
 
-  public OrderShipment(Order order, Date estimatedDeliveryDate, Location deliveryLocation) {
+  public OrderShipment(Order order, LocalDate estimatedDeliveryDate, Location deliveryLocation) {
     this.order = order;
     this.estimatedDeliveryDate = estimatedDeliveryDate;
     this.deliveryLocation = deliveryLocation;
   }
+
+  public OrderShipment() {}
 }

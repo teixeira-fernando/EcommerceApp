@@ -6,16 +6,15 @@ import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import com.ecommerceapp.shop.service.kafka.MessageProducer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderService {
@@ -69,11 +68,13 @@ public class OrderService {
               }
             });
 
+    Order savedOrder = this.repository.save(order);
+
     // send this to shipment module
-    messageProducer.sendOrderToShipment(order);
+    messageProducer.sendOrderToShipment(savedOrder);
     messageProducer.sendString("Sending a message with Kafka");
 
-    return this.repository.save(order);
+    return savedOrder;
   }
 
   public Order updateOrder(Order order) {

@@ -1,11 +1,21 @@
 package com.ecommerceapp.inventory.unit.controller;
 
+import static com.ecommerceapp.inventory.utils.Utilities.asJsonString;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.ecommerceapp.inventory.controller.InventoryController;
 import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
 import com.ecommerceapp.inventory.dto.request.StockOperation;
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+import javax.persistence.EntityExistsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,17 +25,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import javax.persistence.EntityExistsException;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-
-import static com.ecommerceapp.inventory.utils.Utilities.asJsonString;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(InventoryController.class)
 public class InventoryControllerTest {
