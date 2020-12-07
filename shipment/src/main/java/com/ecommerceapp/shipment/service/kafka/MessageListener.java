@@ -22,7 +22,7 @@ public class MessageListener {
       topics = "${order.topic.name}",
       groupId = "${kafka.groupId}",
       containerFactory = "orderKafkaListenerContainerFactory")
-  public void orderListener2(Order order) {
+  public void orderListener(Order order) {
     logger.info("Received Order: " + order);
     service.createOrderShipment(order);
     logger.info("Created a new shipment for the order {}", order);

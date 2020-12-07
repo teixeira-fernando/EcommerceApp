@@ -1,0 +1,23 @@
+[
+  {
+    "id": "5fc97d7b5fd868721138b0ec",
+    "order": {
+      "id": "5fc97e3a20fcdb5083abc636",
+      "products": [
+        {
+          "id": "5f75ef79124e4a6ef20a3cb9",
+          "name": "Samsung TV Led",
+          "quantity": 1,
+          "category": "ELECTRONICS"
+        }
+      ]
+    },
+    "deliveryLocation": {
+      "street": "4614 McLaughlin Squares",
+      "number": 41137,
+      "postalCode": "59762-3080",
+      "city": "Johnschester",
+      "state": "Michigan"
+    }
+  }
+]

@@ -188,8 +188,10 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
             <scope>provided</scope>
         </dependency>
+
 
         <dependency>
             <groupId>javax.validation</groupId>
@@ -223,6 +225,13 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>4.0.2</version>
             <scope>test</scope>
         </dependency>
 
