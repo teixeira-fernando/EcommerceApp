@@ -10,9 +10,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageListener {
+public class MessageListenerShipment {
 
-  private static final Logger logger = LogManager.getLogger(MessageListener.class);
+  private static final Logger logger = LogManager.getLogger(MessageListenerShipment.class);
 
   private CountDownLatch orderLatch = new CountDownLatch(1);
 

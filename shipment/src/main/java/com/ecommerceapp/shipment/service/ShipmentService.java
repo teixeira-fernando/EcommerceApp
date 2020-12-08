@@ -3,7 +3,7 @@ package com.ecommerceapp.shipment.service;
 import com.ecommerceapp.shipment.model.Location;
 import com.ecommerceapp.shipment.model.OrderShipment;
 import com.ecommerceapp.shipment.repository.OrderShipmentRepository;
-import com.ecommerceapp.shipment.service.kafka.MessageListener;
+import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
 import com.ecommerceapp.shop.model.Order;
 import com.github.javafaker.Faker;
 import java.time.LocalDate;
@@ -22,7 +22,7 @@ public class ShipmentService {
 
   @Autowired private OrderShipmentRepository repository;
 
-  @Autowired private MessageListener messageListener;
+  @Autowired private MessageListenerShipment messageListenerShipment;
 
   private Faker faker;
 

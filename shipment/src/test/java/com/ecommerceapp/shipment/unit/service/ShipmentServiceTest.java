@@ -9,7 +9,7 @@ import com.ecommerceapp.shipment.model.Location;
 import com.ecommerceapp.shipment.model.OrderShipment;
 import com.ecommerceapp.shipment.repository.OrderShipmentRepository;
 import com.ecommerceapp.shipment.service.ShipmentService;
-import com.ecommerceapp.shipment.service.kafka.MessageListener;
+import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
 import com.ecommerceapp.shop.model.Order;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ShipmentServiceTest {
 
   @MockBean private OrderShipmentRepository repository;
 
-  @MockBean private MessageListener messageListener;
+  @MockBean private MessageListenerShipment messageListenerShipment;
 
   @Test
   @DisplayName("findById - success")
