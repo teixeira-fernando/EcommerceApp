@@ -1,10 +1,32 @@
 package com.ecommerceapp.shipment.integration;
 
-/*
+import static org.awaitility.Awaitility.await;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.ecommerceapp.inventory.model.Category;
+import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.shipment.model.OrderShipment;
+import com.ecommerceapp.shipment.unit.repository.MongoDataFile;
+import com.ecommerceapp.shipment.unit.repository.MongoSpringExtension;
+import com.ecommerceapp.shop.model.Order;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.test.EmbeddedKafkaBroker;
+import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith({SpringExtension.class, MongoSpringExtension.class})
 @SpringBootTest
-@ActiveProfiles("test")
 @EmbeddedKafka(ports = 9095)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Import({KafkaProducerTestConfiguration.class})
@@ -28,8 +50,8 @@ public class OrderShipmentServiceIntegrationTest {
 
   @BeforeAll
   public void setup() {
-    // embeddedKafkaBroker = new EmbeddedKafkaBroker(1, true, 1, topicName);
-    embeddedKafkaBroker.setZkPort(63178);
+    embeddedKafkaBroker = new EmbeddedKafkaBroker(1, true, 1, topicName);
+    embeddedKafkaBroker.setZkPort(63179);
     embeddedKafkaBroker.kafkaPorts(9095);
   }
 
@@ -48,19 +70,11 @@ public class OrderShipmentServiceIntegrationTest {
     orderKafkaTemplate.send(topicName, order1);
 
     await()
-        .atMost(10, TimeUnit.SECONDS)
+        .atMost(30, TimeUnit.SECONDS)
         .untilAsserted(
             () ->
-                mockMvc
-                    .perform(get("/shipments"))
-
-                    // Validate the response code and content type
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-
-                    // Make sure that the new OrderPayment was inserted
-                    .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[1].order.id", equalTo("123"))));
+                Assertions.assertEquals(
+                    2, mongoTemplate.findAll(OrderShipment.class, "OrderShipment").size()));
   }
 
   @Test
@@ -86,19 +100,10 @@ public class OrderShipmentServiceIntegrationTest {
     orderKafkaTemplate.send(topicName, order5);
 
     await()
-        .atMost(10, TimeUnit.SECONDS)
+        .atMost(30, TimeUnit.SECONDS)
         .untilAsserted(
             () ->
-                mockMvc
-                    .perform(get("/shipments"))
-
-                    // Validate the response code and content type
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-
-                    // Make sure that the new OrderPayment was inserted
-                    .andExpect(jsonPath("$", hasSize(6)))
-                    .andExpect(jsonPath("$[1].order.id", equalTo("1"))));
+                Assertions.assertEquals(
+                    6, mongoTemplate.findAll(OrderShipment.class, "OrderShipment").size()));
   }
 }
-*/
