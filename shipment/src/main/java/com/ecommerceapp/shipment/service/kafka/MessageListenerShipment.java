@@ -10,9 +10,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageListener {
+public class MessageListenerShipment {
 
-  private static final Logger logger = LogManager.getLogger(MessageListener.class);
+  private static final Logger logger = LogManager.getLogger(MessageListenerShipment.class);
 
   private CountDownLatch orderLatch = new CountDownLatch(1);
 
@@ -22,7 +22,7 @@ public class MessageListener {
       topics = "${order.topic.name}",
       groupId = "${kafka.groupId}",
       containerFactory = "orderKafkaListenerContainerFactory")
-  public void orderListener2(Order order) {
+  public void orderListener(Order order) {
     logger.info("Received Order: " + order);
     service.createOrderShipment(order);
     logger.info("Created a new shipment for the order {}", order);
