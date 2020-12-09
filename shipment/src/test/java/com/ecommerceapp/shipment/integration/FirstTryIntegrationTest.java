@@ -1,12 +1,12 @@
 package com.ecommerceapp.shipment.integration;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.awaitility.Awaitility.await;
 
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.shipment.model.OrderShipment;
+import com.ecommerceapp.shipment.unit.repository.MongoDataFile;
+import com.ecommerceapp.shipment.unit.repository.MongoSpringExtension;
 import com.ecommerceapp.shop.model.Order;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,16 +14,16 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.TimeUnit;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.ContainerProperties;
@@ -35,6 +35,7 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 @EmbeddedKafka(ports = 9095)
@@ -43,6 +44,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @Import({KafkaProducerTestConfiguration.class})
 @AutoConfigureMockMvc
 @ActiveProfiles("default")
+@ExtendWith({SpringExtension.class, MongoSpringExtension.class})
 public class FirstTryIntegrationTest {
 
   private static final String TOPIC = "shipment";
@@ -56,6 +58,12 @@ public class FirstTryIntegrationTest {
   KafkaMessageListenerContainer<String, Order> container;
 
   @Autowired private MockMvc mockMvc;
+
+  @Autowired private MongoTemplate mongoTemplate;
+
+  public MongoTemplate getMongoTemplate() {
+    return mongoTemplate;
+  }
 
   @BeforeAll
   public void setUp() {
@@ -75,6 +83,11 @@ public class FirstTryIntegrationTest {
   }
 
   @Test
+  @DisplayName("Create Order Shipment reading message from Kafka - Success")
+  @MongoDataFile(
+      value = "sample.json",
+      classType = OrderShipment.class,
+      collectionName = "OrderShipment")
   void testCreateOrderShipment() throws Exception {
     Product product1 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
     ArrayList<Product> products = new ArrayList<>();
@@ -83,17 +96,12 @@ public class FirstTryIntegrationTest {
 
     orderKafkaTemplate.send(TOPIC, UUID.randomUUID().toString(), order1);
 
-    Thread.sleep(5000);
-
-    mockMvc
-        .perform(get("/shipments"))
-
-        // Validate the response code and content type
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-
-        // Make sure that the new OrderPayment was inserted
-        .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0].order.id", equalTo("123")));
+    await()
+        .atMost(30, TimeUnit.SECONDS)
+        .untilAsserted(
+            () ->
+                Assertions.assertEquals(
+                    2, mongoTemplate.findAll(OrderShipment.class, "OrderShipment").size()));
   }
+  
 }
