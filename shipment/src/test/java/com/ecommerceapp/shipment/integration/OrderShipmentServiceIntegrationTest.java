@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shipment.model.OrderShipment;
+import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
 import com.ecommerceapp.shipment.unit.repository.MongoDataFile;
 import com.ecommerceapp.shipment.unit.repository.MongoSpringExtension;
 import com.ecommerceapp.shop.model.Order;
@@ -15,44 +16,34 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith({SpringExtension.class, MongoSpringExtension.class})
 @SpringBootTest
-@EmbeddedKafka(ports = 9095)
+@EmbeddedKafka(ports = 9095, partitions = 1)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Import({KafkaProducerTestConfiguration.class})
-@AutoConfigureMockMvc
+@Import({KafkaProducerTestConfiguration.class, MessageListenerShipment.class})
+@ActiveProfiles("default")
 public class OrderShipmentServiceIntegrationTest {
 
-  private EmbeddedKafkaBroker embeddedKafkaBroker = new EmbeddedKafkaBroker(1);
+  @Autowired private EmbeddedKafkaBroker embeddedKafkaBroker;
 
   @Autowired private KafkaTemplate<String, Order> orderKafkaTemplate;
 
   @Value("${order.topic.name}")
   private String topicName;
 
-  @Autowired private MockMvc mockMvc;
-
   @Autowired private MongoTemplate mongoTemplate;
 
   public MongoTemplate getMongoTemplate() {
     return mongoTemplate;
-  }
-
-  @BeforeAll
-  public void setup() {
-    embeddedKafkaBroker = new EmbeddedKafkaBroker(1, true, 1, topicName);
-    embeddedKafkaBroker.setZkPort(63179);
-    embeddedKafkaBroker.kafkaPorts(9095);
   }
 
   @Test
@@ -71,10 +62,7 @@ public class OrderShipmentServiceIntegrationTest {
 
     await()
         .atMost(30, TimeUnit.SECONDS)
-        .untilAsserted(
-            () ->
-                Assertions.assertEquals(
-                    2, mongoTemplate.findAll(OrderShipment.class, "OrderShipment").size()));
+        .until(() -> mongoTemplate.findAll(OrderShipment.class, "OrderShipment").size() == 2);
   }
 
   @Test
@@ -101,9 +89,6 @@ public class OrderShipmentServiceIntegrationTest {
 
     await()
         .atMost(30, TimeUnit.SECONDS)
-        .untilAsserted(
-            () ->
-                Assertions.assertEquals(
-                    6, mongoTemplate.findAll(OrderShipment.class, "OrderShipment").size()));
+        .until(() -> mongoTemplate.findAll(OrderShipment.class, "OrderShipment").size() == 6);
   }
 }
