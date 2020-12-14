@@ -22,33 +22,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-@SpringBootTest(
-    classes = {
-      MessageListenerShipment.class,
-      OrderShipmentRepository.class,
-      ShipmentService.class,
-      MessageListenerShipment.class,
-      KafkaProducerTestConfiguration.class,
-      KafkaConsumerConfig.class
-    })
+@SpringBootTest(classes = {OrderShipmentRepository.class, ShipmentService.class})
 @EmbeddedKafka(ports = 9092, partitions = 1)
 @DirtiesContext
-@Import({
-  KafkaProducerTestConfiguration.class,
-  MessageListenerShipment.class,
-  KafkaConsumerConfig.class
-})
+@Import({MessageListenerShipment.class})
 @ContextConfiguration(classes = {KafkaConsumerConfig.class, KafkaProducerTestConfiguration.class})
 public class KafkaListenerIntegrationTest {
-
-  @Autowired private EmbeddedKafkaBroker embeddedKafkaBroker;
 
   @Autowired private KafkaTemplate<String, Order> orderKafkaTemplate;
 
@@ -56,14 +41,12 @@ public class KafkaListenerIntegrationTest {
 
   @Autowired private ShipmentService shipmentService;
 
-  @Autowired private MessageListenerShipment messageListenerShipment;
-
   @Value("${order.topic.name}")
   private String topicName;
 
   @Test
   @DisplayName("Create Order Shipment reading message from Kafka - Success")
-  void testCreateOrderShipment() throws Exception {
+  void testCreateOrderShipment(){
     Product product1 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
     ArrayList<Product> products = new ArrayList<>();
     products.add(product1);
@@ -78,7 +61,7 @@ public class KafkaListenerIntegrationTest {
 
   @Test
   @DisplayName("Sending multiple orders through Kafka - Success")
-  void testCreateMultipleOrderShipment() throws Exception {
+  void testCreateMultipleOrderShipment(){
     Product product1 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
     ArrayList<Product> products = new ArrayList<>();
     products.add(product1);
