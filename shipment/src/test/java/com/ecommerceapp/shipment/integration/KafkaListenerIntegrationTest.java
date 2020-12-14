@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -37,7 +38,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
       KafkaProducerTestConfiguration.class,
       KafkaConsumerConfig.class
     })
-@EmbeddedKafka(ports = 9095, partitions = 1)
+@EmbeddedKafka(ports = 9092, partitions = 1)
+@DirtiesContext
 @Import({
   KafkaProducerTestConfiguration.class,
   MessageListenerShipment.class,
@@ -55,8 +57,6 @@ public class KafkaListenerIntegrationTest {
   @Autowired private ShipmentService shipmentService;
 
   @Autowired private MessageListenerShipment messageListenerShipment;
-
-  @Autowired private KafkaProducerTestConfiguration kafkaProducerTestConfiguration;
 
   @Value("${order.topic.name}")
   private String topicName;

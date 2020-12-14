@@ -21,13 +21,14 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith({SpringExtension.class})
 @SpringBootTest
-@EmbeddedKafka(ports = 9095, partitions = 1, controlledShutdown = true)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@EmbeddedKafka(ports = 9092, partitions = 1)
+@DirtiesContext
 @Import({
   KafkaProducerTestConfiguration.class,
   MessageListenerShipment.class,
