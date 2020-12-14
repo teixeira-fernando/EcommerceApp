@@ -19,10 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith({SpringExtension.class})
@@ -34,10 +32,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
   MessageListenerShipment.class,
   KafkaConsumerConfig.class
 })
-@ActiveProfiles("test")
 public class OrderShipmentServiceIntegrationTest {
-
-  @Autowired private EmbeddedKafkaBroker embeddedKafkaBroker;
 
   @Autowired private KafkaTemplate<String, Order> orderKafkaTemplate;
 
@@ -46,10 +41,6 @@ public class OrderShipmentServiceIntegrationTest {
 
   @Autowired private MongoTemplate mongoTemplate;
 
-  public MongoTemplate getMongoTemplate() {
-    return mongoTemplate;
-  }
-
   @AfterEach
   void cleanUp() {
     mongoTemplate.getDb().drop();
@@ -57,7 +48,7 @@ public class OrderShipmentServiceIntegrationTest {
 
   @Test
   @DisplayName("Create Order Shipment reading message from Kafka - Success")
-  void testCreateOrderShipment() throws Exception {
+  void testCreateOrderShipment(){
     Product product1 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
     ArrayList<Product> products = new ArrayList<>();
     products.add(product1);
@@ -72,7 +63,7 @@ public class OrderShipmentServiceIntegrationTest {
 
   @Test
   @DisplayName("Sending multiple orders through Kafka - Success")
-  void testCreateMultipleOrderShipment() throws Exception {
+  void testCreateMultipleOrderShipment(){
     Product product1 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
     ArrayList<Product> products = new ArrayList<>();
     products.add(product1);
