@@ -59,8 +59,23 @@ public class CreateShipmentConsumerPact {
 
     @Pact(provider = "OrderModule", consumer = "ShipmentModule")
     public MessagePact createPactJsonMessage(MessagePactBuilder builder) {
+        String id = "1";
+        String productName = "Samsung TV Led";
+        Integer quantity = 50;
+        Category category = Category.ELECTRONICS;
+
+        Order order = new Order("1", new ArrayList<>());
+        order.getProducts().add(new Product(id, productName, quantity, category));
+
         PactDslJsonBody body = new PactDslJsonBody();
         body.stringType("id", "1");
+        body.eachLike("products")
+                .stringType("id", "1")
+                .stringType("name", "Samsung TV")
+                .integerType("quantity", 50)
+                .stringType("category", Category.ELECTRONICS.toString())
+        .closeArray();
+        body.minMaxArrayLike("products", 0, 1);
 
         Map<String, String> metadata = new HashMap<String, String>();
         metadata.put("Content-Type", "application/json");
@@ -81,7 +96,8 @@ public class CreateShipmentConsumerPact {
             Order order = mapper.readValue(messages.get(0).getContents().valueAsString(), Order.class);
 
             Assertions.assertEquals(order.getId(), "1");
-            Assertions.assertEquals(order.getProducts().size(), 0);
+            Assertions.assertNotNull(order.getProducts());
+            Assertions.assertEquals(order.getProducts().size(), 1);
 
         }
         catch (JsonProcessingException e){

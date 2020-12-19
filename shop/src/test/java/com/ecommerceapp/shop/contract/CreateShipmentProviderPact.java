@@ -9,6 +9,8 @@ import au.com.dius.pact.provider.junit.loader.PactBroker;
 import au.com.dius.pact.provider.junit5.*;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
+import com.ecommerceapp.inventory.model.Category;
+import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.model.Order;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -52,7 +54,15 @@ public class CreateShipmentProviderPact {
   public String verifyMessageForOrderJson() {
 
     try {
-      String body = mapper.writeValueAsString(new Order("1", new ArrayList<>()));
+      String id = "1";
+      String productName = "Samsung TV Led";
+      Integer quantity = 50;
+      Category category = Category.ELECTRONICS;
+
+      Order order = new Order("1", new ArrayList<>());
+      order.getProducts().add(new Product(id, productName, quantity, category));
+
+      String body = mapper.writeValueAsString(order);
 
       return body;
     } catch (JsonProcessingException e) {
