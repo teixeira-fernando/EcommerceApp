@@ -1,9 +1,5 @@
 package com.ecommerceapp.shop.unit.service;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
-
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
@@ -13,9 +9,6 @@ import com.ecommerceapp.shop.repository.OrderRepository;
 import com.ecommerceapp.shop.service.InventoryClient;
 import com.ecommerceapp.shop.service.OrderService;
 import com.ecommerceapp.shop.service.kafka.MessageProducer;
-import java.net.URISyntaxException;
-import java.security.InvalidParameterException;
-import java.util.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +19,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.net.URISyntaxException;
+import java.security.InvalidParameterException;
+import java.util.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = {OrderService.class, InventoryClient.class})
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
