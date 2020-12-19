@@ -23,7 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(PactConsumerTestExt.class)
 @PactTestFor(providerName = "ProductModule")
-public class GetProductPact {
+public class GetProductConsumerPact {
 
   @BeforeAll
   public static void config() {
