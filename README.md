@@ -5,6 +5,7 @@
 ## Microservices
 * Shop
 * Inventory
+* Shipment
 
 ## Instructions
 
@@ -38,7 +39,7 @@ To run the pact-broker using Docker, execute:
 docker-compose up -d
 ```
 
-Then you can go to the shop module and execute the contract tests. The pact files will be written in the target/pact folder.
+Then you can go to the producer module and execute the contract tests, to generate the contracts. The pact files will be written in the target/pact folder.
 After that, you can publish the pact into the pact broker with the following command:
 ``` 
 mvn pact:publish (in the shop module)

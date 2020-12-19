@@ -26,11 +26,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(PactConsumerTestExt.class)
 @PactTestFor(providerName = "ProductModule")
-public class UpdateStockPact {
+public class UpdateStockConsumerPact {
 
   private HttpClient client;
 
-  public UpdateStockPact() {
+  public UpdateStockConsumerPact() {
     client =
         HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(10))

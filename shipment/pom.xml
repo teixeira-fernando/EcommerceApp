@@ -20,6 +20,7 @@
     <properties>
         <java.version>11</java.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <pact-broker-host>localhost</pact-broker-host>
     </properties>
 
 
@@ -144,6 +145,20 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>au.com.dius</groupId>
+                <artifactId>pact-jvm-provider-maven</artifactId>
+                <version>4.0.6</version>
+                <configuration>
+                    <pactBrokerUrl>http://${pact-broker-host}:9292</pactBrokerUrl>
+                    <pactDirectory>target/pacts</pactDirectory>
+                    <tags>
+                        <tag>master</tag>
+                    </tags>
+                    <trimSnapshot>true</trimSnapshot>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -240,6 +255,12 @@
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>0.17.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>au.com.dius.pact.consumer</groupId>
+            <artifactId>junit5</artifactId>
+            <version>4.1.0</version>
         </dependency>
 
     </dependencies>
