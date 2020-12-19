@@ -1,17 +1,14 @@
 package com.ecommerceapp.shipment.integration;
 
-import static org.awaitility.Awaitility.await;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shipment.model.OrderShipment;
 import com.ecommerceapp.shipment.service.kafka.KafkaConsumerConfig;
 import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
 import com.ecommerceapp.shop.model.Order;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +19,11 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
 
 @ExtendWith({SpringExtension.class})
 @SpringBootTest
@@ -48,7 +50,7 @@ public class OrderShipmentServiceIntegrationTest {
 
   @Test
   @DisplayName("Create Order Shipment reading message from Kafka - Success")
-  void testCreateOrderShipment(){
+  void testCreateOrderShipment() {
     Product product1 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
     ArrayList<Product> products = new ArrayList<>();
     products.add(product1);
@@ -63,7 +65,7 @@ public class OrderShipmentServiceIntegrationTest {
 
   @Test
   @DisplayName("Sending multiple orders through Kafka - Success")
-  void testCreateMultipleOrderShipment(){
+  void testCreateMultipleOrderShipment() {
     Product product1 = new Product("Samsung TV Led", 50, Category.ELECTRONICS);
     ArrayList<Product> products = new ArrayList<>();
     products.add(product1);
