@@ -6,6 +6,9 @@ import com.ecommerceapp.shipment.model.Location;
 import com.ecommerceapp.shipment.model.OrderShipment;
 import com.ecommerceapp.shipment.repository.OrderShipmentRepository;
 import com.ecommerceapp.shop.model.Order;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,10 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @DataMongoTest
 @ExtendWith(MongoSpringExtension.class)

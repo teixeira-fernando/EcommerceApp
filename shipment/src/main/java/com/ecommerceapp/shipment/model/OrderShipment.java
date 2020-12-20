@@ -2,15 +2,14 @@ package com.ecommerceapp.shipment.model;
 
 import com.ecommerceapp.shop.model.Order;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDate;
+import java.util.Date;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Document(collection = "OrderShipment")
 @Entity
