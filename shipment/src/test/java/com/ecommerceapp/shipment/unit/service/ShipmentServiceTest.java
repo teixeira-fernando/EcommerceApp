@@ -20,10 +20,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = {ShipmentService.class})
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
@@ -62,6 +64,19 @@ public class ShipmentServiceTest {
     Assertions.assertNotNull(returnedOrderShipment, "OrderShipment was not found");
     Assertions.assertEquals(
         returnedOrderShipment, orderShipment, "OrderShipment should be the same");
+  }
+
+  @Test
+  @DisplayName("findById - Not Found")
+  void testFindByIdNotFound() {
+
+    when(repository.findById(any())).thenReturn(Optional.empty());
+
+    Assertions.assertThrows(
+        NoSuchElementException.class,
+        () -> {
+          service.findById("9999");
+        });
   }
 
   @Test
