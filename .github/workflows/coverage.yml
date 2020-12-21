@@ -85,15 +85,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push - inventory
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.2.1
         with:
-          context: ./inventory
-          file: inventory/Dockerfile
+          file: ./inventory/Dockerfile
           platforms: linux/amd64,linux/arm64,linux/386
           push: true
           tags: teixeirafernando/ecommerceapp/inventory:latest
       - name: Build and push - shop
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.2.1
         with:
           context: ./shop
           file: ./shop/Dockerfile
