@@ -89,7 +89,7 @@ jobs:
         with:
           context: .
           file: ./inventory/Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/386
+          builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: teixeirafernando/ecommerceapp/inventory:latest
       - name: Build and push - shop
