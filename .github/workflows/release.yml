@@ -79,7 +79,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build docker image - inventory
-        run: mvn -f shop/ spring-boot:build-image -Dspring-boot.build-image.imageName=ecommerceapp/inventory
+        run: mvn -f inventory/ spring-boot:build-image -Dspring-boot.build-image.imageName=ecommerceapp/inventory
       - name: Tag Docker Image - inventory
         run: docker image tag ecommerceapp/inventory teixeirafernando/ecommerceapp-inventory:latest
       - name: Push Docker Image - inventory
@@ -137,7 +137,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build docker image - shipment
-        run: mvn -f shop/ spring-boot:build-image -Dspring-boot.build-image.imageName=ecommerceapp/shipment
+        run: mvn -f shipment/ spring-boot:build-image -Dspring-boot.build-image.imageName=ecommerceapp/shipment
       - name: Tag Docker Image - shipment
         run: docker image tag ecommerceapp/shipment teixeirafernando/ecommerceapp-shipment:latest
       - name: Push Docker Image - shipment
