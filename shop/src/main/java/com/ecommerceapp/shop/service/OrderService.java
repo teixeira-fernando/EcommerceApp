@@ -64,7 +64,6 @@ public class OrderService {
                     product.getId(),
                     new ChangeStockDto(product.getQuantity(), StockOperation.DECREMENT));
               } catch (URISyntaxException e) {
-                e.printStackTrace();
                 logger.error(e.getStackTrace());
               }
             });

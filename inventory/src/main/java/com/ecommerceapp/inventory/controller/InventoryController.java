@@ -90,7 +90,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product")
-  public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product) {
+  public ResponseEntity<?> createProduct(@RequestBody @Valid Product product) {
     logger.info(
         "Creating new product with name: {}, quantity: {}",
         product.getName(),
@@ -103,8 +103,8 @@ public class InventoryController {
       // Build a created response
       return ResponseEntity.created(new URI("/product/" + newProduct.getId())).body(newProduct);
     } catch (EntityExistsException e) {
-      return new ResponseEntity(
-          "There is a product with the same name already registered", HttpStatus.BAD_REQUEST);
+      return ResponseEntity.badRequest().body(
+          "There is a product with the same name already registered");
     } catch (URISyntaxException e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
