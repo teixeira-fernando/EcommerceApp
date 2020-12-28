@@ -44,7 +44,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @GetMapping("/product/{id}")
-  public ResponseEntity<Product> getProduct(@PathVariable String id) {
+  public ResponseEntity getProduct(@PathVariable String id) {
     try {
       Product product = inventoryService.findById(id);
 
@@ -90,7 +90,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product")
-  public ResponseEntity<?> createProduct(@RequestBody @Valid Product product) {
+  public ResponseEntity createProduct(@RequestBody @Valid Product product) {
     logger.info(
         "Creating new product with name: {}, quantity: {}",
         product.getName(),
@@ -103,8 +103,8 @@ public class InventoryController {
       // Build a created response
       return ResponseEntity.created(new URI("/product/" + newProduct.getId())).body(newProduct);
     } catch (EntityExistsException e) {
-      return ResponseEntity.badRequest().body(
-          "There is a product with the same name already registered");
+      return new ResponseEntity(
+          "There is a product with the same name already registered", HttpStatus.BAD_REQUEST);
     } catch (URISyntaxException e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
@@ -120,7 +120,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product/{id}/changeStock")
-  public ResponseEntity<?> changeStock(
+  public ResponseEntity changeStock(
       @PathVariable String id, @RequestBody ChangeStockDto changeStockDto) {
     try {
       Product product = inventoryService.findById(id);
@@ -142,7 +142,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @DeleteMapping("/product/{id}")
-  public ResponseEntity<?> deleteProduct(@PathVariable String id) {
+  public ResponseEntity deleteProduct(@PathVariable String id) {
     logger.info("Deleting product with id: {}", id);
     try {
       inventoryService.deleteProduct(id);
