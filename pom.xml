@@ -17,6 +17,9 @@
     <properties>
         <java.version>11</java.version>
         <sonar.version>3.7.0.1746</sonar.version>
+        <sonar.projectKey>teixeira-fernando_EcommerceApp</sonar.projectKey>
+        <sonar.organization>teixeira-fernando</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <build>
