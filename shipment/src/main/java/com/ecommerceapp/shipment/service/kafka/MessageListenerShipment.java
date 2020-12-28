@@ -24,9 +24,9 @@ public class MessageListenerShipment {
       groupId = "${kafka.groupId}",
       containerFactory = "orderKafkaListenerContainerFactory")
   public void orderListener(Order order) {
-    logger.info("Received Order: " + order);
+    logger.info("Received Order: {}", order);
     service.createOrderShipment(order);
-    logger.info("Created a new shipment for the order {}", order);
+    logger.info("Created a new shipment for the order: {} ", order);
     this.orderLatch.countDown();
   }
 }

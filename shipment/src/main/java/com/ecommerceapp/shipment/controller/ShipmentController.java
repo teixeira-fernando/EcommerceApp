@@ -4,8 +4,6 @@ import com.ecommerceapp.shipment.model.OrderShipment;
 import com.ecommerceapp.shipment.service.ShipmentService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +20,6 @@ import java.util.NoSuchElementException;
 @Validated
 @RestController
 public class ShipmentController {
-
-  private static final Logger logger = LogManager.getLogger(ShipmentController.class);
 
   @Autowired private ShipmentService shipmentService;
 

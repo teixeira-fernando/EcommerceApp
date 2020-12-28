@@ -25,7 +25,7 @@ import java.util.ArrayList;
 @PactBroker(host = "localhost", port = "9292")
 @VerificationReports
 @IgnoreNoPactsToVerify
-public class CreateShipmentProviderPact {
+class CreateShipmentProviderPact {
 
   static ObjectMapper mapper = new ObjectMapper();
 

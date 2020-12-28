@@ -24,7 +24,7 @@ import static org.hamcrest.core.Is.is;
 
 @ExtendWith(PactConsumerTestExt.class)
 @PactTestFor(providerName = "ProductModule")
-public class GetProductConsumerPact {
+class GetProductConsumerPact {
 
   @BeforeAll
   public static void config() {

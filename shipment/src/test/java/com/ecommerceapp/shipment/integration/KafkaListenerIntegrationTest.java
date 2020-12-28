@@ -34,7 +34,7 @@ import static org.awaitility.Awaitility.await;
 @DirtiesContext
 @Import({MessageListenerShipment.class})
 @ContextConfiguration(classes = {KafkaConsumerConfig.class, KafkaProducerTestConfiguration.class})
-public class KafkaListenerIntegrationTest {
+class KafkaListenerIntegrationTest {
 
   @Autowired private KafkaTemplate<String, Order> orderKafkaTemplate;
 

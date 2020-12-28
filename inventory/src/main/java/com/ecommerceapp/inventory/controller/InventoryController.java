@@ -44,7 +44,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @GetMapping("/product/{id}")
-  public ResponseEntity getProduct(@PathVariable String id) {
+  public ResponseEntity<Product> getProduct(@PathVariable String id) {
     try {
       Product product = inventoryService.findById(id);
 
@@ -90,15 +90,16 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product")
-  public ResponseEntity createProduct(@RequestBody @Valid Product product) {
-    logger.info(
-        "Creating new product with name: {}, quantity: {}",
-        product.getName(),
-        product.getQuantity());
+  public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product) {
 
     try {
       // Create the new product
       Product newProduct = inventoryService.createProduct(product);
+
+      logger.info(
+              "Created new product with name: {}, quantity: {}",
+              newProduct.getName(),
+              newProduct.getQuantity());
 
       // Build a created response
       return ResponseEntity.created(new URI("/product/" + newProduct.getId())).body(newProduct);
@@ -120,7 +121,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product/{id}/changeStock")
-  public ResponseEntity changeStock(
+  public ResponseEntity<String> changeStock(
       @PathVariable String id, @RequestBody ChangeStockDto changeStockDto) {
     try {
       Product product = inventoryService.findById(id);
@@ -128,7 +129,7 @@ public class InventoryController {
       inventoryService.updateStock(product, changeStockDto);
       return ResponseEntity.ok().build();
     } catch (NoSuchElementException e) {
-      return new ResponseEntity("The product referenced was not found", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>("The product referenced was not found", HttpStatus.NOT_FOUND);
     }
   }
 

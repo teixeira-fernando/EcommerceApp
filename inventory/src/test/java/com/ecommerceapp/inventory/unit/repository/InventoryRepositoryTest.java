@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @DataMongoTest
 @ExtendWith(MongoSpringExtension.class)
-public class InventoryRepositoryTest {
+class InventoryRepositoryTest {
 
   @Autowired private MongoTemplate mongoTemplate;
 

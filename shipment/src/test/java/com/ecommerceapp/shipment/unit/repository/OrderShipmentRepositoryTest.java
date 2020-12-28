@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @DataMongoTest
 @ExtendWith(MongoSpringExtension.class)
-public class OrderShipmentRepositoryTest {
+class OrderShipmentRepositoryTest {
 
   @Autowired private MongoTemplate mongoTemplate;
 

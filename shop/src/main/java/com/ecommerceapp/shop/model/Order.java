@@ -39,16 +39,16 @@ public class Order {
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
   @ApiModelProperty(required = false, notes = "Auto generated date for the order")
-  private Date createDate = new Date(); // initialize created date;
+  private Date createDate = new Date();
 
   @LastModifiedDate
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
   @ApiModelProperty(required = false, notes = "Auto generated date for the order")
-  private Date updateDate = new Date(); // initialize updated date;
+  private Date updateDate = new Date();
 
-  public Order(String id, ArrayList<Product> products) {
+  public Order(String id, List<Product> products) {
     this.id = id;
     this.products = products;
     this.status = OrderStatus.CREATED;

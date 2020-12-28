@@ -27,7 +27,7 @@ import static org.mockito.Mockito.doReturn;
 
 @SpringBootTest(classes = {ShipmentService.class})
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-public class ShipmentServiceTest {
+class ShipmentServiceTest {
 
   /** The service that we want to test. */
   @Autowired private ShipmentService service;
@@ -78,9 +78,9 @@ public class ShipmentServiceTest {
     List<OrderShipment> orderShipments = service.findAll();
 
     // assert
-    Assertions.assertEquals(orderShipments.size(), 2);
-    Assertions.assertEquals(orderShipments.get(0), orderShipment);
-    Assertions.assertEquals(orderShipments.get(1), orderShipment2);
+    Assertions.assertEquals( 2, orderShipments.size());
+    Assertions.assertEquals( orderShipment, orderShipments.get(0));
+    Assertions.assertEquals( orderShipment2, orderShipments.get(1));
   }
 
   @Test

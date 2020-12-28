@@ -28,7 +28,7 @@ import static org.mockito.Mockito.doReturn;
 
 @SpringBootTest(classes = {InventoryService.class})
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-public class InventoryServiceTest {
+class InventoryServiceTest {
 
   /** The service that we want to test. */
   @Autowired private InventoryService service;

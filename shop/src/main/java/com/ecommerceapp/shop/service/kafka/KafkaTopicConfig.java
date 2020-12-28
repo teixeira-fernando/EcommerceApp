@@ -2,6 +2,8 @@ package com.ecommerceapp.shop.service.kafka;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,8 @@ import java.util.Map;
 
 @Configuration
 public class KafkaTopicConfig {
+
+  private static final Logger logger = LogManager.getLogger(KafkaTopicConfig.class);
 
   @Value(value = "${kafka.bootstrapAddress}")
   private String bootstrapAddress;
@@ -31,13 +35,13 @@ public class KafkaTopicConfig {
 
   @Bean
   public NewTopic topicString() {
-    System.out.println("created topic: " + messageTopicName);
+    logger.info("created topic: {}", messageTopicName);
     return new NewTopic(messageTopicName, 1, (short) 1);
   }
 
   @Bean
   public NewTopic topicOrder() {
-    System.out.println("created topic: " + orderTopicName);
+    logger.info("created topic: {}", orderTopicName);
     return new NewTopic(orderTopicName, 1, (short) 1);
   }
 }

@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-public class InventoryServiceIntegrationTest {
+class InventoryServiceIntegrationTest {
 
   @Autowired private MockMvc mockMvc;
 

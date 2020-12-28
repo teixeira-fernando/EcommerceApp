@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest({OrderController.class, InventoryController.class})
-public class OrderControllerTest {
+class OrderControllerTest {
 
   @MockBean private OrderService service;
 

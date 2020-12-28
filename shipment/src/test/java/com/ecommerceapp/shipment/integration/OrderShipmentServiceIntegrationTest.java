@@ -34,7 +34,7 @@ import static org.awaitility.Awaitility.await;
   MessageListenerShipment.class,
   KafkaConsumerConfig.class
 })
-public class OrderShipmentServiceIntegrationTest {
+class OrderShipmentServiceIntegrationTest {
 
   @Autowired private KafkaTemplate<String, Order> orderKafkaTemplate;
 

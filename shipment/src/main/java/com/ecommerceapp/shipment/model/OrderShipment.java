@@ -32,14 +32,14 @@ public class OrderShipment {
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
   @ApiModelProperty(required = false, notes = "Auto generated date for the shipment")
-  private Date createDate = new Date(); // initialize created date;
+  private Date createDate = new Date();
 
   @LastModifiedDate
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
   @ApiModelProperty(required = false, notes = "Auto generated date for the shipment")
-  private Date updateDate = new Date(); // initialize updated date;
+  private Date updateDate = new Date();
 
   @Temporal(TemporalType.TIMESTAMP)
   @Getter

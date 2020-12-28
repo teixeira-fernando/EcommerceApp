@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -29,8 +28,8 @@ public class InventoryClient {
 
   private HttpClient client;
 
-  private String INVENTORYHOST;
-  private long TIMEOUT = 10;
+  private String inventoryHost;
+  private long timeout = 10;
 
   public InventoryClient() {
     client =
@@ -39,7 +38,7 @@ public class InventoryClient {
             .version(HttpClient.Version.HTTP_2)
             .build();
     // get the property value
-    INVENTORYHOST = UtilitiesApplication.readPropertyValue("inventory.host");
+    inventoryHost = UtilitiesApplication.readPropertyValue("inventory.host");
   }
 
   private HttpClient getClient() {
@@ -48,15 +47,15 @@ public class InventoryClient {
 
   private HttpRequest searchForProductRequest(String id) throws URISyntaxException {
 
-    return HttpRequest.newBuilder().uri(new URI(INVENTORYHOST + "/product/" + id)).GET().build();
+    return HttpRequest.newBuilder().uri(new URI(inventoryHost + "/product/" + id)).GET().build();
   }
 
   private HttpRequest changeStockRequest(String id, ChangeStockDto stockOperation)
       throws URISyntaxException {
 
     return HttpRequest.newBuilder()
-        .uri(new URI(INVENTORYHOST + "/product/" + id + "/changeStock"))
-        .timeout(Duration.of(TIMEOUT, SECONDS))
+        .uri(new URI(inventoryHost + "/product/" + id + "/changeStock"))
+        .timeout(Duration.of(timeout, SECONDS))
         .setHeader("Content-Type", "application/json")
         .POST(
             HttpRequest.BodyPublishers.ofString(UtilitiesApplication.asJsonString(stockOperation)))
@@ -66,8 +65,8 @@ public class InventoryClient {
   private HttpRequest getAllProductsRequest() throws URISyntaxException {
 
     return HttpRequest.newBuilder()
-        .uri(new URI(INVENTORYHOST + "/products"))
-        .timeout(Duration.of(TIMEOUT, SECONDS))
+        .uri(new URI(inventoryHost + "/products"))
+        .timeout(Duration.of(timeout, SECONDS))
         .GET()
         .build();
   }
@@ -100,13 +99,12 @@ public class InventoryClient {
     HttpResponse<String> response = this.executeRequest(this.searchForProductRequest(id));
     JSONObject jsonObject = new JSONObject(response.body());
     int currentStock = (int) jsonObject.get("quantity");
-    logger.debug("Value of quantity: " + currentStock);
-    logger.debug("My response body: " + response.body());
+    logger.debug("Value of quantity: %d", currentStock);
     if (desiredQuantity > currentStock) {
       return false;
-    } else {
-      return true;
     }
+    return true;
+
   }
 
   public void updateStock(String id, ChangeStockDto stockOperation) throws URISyntaxException {
@@ -119,7 +117,6 @@ public class InventoryClient {
 
   public JSONArray getAllProducts() throws URISyntaxException {
     HttpResponse<String> response = this.executeRequest(this.getAllProductsRequest());
-    JSONArray jsonArray = new JSONArray(response.body());
-    return jsonArray;
+    return new JSONArray(response.body());
   }
 }

@@ -48,6 +48,7 @@ public class ShipmentService {
     String state = faker.address().state();
     Location location = new Location(street, number, zipCode, cityName, state);
     OrderShipment orderShipment = new OrderShipment(order, LocalDate.now().plusDays(3), location);
+    logger.info("Creating a new shipment with id: {}", orderShipment.getId());
     return repository.save(orderShipment);
   }
 

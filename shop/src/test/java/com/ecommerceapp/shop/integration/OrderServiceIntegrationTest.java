@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @EmbeddedKafka(ports = 63178)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class OrderServiceIntegrationTest {
+class OrderServiceIntegrationTest {
 
   final EmbeddedKafkaBroker embeddedKafkaBroker = new EmbeddedKafkaBroker(1);
   @Autowired private MockMvc mockMvc;

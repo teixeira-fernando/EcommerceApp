@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = {OrderService.class, InventoryClient.class})
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-public class OrderServiceTest {
+class OrderServiceTest {
 
   /** The service that we want to test. */
   @Autowired private OrderService service;

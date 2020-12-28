@@ -27,7 +27,7 @@ import static org.hamcrest.core.Is.is;
 
 @ExtendWith(PactConsumerTestExt.class)
 @PactTestFor(providerName = "ProductModule")
-public class UpdateStockConsumerPact {
+class UpdateStockConsumerPact {
 
   private HttpClient client;
 
@@ -73,6 +73,6 @@ public class UpdateStockConsumerPact {
                 ContentType.APPLICATION_JSON)
             .execute()
             .returnResponse();
-    Assertions.assertEquals(httpResponse.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
+    Assertions.assertEquals( HttpStatus.SC_OK, httpResponse.getStatusLine().getStatusCode());
   }
 }

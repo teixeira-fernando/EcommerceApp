@@ -36,7 +36,7 @@ import static org.mockito.BDDMockito.given;
     port = "${pactbroker.port}")
 @VerificationReports
 @IgnoreNoPactsToVerify
-public class InventoryProviderPact {
+class InventoryProviderPact {
 
   @LocalServerPort private int localServerPort;
 
