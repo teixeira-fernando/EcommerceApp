@@ -3,11 +3,13 @@ package com.ecommerceapp.shop.service;
 import com.ecommerceapp.shop.dto.request.ChangeStockDto;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.utils.UtilitiesApplication;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -70,7 +72,7 @@ public class InventoryClient {
         .build();
   }
 
-  private HttpResponse<String> executeRequest(HttpRequest request) {
+  private HttpResponse<String> executeRequest(HttpRequest request){
     HttpResponse<String> response = null;
     try {
       response = this.getClient().send(request, HttpResponse.BodyHandlers.ofString());
@@ -78,7 +80,13 @@ public class InventoryClient {
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {
+      logger.log(Level.WARN, "Interrupted!", e);
       e.printStackTrace();
+      // Restore interrupted state...
+      Thread.currentThread().interrupt();
+    }
+    if(response == null){
+      throw new NullPointerException("Something went wrong when trying to communicate with the other module");
     }
     return response;
   }
