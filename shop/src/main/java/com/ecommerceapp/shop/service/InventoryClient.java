@@ -78,10 +78,9 @@ public class InventoryClient {
       response = this.getClient().send(request, HttpResponse.BodyHandlers.ofString());
 
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.error(e.getStackTrace());
     } catch (InterruptedException e) {
       logger.log(Level.WARN, "Interrupted!", e);
-      e.printStackTrace();
       // Restore interrupted state...
       Thread.currentThread().interrupt();
     }
