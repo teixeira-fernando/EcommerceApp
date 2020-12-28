@@ -31,6 +31,8 @@ jobs:
         run: mvn -f shop/ pitest:mutationCoverage
       - name: Mutation tests for inventory module
         run: mvn -f inventory/ pitest:mutationCoverage
+      - name: Mutation tests for shipment module
+        run: mvn -f shipment/ pitest:mutationCoverage
       - name: Archive code coverage - Inventory
         uses: actions/upload-artifact@v2
         with:
@@ -51,6 +53,16 @@ jobs:
         with:
           name: mutationCoverage-shop
           path: shop/target/pit-reports
+      - name: Archive code coverage - Shipment
+        uses: actions/upload-artifact@v2
+        with:
+          name: codeCoverage-shipment
+          path: shipment/target/site/jacoco
+      - name: Archive mutation coverage - Shipment
+        uses: actions/upload-artifact@v2
+        with:
+          name: mutationCoverage-shipment
+          path: shipment/target/pit-reports
 
   docker-build-and-publish:
 
