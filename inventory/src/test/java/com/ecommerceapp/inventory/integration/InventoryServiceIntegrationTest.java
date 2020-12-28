@@ -1,9 +1,13 @@
 package com.ecommerceapp.inventory.integration;
 
+import static com.ecommerceapp.inventory.utils.Utilities.asJsonString;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
-import com.ecommerceapp.inventory.unit.repository.MongoDataFile;
-import com.ecommerceapp.inventory.unit.repository.MongoSpringExtension;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,12 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.ecommerceapp.inventory.utils.Utilities.asJsonString;
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-@ExtendWith({SpringExtension.class, MongoSpringExtension.class})
+@ExtendWith({SpringExtension.class})
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
@@ -32,20 +31,21 @@ class InventoryServiceIntegrationTest {
 
   @Autowired private MongoTemplate mongoTemplate;
 
-  /**
-   * MongoSpringExtension method that returns the autowired MongoTemplate to use for MongoDB
-   * interactions.
-   *
-   * @return The autowired MongoTemplate instance.
-   */
-  public MongoTemplate getMongoTemplate() {
-    return mongoTemplate;
+  @BeforeEach
+  void cleanup() {
+    mongoTemplate.getDb().drop();
   }
 
   @Test
   @DisplayName("GET /product/{id} - Success")
-  @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
   void testGetProductByIdSuccess() throws Exception {
+
+    String id = "1";
+    String productName = "Dark Souls 3";
+    Integer quantity = 20;
+    Category category = Category.VIDEOGAMES;
+
+    mongoTemplate.insert(new Product(id, productName, quantity, category), "Product");
 
     // Execute the GET request
     mockMvc
@@ -59,15 +59,14 @@ class InventoryServiceIntegrationTest {
         .andExpect(header().string(HttpHeaders.LOCATION, "/product/1"))
 
         // Validate the returned fields
-        .andExpect(jsonPath("$.id", is("1")))
-        .andExpect(jsonPath("$.name", is("Samsung TV Led")))
-        .andExpect(jsonPath("$.quantity", is(50)))
-        .andExpect(jsonPath("$.category", is(Category.ELECTRONICS.toString())));
+        .andExpect(jsonPath("$.id", is(id)))
+        .andExpect(jsonPath("$.name", is(productName)))
+        .andExpect(jsonPath("$.quantity", is(quantity)))
+        .andExpect(jsonPath("$.category", is(category.toString())));
   }
 
   @Test
   @DisplayName("GET /product/{id} - Not Found")
-  @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
   void testGetProductByIdNotFound() throws Exception {
 
     // Execute the GET request
@@ -80,8 +79,14 @@ class InventoryServiceIntegrationTest {
 
   @Test
   @DisplayName("GET /products - Success")
-  @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
   void testGetProductsSuccess() throws Exception {
+
+    String id = "1";
+    String productName = "Dark Souls 3";
+    Integer quantity = 20;
+    Category category = Category.VIDEOGAMES;
+
+    mongoTemplate.insert(new Product(id, productName, quantity, category), "Product");
 
     // Execute the GET request
     mockMvc
@@ -92,16 +97,15 @@ class InventoryServiceIntegrationTest {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
 
         // Validate the returned array
-        .andExpect(jsonPath("$", hasSize(2)));
+        .andExpect(jsonPath("$", hasSize(1)));
   }
 
   @Test
   @DisplayName("POST /product - Success")
-  @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
   void testCreateProduct() throws Exception {
     // Setup product to create
-    String productName = "Dark Souls 3";
-    Integer quantity = 20;
+    String productName = "A New product";
+    Integer quantity = 50;
     Category category = Category.VIDEOGAMES;
 
     Product newProduct = new Product(productName, quantity, category);
@@ -128,8 +132,15 @@ class InventoryServiceIntegrationTest {
 
   @Test
   @DisplayName("DELETE /product/{id} - Success")
-  @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
   void testDeleteProductSuccess() throws Exception {
+
+    String id = "1";
+    String productName = "Dark Souls 3";
+    Integer quantity = 20;
+    Category category = Category.VIDEOGAMES;
+
+    mongoTemplate.insert(new Product(id, productName, quantity, category), "Product");
+
     mockMvc
         .perform(delete("/product/{id}", 1).contentType(MediaType.APPLICATION_JSON))
 
@@ -139,8 +150,8 @@ class InventoryServiceIntegrationTest {
 
   @Test
   @DisplayName("DELETE /product/{id} - Not Found")
-  @MongoDataFile(value = "sample.json", classType = Product.class, collectionName = "Product")
   void testDeleteProductNotFound() throws Exception {
+
     mockMvc
         .perform(delete("/product/{id}", 99).contentType(MediaType.APPLICATION_JSON))
 

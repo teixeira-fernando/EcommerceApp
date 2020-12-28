@@ -14,16 +14,15 @@ import com.ecommerceapp.shop.model.Order;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @ExtendWith(PactConsumerTestExt.class)
 @PactTestFor(providerName = "OrderModule", providerType = ProviderType.ASYNCH)
@@ -84,7 +83,7 @@ class CreateShipmentConsumerPact {
     try {
       Order order = mapper.readValue(messages.get(0).getContents().valueAsString(), Order.class);
 
-      Assertions.assertEquals( "1", order.getId());
+      Assertions.assertEquals("1", order.getId());
       Assertions.assertNotNull(order.getProducts());
 
     } catch (JsonProcessingException e) {

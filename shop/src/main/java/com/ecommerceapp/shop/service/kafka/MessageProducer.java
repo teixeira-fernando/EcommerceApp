@@ -36,18 +36,17 @@ public class MessageProducer {
 
           @Override
           public void onSuccess(SendResult<String, String> result) {
-              logger.info(
+            logger.info(
                 "Sent message=[",
-                    message,
-                    "] with offset=[",
-                     result.getRecordMetadata().offset(),
-                     "]");
+                message,
+                "] with offset=[",
+                result.getRecordMetadata().offset(),
+                "]");
           }
 
           @Override
           public void onFailure(Throwable ex) {
-              logger.info(
-                "Unable to send message=[" , message , "] due to : " , ex.getMessage());
+            logger.info("Unable to send message=[", message, "] due to : ", ex.getMessage());
           }
         });
   }

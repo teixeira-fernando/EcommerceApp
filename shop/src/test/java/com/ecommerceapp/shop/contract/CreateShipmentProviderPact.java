@@ -15,11 +15,10 @@ import com.ecommerceapp.shop.model.Order;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
 
 @Provider("OrderModule")
 @PactBroker(host = "localhost", port = "9292")
