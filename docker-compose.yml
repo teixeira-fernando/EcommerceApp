@@ -7,25 +7,25 @@ services:
     ports:
       - "27017:27017"
 
-  inventory:
-    image: 'teixeirafernando/ecommerceapp-inventory:latest'
+  zookeeper:
+    image: wurstmeister/zookeeper
     ports:
-      - "7080:7080"
-    depends_on:
-      - mongodb
-    links:
-      - mongodb
-    environment:
-      - spring.data.mongodb.host=mongodb
+      - "2181:2181"
 
-  shop:
-    image: 'teixeirafernando/ecommerceapp-shop:latest'
+  kafka:
+    image: wurstmeister/kafka:latest
     ports:
-      - "7081:7081"
-    depends_on:
-      - mongodb
-      - inventory
-    links:
-      - mongodb
+      - target: 9092
+        published: 9092
+        protocol: tcp
+        mode: host
     environment:
-      - spring.data.mongodb.host=mongodb
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9091,OUTSIDE://_{HOSTNAME_COMMAND}:9092
+      KAFKA_LISTENERS: INSIDE://:9091,OUTSIDE://:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
