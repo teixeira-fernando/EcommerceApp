@@ -1,5 +1,8 @@
 package com.ecommerceapp.shipment.unit.service;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shipment.model.Location;
@@ -8,6 +11,9 @@ import com.ecommerceapp.shipment.repository.OrderShipmentRepository;
 import com.ecommerceapp.shipment.service.ShipmentService;
 import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
 import com.ecommerceapp.shop.model.Order;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,16 +24,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-
 @SpringBootTest(classes = {ShipmentService.class})
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
-public class ShipmentServiceTest {
+class ShipmentServiceTest {
 
   /** The service that we want to test. */
   @Autowired private ShipmentService service;
@@ -78,9 +77,9 @@ public class ShipmentServiceTest {
     List<OrderShipment> orderShipments = service.findAll();
 
     // assert
-    Assertions.assertEquals(orderShipments.size(), 2);
-    Assertions.assertEquals(orderShipments.get(0), orderShipment);
-    Assertions.assertEquals(orderShipments.get(1), orderShipment2);
+    Assertions.assertEquals(2, orderShipments.size());
+    Assertions.assertEquals(orderShipment, orderShipments.get(0));
+    Assertions.assertEquals(orderShipment2, orderShipments.get(1));
   }
 
   @Test

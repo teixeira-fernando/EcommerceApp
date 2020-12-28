@@ -6,15 +6,14 @@ import com.ecommerceapp.shipment.repository.OrderShipmentRepository;
 import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
 import com.ecommerceapp.shop.model.Order;
 import com.github.javafaker.Faker;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ShipmentService {
@@ -48,6 +47,7 @@ public class ShipmentService {
     String state = faker.address().state();
     Location location = new Location(street, number, zipCode, cityName, state);
     OrderShipment orderShipment = new OrderShipment(order, LocalDate.now().plusDays(3), location);
+    logger.info("Creating a new shipment with id: {}", orderShipment.getId());
     return repository.save(orderShipment);
   }
 

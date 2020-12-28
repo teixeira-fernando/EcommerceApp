@@ -1,11 +1,15 @@
 package com.ecommerceapp.shipment.integration;
 
+import static org.awaitility.Awaitility.await;
+
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shipment.model.OrderShipment;
 import com.ecommerceapp.shipment.service.kafka.KafkaConsumerConfig;
 import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
 import com.ecommerceapp.shop.model.Order;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +24,6 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import static org.awaitility.Awaitility.await;
-
 @ExtendWith({SpringExtension.class})
 @SpringBootTest
 @EmbeddedKafka(ports = 9092, partitions = 1)
@@ -34,7 +33,7 @@ import static org.awaitility.Awaitility.await;
   MessageListenerShipment.class,
   KafkaConsumerConfig.class
 })
-public class OrderShipmentServiceIntegrationTest {
+class OrderShipmentServiceIntegrationTest {
 
   @Autowired private KafkaTemplate<String, Order> orderKafkaTemplate;
 

@@ -2,16 +2,15 @@ package com.ecommerceapp.shop.model;
 
 import com.ecommerceapp.inventory.model.Product;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Document(collection = "Order")
 @Entity
@@ -39,16 +38,16 @@ public class Order {
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
   @ApiModelProperty(required = false, notes = "Auto generated date for the order")
-  private Date createDate = new Date(); // initialize created date;
+  private Date createDate = new Date();
 
   @LastModifiedDate
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
   @ApiModelProperty(required = false, notes = "Auto generated date for the order")
-  private Date updateDate = new Date(); // initialize updated date;
+  private Date updateDate = new Date();
 
-  public Order(String id, ArrayList<Product> products) {
+  public Order(String id, List<Product> products) {
     this.id = id;
     this.products = products;
     this.status = OrderStatus.CREATED;

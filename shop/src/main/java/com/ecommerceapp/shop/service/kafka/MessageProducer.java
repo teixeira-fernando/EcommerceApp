@@ -14,7 +14,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Component
 public class MessageProducer {
 
-  private static final Logger LOGGER = LogManager.getLogger(MessageProducer.class);
+  private static final Logger logger = LogManager.getLogger(MessageProducer.class);
 
   @Autowired private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -27,7 +27,7 @@ public class MessageProducer {
   private String orderTopicname;
 
   public void sendString(String message) {
-    LOGGER.info("sending payload='{}' to topic='{}'", message, topicName);
+    logger.info("sending payload='{}' to topic='{}'", message, topicName);
 
     ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topicName, message);
 
@@ -36,24 +36,23 @@ public class MessageProducer {
 
           @Override
           public void onSuccess(SendResult<String, String> result) {
-            System.out.println(
-                "Sent message=["
-                    + message
-                    + "] with offset=["
-                    + result.getRecordMetadata().offset()
-                    + "]");
+            logger.info(
+                "Sent message=[",
+                message,
+                "] with offset=[",
+                result.getRecordMetadata().offset(),
+                "]");
           }
 
           @Override
           public void onFailure(Throwable ex) {
-            System.out.println(
-                "Unable to send message=[" + message + "] due to : " + ex.getMessage());
+            logger.info("Unable to send message=[", message, "] due to : ", ex.getMessage());
           }
         });
   }
 
   public void sendOrderToShipment(Order order) {
-    LOGGER.info("sending payload='{}' to topic='{}'", order, orderTopicname);
+    logger.info("sending payload='{}' to topic='{}'", order, orderTopicname);
 
     orderKafkaTemplate.send(orderTopicname, order);
   }

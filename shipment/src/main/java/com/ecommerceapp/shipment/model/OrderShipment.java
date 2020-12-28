@@ -2,15 +2,14 @@ package com.ecommerceapp.shipment.model;
 
 import com.ecommerceapp.shop.model.Order;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDate;
+import java.util.Date;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Document(collection = "OrderShipment")
 @Entity
@@ -32,14 +31,14 @@ public class OrderShipment {
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
   @ApiModelProperty(required = false, notes = "Auto generated date for the shipment")
-  private Date createDate = new Date(); // initialize created date;
+  private Date createDate = new Date();
 
   @LastModifiedDate
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
   @ApiModelProperty(required = false, notes = "Auto generated date for the shipment")
-  private Date updateDate = new Date(); // initialize updated date;
+  private Date updateDate = new Date();
 
   @Temporal(TemporalType.TIMESTAMP)
   @Getter

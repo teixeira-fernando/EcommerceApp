@@ -1,15 +1,13 @@
 package com.ecommerceapp.shop.utils;
 
-import com.ecommerceapp.shop.service.InventoryClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UtilitiesApplication {
 
@@ -20,8 +18,8 @@ public class UtilitiesApplication {
       return new ObjectMapper().writeValueAsString(obj);
     } catch (RuntimeException | JsonProcessingException e) {
       logger.error(e.getStackTrace());
-      throw new RuntimeException();
     }
+    return "";
   }
 
   public static String readPropertyValue(String propertyPath) {

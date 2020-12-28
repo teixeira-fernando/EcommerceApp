@@ -5,6 +5,12 @@ import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.NoSuchElementException;
+import javax.persistence.EntityExistsException;
+import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityExistsException;
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 @Validated
 @RestController
@@ -44,7 +43,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @GetMapping("/product/{id}")
-  public ResponseEntity getProduct(@PathVariable String id) {
+  public ResponseEntity<Product> getProduct(@PathVariable String id) {
     try {
       Product product = inventoryService.findById(id);
 
@@ -90,15 +89,16 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product")
-  public ResponseEntity createProduct(@RequestBody @Valid Product product) {
-    logger.info(
-        "Creating new product with name: {}, quantity: {}",
-        product.getName(),
-        product.getQuantity());
+  public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product) {
 
     try {
       // Create the new product
       Product newProduct = inventoryService.createProduct(product);
+
+      logger.info(
+          "Created new product with name: {}, quantity: {}",
+          newProduct.getName(),
+          newProduct.getQuantity());
 
       // Build a created response
       return ResponseEntity.created(new URI("/product/" + newProduct.getId())).body(newProduct);
@@ -120,7 +120,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product/{id}/changeStock")
-  public ResponseEntity changeStock(
+  public ResponseEntity<?> changeStock(
       @PathVariable String id, @RequestBody ChangeStockDto changeStockDto) {
     try {
       Product product = inventoryService.findById(id);
@@ -142,7 +142,7 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @DeleteMapping("/product/{id}")
-  public ResponseEntity deleteProduct(@PathVariable String id) {
+  public ResponseEntity<?> deleteProduct(@PathVariable String id) {
     logger.info("Deleting product with id: {}", id);
     try {
       inventoryService.deleteProduct(id);
