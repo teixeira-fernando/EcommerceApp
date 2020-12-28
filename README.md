@@ -1,4 +1,9 @@
 ![](https://github.com/teixeira-fernando/EcommerceApp/workflows/JavaCIMaven/badge.svg)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=teixeira-fernando_EcommerceApp&metric=coverage)](https://sonarcloud.io/dashboard?id=teixeira-fernando_EcommerceApp)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=teixeira-fernando_EcommerceApp&metric=bugs)](https://sonarcloud.io/dashboard?id=teixeira-fernando_EcommerceApp)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=teixeira-fernando_EcommerceApp&metric=sqale_index)](https://sonarcloud.io/dashboard?id=teixeira-fernando_EcommerceApp)
+
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=teixeira-fernando_EcommerceApp)](https://sonarcloud.io/dashboard?id=teixeira-fernando_EcommerceApp)
 
 # E-commerce App - Microservices Java
 
@@ -8,31 +13,38 @@
 * Inventory
 * Shipment
 
+![alt text](images/EcommerceappDiagram.png "EcommerceApp modules comunication")
+
 ## Instructions
 
-Run:
+The docker-compose file contains the pre-requisites to run the application: MongoDB and Kafka
+
+So, first run: 
 
 ```
-mvn spring-boot:run (in the sub-module directory)
+docker-compose up -d
 ```
 
-Generate Jar:
+Then, you can run the application modules:
 
-``` 
-mvn clean install 
+Run Inventory:
+
+```
+mvn -f inventory/ spring-boot:run 
 ```
 
-Check code Style:
+Run Shop:
 
-``` 
-mvn spotless::check (in the sub-module directory)
+```
+mvn -f shop/ spring-boot:run 
 ```
 
-Apply code Style:
+Run Shipment:
 
-``` 
-mvn spotless::apply (in the sub-module directory)
 ```
+mvn -f shipment/ spring-boot:run 
+```
+
 
 ## Instructions for contract tests wth Pact
 
@@ -56,10 +68,29 @@ Then you can run the contract tests in the provider side, where it is already co
 mvn -Dtest=**/contract/** test
 ``` 
 
-## Utils
+## Other info and Utilities
 
 * Install and activate Intellij plugin to format on IDE:
     * https://plugins.jetbrains.com/plugin/8527-google-java-format
 
 * There is a swagger documentation configured for each module. After running the desired module, you can navigate
   to: http://localhost:{port}/swagger-ui/
+
+
+* Generate Jars:
+
+``` 
+mvn clean install 
+```
+
+* Check code Style:
+
+``` 
+mvn spotless::check (in the sub-module directory)
+```
+
+* Apply code Style:
+
+``` 
+mvn spotless::apply (in the sub-module directory)
+```
