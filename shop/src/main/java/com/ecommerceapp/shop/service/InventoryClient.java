@@ -42,10 +42,6 @@ public class InventoryClient {
             .build();
   }
 
-  private HttpClient getClient() {
-    return client;
-  }
-
   private HttpRequest searchForProductRequest(String id) throws URISyntaxException {
 
     return HttpRequest.newBuilder().uri(new URI(inventoryHost + "/product/" + id)).GET().build();
@@ -76,7 +72,7 @@ public class InventoryClient {
   private HttpResponse<String> executeRequest(HttpRequest request) {
     HttpResponse<String> response = null;
     try {
-      response = this.getClient().send(request, HttpResponse.BodyHandlers.ofString());
+      response = this.client.send(request, HttpResponse.BodyHandlers.ofString());
 
     } catch (IOException e) {
       logger.error(e.getStackTrace());
