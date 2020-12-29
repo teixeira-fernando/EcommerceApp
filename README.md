@@ -15,7 +15,7 @@
 
 ![alt text](images/EcommerceappDiagram.png "EcommerceApp modules comunication")
 
-## Instructions
+## Instructions to run
 
 The docker-compose file contains the pre-requisites to run the application: MongoDB and Kafka
 
@@ -67,6 +67,16 @@ Then you can run the contract tests in the provider side, where it is already co
 ``` 
 mvn -Dtest=**/contract/** test
 ``` 
+
+## QA Strategy
+
+* Unit Tests: <b>Junit5</b>
+* Integration tests: <b>Spring Boot Test and EmbeddedKafka</b> (when testing asynchronous events)
+* Quality Metrics:
+  * Mutation Tests/Mutation Coverage: <b>PITest</b>
+  * Code Coverage: <b>Jacoco</b>
+  * Technical Debt, Code Smells and other complementary metrics : <b>Sonar Cloud</b>
+* Contract tests: <b>Pact framework</b>
 
 ## Other info and Utilities
 

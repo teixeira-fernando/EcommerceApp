@@ -1,6 +1,5 @@
 package com.ecommerceapp.inventory.unit.controller;
 
-import static com.ecommerceapp.inventory.utils.Utilities.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
@@ -13,6 +12,7 @@ import com.ecommerceapp.inventory.dto.request.StockOperation;
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import javax.persistence.EntityExistsException;
@@ -114,7 +114,7 @@ class InventoryControllerTest {
         .perform(
             post("/product")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(mockProduct)))
+                .content(new ObjectMapper().writeValueAsString(mockProduct)))
 
         // Validate the response code and content type
         .andExpect(status().isCreated())
@@ -147,7 +147,7 @@ class InventoryControllerTest {
         .perform(
             post("/product")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(mockProduct)))
+                .content(new ObjectMapper().writeValueAsString(mockProduct)))
 
         // Validate the response code and content type
         .andExpect(status().isBadRequest());
@@ -171,7 +171,7 @@ class InventoryControllerTest {
         .perform(
             post("/product/{id}/changeStock", id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(updateOperation)))
+                .content(new ObjectMapper().writeValueAsString(updateOperation)))
 
         // Validate the response code and content type
         .andExpect(status().isOk());
@@ -196,7 +196,7 @@ class InventoryControllerTest {
         .perform(
             post("/product/{id}/changeStock", 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(updateOperation)))
+                .content(new ObjectMapper().writeValueAsString(updateOperation)))
 
         // Validate the response code and content type
         .andExpect(status().isNotFound());
