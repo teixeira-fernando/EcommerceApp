@@ -1,6 +1,5 @@
 package com.ecommerceapp.shop.unit.controller;
 
-import static com.ecommerceapp.shop.utils.UtilitiesApplication.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -18,6 +17,7 @@ import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.model.OrderStatus;
 import com.ecommerceapp.shop.service.OrderService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -125,7 +125,9 @@ class OrderControllerTest {
     // Execute the POST request
     mockMvc
         .perform(
-            post("/order").contentType(MediaType.APPLICATION_JSON).content(asJsonString(mockOrder)))
+            post("/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(mockOrder)))
 
         // Validate the response code and content type
         .andExpect(status().isCreated())
@@ -152,7 +154,9 @@ class OrderControllerTest {
     // Execute the POST request
     mockMvc
         .perform(
-            post("/order").contentType(MediaType.APPLICATION_JSON).content(asJsonString(mockOrder)))
+            post("/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(mockOrder)))
 
         // Validate the response code
         .andExpect(status().isBadRequest());
@@ -168,7 +172,9 @@ class OrderControllerTest {
     // Execute the POST request
     mockMvc
         .perform(
-            post("/order").contentType(MediaType.APPLICATION_JSON).content(asJsonString(mockOrder)))
+            post("/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(mockOrder)))
 
         // Validate the response code
         .andExpect(status().isServiceUnavailable());
@@ -191,7 +197,9 @@ class OrderControllerTest {
     // Execute the POST request
     mockMvc
         .perform(
-            post("/order").contentType(MediaType.APPLICATION_JSON).content(asJsonString(mockOrder)))
+            post("/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(mockOrder)))
 
         // Validate the response code
         .andExpect(status().isBadRequest());

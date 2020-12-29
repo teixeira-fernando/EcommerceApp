@@ -4,7 +4,8 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 import com.ecommerceapp.shop.dto.request.ChangeStockDto;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
-import com.ecommerceapp.shop.utils.UtilitiesApplication;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,9 @@ public class InventoryClient {
 
   private HttpClient client;
 
+  @Value(value = "${inventory.host}")
   private String inventoryHost;
+
   private long timeout = 10;
 
   public InventoryClient() {
@@ -36,8 +40,6 @@ public class InventoryClient {
             .connectTimeout(Duration.ofSeconds(10))
             .version(HttpClient.Version.HTTP_2)
             .build();
-    // get the property value
-    inventoryHost = UtilitiesApplication.readPropertyValue("inventory.host");
   }
 
   private HttpClient getClient() {
@@ -50,14 +52,15 @@ public class InventoryClient {
   }
 
   private HttpRequest changeStockRequest(String id, ChangeStockDto stockOperation)
-      throws URISyntaxException {
+      throws URISyntaxException, JsonProcessingException {
 
     return HttpRequest.newBuilder()
         .uri(new URI(inventoryHost + "/product/" + id + "/changeStock"))
         .timeout(Duration.of(timeout, SECONDS))
         .setHeader("Content-Type", "application/json")
         .POST(
-            HttpRequest.BodyPublishers.ofString(UtilitiesApplication.asJsonString(stockOperation)))
+            HttpRequest.BodyPublishers.ofString(
+                new ObjectMapper().writeValueAsString(stockOperation)))
         .build();
   }
 
@@ -100,17 +103,18 @@ public class InventoryClient {
     JSONObject jsonObject = new JSONObject(response.body());
     int currentStock = (int) jsonObject.get("quantity");
     logger.debug("Value of quantity: %d", currentStock);
-    if (desiredQuantity > currentStock) {
-      return false;
-    }
-    return true;
+    return desiredQuantity <= currentStock;
   }
 
   public void updateStock(String id, ChangeStockDto stockOperation) throws URISyntaxException {
-    HttpResponse<String> response =
-        this.executeRequest(this.changeStockRequest(id, stockOperation));
-    if (response.statusCode() != HttpStatus.OK.value()) {
-      throw new StockUpdateException("Something went wrong when trying to update the stock");
+    try {
+      HttpResponse<String> response =
+          this.executeRequest(this.changeStockRequest(id, stockOperation));
+      if (response.statusCode() != HttpStatus.OK.value()) {
+        throw new StockUpdateException("Something went wrong when trying to update the stock");
+      }
+    } catch (JsonProcessingException e) {
+      logger.error("Something went wrong when processing the request Json");
     }
   }
 

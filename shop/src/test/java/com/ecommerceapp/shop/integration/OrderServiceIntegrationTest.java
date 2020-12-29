@@ -1,6 +1,5 @@
 package com.ecommerceapp.shop.integration;
 
-import static com.ecommerceapp.shop.utils.UtilitiesApplication.asJsonString;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
@@ -14,13 +13,14 @@ import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.model.OrderStatus;
-import com.ecommerceapp.shop.utils.UtilitiesApplication;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import java.util.ArrayList;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -45,6 +45,9 @@ class OrderServiceIntegrationTest {
   @Autowired private MongoTemplate mongoTemplate;
   private WireMockServer wireMockServer;
 
+  @Value(value = "${inventory.port}")
+  private String port;
+
   @BeforeAll
   public void setup() {
     embeddedKafkaBroker.setZkPort(63178);
@@ -53,8 +56,7 @@ class OrderServiceIntegrationTest {
 
   @BeforeEach
   void configureSystemUnderTest() {
-    int port = Integer.parseInt(UtilitiesApplication.readPropertyValue("inventory.port"));
-    this.wireMockServer = new WireMockServer(options().port(port));
+    this.wireMockServer = new WireMockServer(options().port(Integer.parseInt(port)));
     this.wireMockServer.start();
     configureFor("localhost", this.wireMockServer.port());
     mongoTemplate.getDb().drop();
@@ -151,7 +153,7 @@ class OrderServiceIntegrationTest {
             .willReturn(
                 aResponse()
                     .withStatus(200)
-                    .withBody(UtilitiesApplication.asJsonString(newProduct))));
+                    .withBody(new ObjectMapper().writeValueAsString(newProduct))));
 
     wireMockServer.stubFor(
         WireMock.post(WireMock.urlEqualTo("/product/" + id + "/changeStock"))
@@ -159,7 +161,9 @@ class OrderServiceIntegrationTest {
 
     mockMvc
         .perform(
-            post("/order").contentType(MediaType.APPLICATION_JSON).content(asJsonString(order)))
+            post("/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(order)))
 
         // Validate the response code and content type
         .andExpect(status().isCreated())
