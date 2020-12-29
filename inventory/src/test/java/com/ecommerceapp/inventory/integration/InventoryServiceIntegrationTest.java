@@ -1,12 +1,12 @@
 package com.ecommerceapp.inventory.integration;
 
-import static com.ecommerceapp.inventory.utils.Utilities.asJsonString;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -114,7 +114,7 @@ class InventoryServiceIntegrationTest {
         .perform(
             post("/product")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(newProduct)))
+                .content(new ObjectMapper().writeValueAsString(newProduct)))
 
         // Validate the response code and content type
         .andExpect(status().isCreated())
