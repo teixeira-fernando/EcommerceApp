@@ -16,7 +16,6 @@ import java.time.Duration;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -57,15 +56,6 @@ public class InventoryClient {
         .POST(
             HttpRequest.BodyPublishers.ofString(
                 new ObjectMapper().writeValueAsString(stockOperation)))
-        .build();
-  }
-
-  private HttpRequest getAllProductsRequest() throws URISyntaxException {
-
-    return HttpRequest.newBuilder()
-        .uri(new URI(inventoryHost + "/products"))
-        .timeout(Duration.of(timeout, SECONDS))
-        .GET()
         .build();
   }
 
@@ -114,8 +104,4 @@ public class InventoryClient {
     }
   }
 
-  public JSONArray getAllProducts() throws URISyntaxException {
-    HttpResponse<String> response = this.executeRequest(this.getAllProductsRequest());
-    return new JSONArray(response.body());
-  }
 }
