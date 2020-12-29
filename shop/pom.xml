@@ -87,11 +87,13 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <includes>
-                        <include>com/ecommerceapp/shop/controller/*.class</include>
-                        <include>com/ecommerceapp/shop/service/*.class</include>
-                        <include>com/ecommerceapp/shop/repository/*.class</include>
-                    </includes>
+                    <excludes>
+                        <exclude>**/model/*.class</exclude>
+                        <exclude>**/ShopApplication.class</exclude>
+                        <exclude>**/SwaggerConfig.class</exclude>
+                        <exclude>**/exceptions/*.class</exclude>
+                        <exclude>**/dto/**/*.class</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>

@@ -103,5 +103,4 @@ public class InventoryClient {
       logger.error("Something went wrong when processing the request Json");
     }
   }
-
 }

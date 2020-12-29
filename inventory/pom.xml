@@ -92,11 +92,12 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <includes>
-                        <include>com/ecommerceapp/inventory/controller/*.class</include>
-                        <include>com/ecommerceapp/inventory/service/*.class</include>
-                        <include>com/ecommerceapp/inventory/repository/*.class</include>
-                    </includes>
+                    <excludes>
+                        <exclude>**/model/*.class</exclude>
+                        <exclude>**/InventoryApplication.class</exclude>
+                        <exclude>**/SwaggerConfig.class</exclude>
+                        <exclude>**/dto/*.class</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
 

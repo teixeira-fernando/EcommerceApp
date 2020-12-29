@@ -108,11 +108,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <includes>
-                        <include>com/ecommerceapp/shipment/controller/*.class</include>
-                        <include>com/ecommerceapp/shipment/service/*.class</include>
-                        <include>com/ecommerceapp/shipment/repository/*.class</include>
-                    </includes>
+                    <excludes>
+                        <exclude>**/model/*.class</exclude>
+                        <exclude>**/ShipmentApplication.class</exclude>
+                        <exclude>**/SwaggerConfig.class</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
 
