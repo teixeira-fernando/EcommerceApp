@@ -102,7 +102,8 @@ public class OrderController {
       return ResponseEntity.created(new URI("/order/" + newOrder.getId())).body(newOrder);
     } catch (InvalidParameterException e) {
       return new ResponseEntity(
-          "A product included in the Order was not found in the inventory or there is not enough stock", HttpStatus.BAD_REQUEST);
+          "A product included in the Order was not found in the inventory or there is not enough stock",
+          HttpStatus.BAD_REQUEST);
     } catch (EmptyOrderException e) {
       return new ResponseEntity("The order does not contain any product", HttpStatus.BAD_REQUEST);
     } catch (StockUpdateException e) {

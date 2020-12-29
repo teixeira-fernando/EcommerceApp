@@ -193,19 +193,17 @@ class OrderServiceIntegrationTest {
     order.getProducts().add(newProduct);
 
     wireMockServer.stubFor(
-            WireMock.get(WireMock.urlEqualTo("/product/" + id))
-                    .willReturn(
-                            aResponse()
-                                    .withStatus(404)));
+        WireMock.get(WireMock.urlEqualTo("/product/" + id))
+            .willReturn(aResponse().withStatus(404)));
 
     mockMvc
-            .perform(
-                    post("/order")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(new ObjectMapper().writeValueAsString(order)))
+        .perform(
+            post("/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(order)))
 
-            // Validate the response code
-            .andExpect(status().isBadRequest());
+        // Validate the response code
+        .andExpect(status().isBadRequest());
   }
 
   @Test
@@ -223,18 +221,18 @@ class OrderServiceIntegrationTest {
     order.getProducts().add(productInOrder);
 
     wireMockServer.stubFor(
-            WireMock.get(WireMock.urlEqualTo("/product/" + id))
-                    .willReturn(
-                            aResponse()
-                                    .withStatus(200)
-                                    .withBody(new ObjectMapper().writeValueAsString(productInStock))));
+        WireMock.get(WireMock.urlEqualTo("/product/" + id))
+            .willReturn(
+                aResponse()
+                    .withStatus(200)
+                    .withBody(new ObjectMapper().writeValueAsString(productInStock))));
 
     mockMvc
-            .perform(
-                    post("/order")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(new ObjectMapper().writeValueAsString(order)))
-            // Validate the response code
-            .andExpect(status().isBadRequest());
+        .perform(
+            post("/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(order)))
+        // Validate the response code
+        .andExpect(status().isBadRequest());
   }
 }

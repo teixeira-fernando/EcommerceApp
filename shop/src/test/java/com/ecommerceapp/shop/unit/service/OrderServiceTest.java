@@ -103,6 +103,7 @@ class OrderServiceTest {
 
     when(inventoryClient.checkIfProductExists(any())).thenReturn(true);
     when(inventoryClient.checkIfProductHaveEnoughStock(any(), anyInt())).thenReturn(true);
+    doNothing().when(inventoryClient).updateStock(any(), any());
     doReturn(order).when(repository).save(any());
 
     // Act: Call the service method create product

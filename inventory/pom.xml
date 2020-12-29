@@ -92,10 +92,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <excludes>
-                        <exclude>com.ecommerceapp.inventory.com.ecommerceapp.shipment.model.*</exclude>
-                        <exclude>com.ecommerceapp.inventory.InventoryApplication</exclude>
-                    </excludes>
+                    <includes>
+                        <include>com/ecommerceapp/inventory/controller/*.class</include>
+                        <include>com/ecommerceapp/inventory/service/*.class</include>
+                        <include>com/ecommerceapp/inventory/repository/*.class</include>
+                    </includes>
                 </configuration>
             </plugin>
 
@@ -114,7 +115,11 @@
                 </dependencies>
                 <configuration>
                     <excludedTestClasses>com.ecommerceapp.inventory.integration.*</excludedTestClasses>
-                    <excludedClasses>com.ecommerceapp.inventory.com.ecommerceapp.shipment.model.*</excludedClasses>
+                    <targetClasses>
+                        <param>com.ecommerceapp.inventory.controller.*</param>
+                        <param>com.ecommerceapp.inventory.repository.*</param>
+                        <param>com.ecommerceapp.inventory.service.*</param>
+                    </targetClasses>
                     <outputFormats>
                         <param>HTML</param>
                         <param>XML</param>
