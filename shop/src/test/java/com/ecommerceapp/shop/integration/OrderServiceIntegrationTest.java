@@ -178,4 +178,63 @@ class OrderServiceIntegrationTest {
         .andExpect(jsonPath("$.products[0].quantity", is(quantity)))
         .andExpect(jsonPath("$.products[0].category", is(category.toString())));
   }
+
+  @Test
+  @DisplayName("POST /order - Product does not exists")
+  void testCreateOrderErrorProductDoesNotExists() throws Exception {
+    // Setup product to create
+    String id = "1";
+    String productName = "Samsung TV Led";
+    Integer quantity = 10;
+    Category category = Category.ELECTRONICS;
+
+    Product newProduct = new Product(id, productName, quantity, category);
+    Order order = new Order();
+    order.getProducts().add(newProduct);
+
+    wireMockServer.stubFor(
+            WireMock.get(WireMock.urlEqualTo("/product/" + id))
+                    .willReturn(
+                            aResponse()
+                                    .withStatus(404)));
+
+    mockMvc
+            .perform(
+                    post("/order")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(new ObjectMapper().writeValueAsString(order)))
+
+            // Validate the response code
+            .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  @DisplayName("POST /order - Error Not Enough Stock")
+  void testCreateOrderErrorNotEnoughStock() throws Exception {
+    // Setup product to create
+    String id = "1";
+    String productName = "Samsung TV Led";
+    Integer quantity = 10;
+    Category category = Category.ELECTRONICS;
+
+    Product productInStock = new Product(id, productName, quantity, category);
+    Product productInOrder = new Product(id, productName, quantity + 1, category);
+    Order order = new Order();
+    order.getProducts().add(productInOrder);
+
+    wireMockServer.stubFor(
+            WireMock.get(WireMock.urlEqualTo("/product/" + id))
+                    .willReturn(
+                            aResponse()
+                                    .withStatus(200)
+                                    .withBody(new ObjectMapper().writeValueAsString(productInStock))));
+
+    mockMvc
+            .perform(
+                    post("/order")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(new ObjectMapper().writeValueAsString(order)))
+            // Validate the response code
+            .andExpect(status().isBadRequest());
+  }
 }
