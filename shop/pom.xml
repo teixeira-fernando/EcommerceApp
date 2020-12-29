@@ -87,10 +87,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <excludes>
-                        <exclude>com.ecommerceapp.shop.com.ecommerceapp.shipment.model.*</exclude>
-                        <exclude>com.ecommerceapp.shop.ShopApplication</exclude>
-                    </excludes>
+                    <includes>
+                        <include>com/ecommerceapp/shop/controller/*.class</include>
+                        <include>com/ecommerceapp/shop/service/*.class</include>
+                        <include>com/ecommerceapp/shop/repository/*.class</include>
+                    </includes>
                 </configuration>
             </plugin>
             <plugin>
@@ -106,7 +107,11 @@
                 </dependencies>
                 <configuration>
                     <excludedTestClasses>com.ecommerceapp.shop.integration.*</excludedTestClasses>
-                    <excludedClasses>com.ecommerceapp.shop.com.ecommerceapp.shipment.model.*</excludedClasses>
+                    <targetClasses>
+                        <param>com.ecommerceapp.shop.controller.*</param>
+                        <param>com.ecommerceapp.shop.repository.*</param>
+                        <param>com.ecommerceapp.shop.service.*</param>
+                    </targetClasses>
                     <outputFormats>
                         <param>HTML</param>
                         <param>XML</param>

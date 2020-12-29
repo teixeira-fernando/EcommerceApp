@@ -108,10 +108,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <excludes>
-                        <exclude>com.ecommerceapp.shipment.com.ecommerceapp.shipment.model.*</exclude>
-                        <exclude>com.ecommerceapp.shipment.ShipmentApplication</exclude>
-                    </excludes>
+                    <includes>
+                        <include>com/ecommerceapp/shipment/controller/*.class</include>
+                        <include>com/ecommerceapp/shipment/service/*.class</include>
+                        <include>com/ecommerceapp/shipment/repository/*.class</include>
+                    </includes>
                 </configuration>
             </plugin>
 
@@ -130,7 +131,11 @@
                 </dependencies>
                 <configuration>
                     <excludedTestClasses>com.ecommerceapp.shipment.integration.*</excludedTestClasses>
-                    <excludedClasses>com.ecommerceapp.shipment.com.ecommerceapp.shipment.model.*</excludedClasses>
+                    <targetClasses>
+                        <param>com.ecommerceapp.shipment.controller.*</param>
+                        <param>com.ecommerceapp.shipment.repository.*</param>
+                        <param>com.ecommerceapp.shipment.service.*</param>
+                    </targetClasses>
                     <outputFormats>
                         <param>HTML</param>
                         <param>XML</param>

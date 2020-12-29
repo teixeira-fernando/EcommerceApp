@@ -77,6 +77,7 @@ mvn -Dtest=**/contract/** test
   * Code Coverage: <b>Jacoco</b>
   * Technical Debt, Code Smells and other complementary metrics : <b>Sonar Cloud</b>
 * Contract tests: <b>Pact framework</b>
+* Continuous Integration: This project uses Github Action for Continuous Integration, 
 
 ## Other info and Utilities
 
