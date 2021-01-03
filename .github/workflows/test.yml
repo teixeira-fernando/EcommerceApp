@@ -59,14 +59,14 @@ jobs:
       - name: Generate test jars for dependencies
         run: mvn clean install
       - name: Bring up Pact Broker and execute contract tests
-        run:
-          - docker-compose -f pactbroker_dockercompose/docker-compose.yml up -d
-          - mvn -f inventory/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-          - mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-          - mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-          - mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
-          - mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
-          - mvn -f shipment/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+        run: |
+          docker-compose -f pactbroker_dockercompose/docker-compose.yml up -d
+          mvn -f inventory/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+          mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+          mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+          mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+          mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+          mvn -f shipment/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
 
   sonarCloud:
     runs-on: ubuntu-latest
