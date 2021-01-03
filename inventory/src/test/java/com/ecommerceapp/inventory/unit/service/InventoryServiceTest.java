@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
 import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
+import com.ecommerceapp.inventory.dto.request.ProductDto;
 import com.ecommerceapp.inventory.dto.request.StockOperation;
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
@@ -94,7 +95,7 @@ class InventoryServiceTest {
     doReturn(product).when(repository).save(any());
 
     // Act: Call the service method create product
-    Product createdProduct = service.createProduct(product);
+    Product createdProduct = service.createProduct(new ProductDto(productName, quantity, category));
 
     // Assert: verify the returned product
     Assertions.assertNotNull(createdProduct, "The saved product should not be null");
@@ -115,7 +116,7 @@ class InventoryServiceTest {
     Assertions.assertThrows(
         EntityExistsException.class,
         () -> {
-          service.createProduct(product);
+          service.createProduct(new ProductDto(productName, quantity, category));
         });
   }
 
@@ -131,13 +132,13 @@ class InventoryServiceTest {
     doReturn(product).when(repository).save(any());
 
     // Act: Call the services to save a product and then update it
-    service.createProduct(product);
+    service.createProduct(new ProductDto(productName, quantity, category));
     product.setQuantity(60);
     product.setName("Samsung TV Led 42º");
     Product updatedProduct = service.updateProduct(product);
 
     // Assert: verify the updated product
-    Mockito.verify(repository, Mockito.times(2)).save(product);
+    Mockito.verify(repository, Mockito.times(1)).save(product);
     Assertions.assertEquals(updatedProduct, product);
   }
 

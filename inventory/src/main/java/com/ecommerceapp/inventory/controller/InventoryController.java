@@ -1,6 +1,7 @@
 package com.ecommerceapp.inventory.controller;
 
 import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
+import com.ecommerceapp.inventory.dto.request.ProductDto;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
 import io.swagger.annotations.ApiResponse;
@@ -10,7 +11,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import javax.persistence.EntityExistsException;
-import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ public class InventoryController {
   /**
    * Creates a new product.
    *
-   * @param product The product to create.
+   * @param productDto The DTO to create a product.
    * @return The created product.
    */
   @ApiResponses(
@@ -89,11 +89,11 @@ public class InventoryController {
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
   @PostMapping("/product")
-  public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product) {
+  public ResponseEntity<Product> createProduct(@RequestBody @Validated ProductDto productDto) {
 
     try {
       // Create the new product
-      Product newProduct = inventoryService.createProduct(product);
+      Product newProduct = inventoryService.createProduct(productDto);
 
       logger.info(
           "Created new product with name: {}, quantity: {}",
