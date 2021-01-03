@@ -49,18 +49,27 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Cache Maven packages
-        uses: actions/cache@v2
+      - name: Cache
+        uses: actions/cache@v2.1.3
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Bring up Pact Broker
         run: docker-compose -f pactbroker_dockercompose/docker-compose.yml up -d
-      - name: Consumer Tests
-        run: mvn -Dtest=**/contract/*ConsumerPact test
-      - name: Provider tests
-        run: mvn -Dtest=**/contract/*ProviderPact test
+      - name: Consumer Tests - Inventory
+        run: mvn -f inventory/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+      - name: Consumer Tests - Shop
+        run: mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+      - name: Consumer Tests - Shipment
+        run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+      - name: Provider tests - Inventory
+        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+      - name: Provider Tests - Shop
+        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+      - name: Provider Tests - Shipment
+        run: mvn -f shipment/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
 
   sonarCloud:
     runs-on: ubuntu-latest
