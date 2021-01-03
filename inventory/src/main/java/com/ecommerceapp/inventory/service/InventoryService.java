@@ -1,6 +1,7 @@
 package com.ecommerceapp.inventory.service;
 
 import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
+import com.ecommerceapp.inventory.dto.request.ProductDto;
 import com.ecommerceapp.inventory.dto.request.StockOperation;
 import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
@@ -29,15 +30,16 @@ public class InventoryService {
     return this.repository.findAll();
   }
 
-  public Product createProduct(@Valid Product product) {
-    Optional<Product> checkIfProductAlreadyExists = repository.findByName(product.getName());
+  public Product createProduct(@Valid ProductDto productDto) {
+    Optional<Product> checkIfProductAlreadyExists = repository.findByName(productDto.getName());
 
     if (checkIfProductAlreadyExists.isPresent()) {
       throw new EntityExistsException(
           "There is already a product with the same name registered in the inventory");
     }
 
-    return this.repository.save(product);
+    return this.repository.save(
+        new Product(productDto.getName(), productDto.getQuantity(), productDto.getCategory()));
   }
 
   public Product updateProduct(@Valid Product product) {
