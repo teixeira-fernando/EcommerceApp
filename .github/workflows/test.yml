@@ -58,22 +58,15 @@ jobs:
             ${{ runner.os }}-maven-
       - name: Generate test jars for dependencies
         run: mvn clean install
-      - name: Bring up Pact Broker
-        run: docker-compose -f pactbroker_dockercompose/docker-compose.yml up -d
-      - name: Consumer Tests - Inventory
-        run: mvn -f inventory/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-      - name: Consumer Tests - Shop
-        run: mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-      - name: Consumer Tests - Shipment
-        run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-      - name: check running containers
-        run: docker ps -a
-      - name: Provider tests - Inventory
-        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
-      - name: Provider Tests - Shop
-        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
-      - name: Provider Tests - Shipment
-        run: mvn -f shipment/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+      - name: Bring up Pact Broker and execute contract tests
+        run:
+          - docker-compose -f pactbroker_dockercompose/docker-compose.yml up -d
+          - mvn -f inventory/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+          - mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+          - mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+          - mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+          - mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+          - mvn -f shipment/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
 
   sonarCloud:
     runs-on: ubuntu-latest
