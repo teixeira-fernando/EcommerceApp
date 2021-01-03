@@ -26,6 +26,8 @@ public class ProductDto {
   @NotNull
   private Category category;
 
+  public ProductDto() {}
+
   public ProductDto(String name, Integer quantity, Category category) {
     this.name = name;
     this.quantity = quantity;
