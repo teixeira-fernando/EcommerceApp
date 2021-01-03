@@ -56,6 +56,8 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+      - name: Generate test jars for dependencies
+        run: mvn clean install
       - name: Bring up Pact Broker
         run: docker-compose -f pactbroker_dockercompose/docker-compose.yml up -d
       - name: Consumer Tests - Inventory
