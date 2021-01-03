@@ -15,7 +15,7 @@
 
 ![alt text](images/EcommerceappDiagram.png "EcommerceApp modules comunication")
 
-## Instructions to run
+## Instructions to run the project
 
 The docker-compose file contains the pre-requisites to run the application: MongoDB and Kafka
 
@@ -45,29 +45,6 @@ Run Shipment:
 mvn -f shipment/ spring-boot:run 
 ```
 
-
-## Instructions for contract tests wth Pact
-
-This project contains contract tests using Pact. In order to run it, first of all you need to bring up the pact broker.
-To run the pact-broker using Docker, execute:
-
-``` 
-docker-compose up -d
-```
-
-Then you can go to the producer module and execute the contract tests, to generate the contracts. The pact files will be
-written in the target/pact folder. After that, you can publish the pact into the pact broker with the following command:
-
-``` 
-mvn pact:publish (in the shop module)
-```
-
-Then you can run the contract tests in the provider side, where it is already configured to get it from the pact broker
-
-``` 
-mvn -Dtest=**/contract/** test
-``` 
-
 ## QA Strategy
 
 * Unit Tests: <b>Junit5</b>
@@ -77,7 +54,46 @@ mvn -Dtest=**/contract/** test
   * Code Coverage: <b>Jacoco</b>
   * Technical Debt, Code Smells and other complementary metrics : <b>Sonar Cloud</b>
 * Contract tests: <b>Pact framework</b>
-* Continuous Integration: This project uses Github Action for Continuous Integration, where it executes all the tests and Sonar Cloud Analysis for every pull request, making easier the process of integration every new code into the stable version, and helping in the delivery process.
+* Continuous Integration: This project uses Github Action for Continuous Integration, where it executes all the tests and Sonar Cloud Analysis for every pull request, making easier the process of integration of every new code, also facilitating the process of Code Review.
+
+## Development technology stack
+
+* Development:
+  * Spring Boot 
+  * Java
+  * Maven
+* Kafka
+* MongoDB
+* Github Actions
+* Docker
+
+## Instructions for contract tests with Pact
+
+This project contains contract tests using Pact. In order to run it, first you need to bring up the pact broker.
+To run the pact-broker using Docker, execute:
+
+``` 
+docker-compose -f pactbroker_dockercompose/docker-compose.yml up -d
+```
+
+Then you can go to the producer module and execute the contract tests, to generate the contracts. The pact files will be
+written in the target/pact folder. It is configured to automatically publish the pacts into the pact broker.
+
+``` 
+mvn -f {folder}/ -Dtest=**/contract/*ConsumerPact test
+``` 
+
+If you want to manually publish the pacts into the pact broker, you can execute the following command:
+
+``` 
+mvn pact:publish 
+```
+
+Then you can run the contract tests in the provider side, where it is already configured to get it from the pact broker
+
+``` 
+mvn -f {folder}/ -Dtest=**/contract/*ProviderPact test
+``` 
 
 ## Other info and Utilities
 
@@ -86,13 +102,7 @@ mvn -Dtest=**/contract/** test
 
 * There is a swagger documentation configured for each module. After running the desired module, you can navigate
   to: http://localhost:{port}/swagger-ui/
-
-
-* Generate Jars:
-
-``` 
-mvn clean install 
-```
+  
 
 * Check code Style:
 
