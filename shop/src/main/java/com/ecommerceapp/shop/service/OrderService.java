@@ -1,6 +1,7 @@
 package com.ecommerceapp.shop.service;
 
 import com.ecommerceapp.shop.dto.request.ChangeStockDto;
+import com.ecommerceapp.shop.dto.request.OrderDto;
 import com.ecommerceapp.shop.dto.request.StockOperation;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.model.Order;
@@ -40,12 +41,12 @@ public class OrderService {
     return this.repository.findAll();
   }
 
-  public Order createOrder(Order order) throws EmptyOrderException {
-    if (order.getProducts().isEmpty()) {
+  public Order createOrder(OrderDto orderDto) throws EmptyOrderException {
+    if (orderDto.getProducts().isEmpty()) {
       throw new EmptyOrderException();
     }
 
-    order
+    orderDto
         .getProducts()
         .forEach(
             product -> {
@@ -67,7 +68,7 @@ public class OrderService {
               }
             });
 
-    Order savedOrder = this.repository.save(order);
+    Order savedOrder = this.repository.save(new Order(orderDto.getProducts()));
 
     // send this to shipment module
     messageProducer.sendOrderToShipment(savedOrder);

@@ -1,6 +1,7 @@
 package com.ecommerceapp.shop.controller;
 
 import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.shop.dto.request.OrderDto;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
@@ -91,12 +92,12 @@ public class OrderController {
             response = Error.class),
         @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
       })
-  public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+  public ResponseEntity<Order> createOrder(@RequestBody OrderDto orderDto) {
     logger.info("Creating new order");
 
     try {
       // Create the new order
-      Order newOrder = orderService.createOrder(order);
+      Order newOrder = orderService.createOrder(orderDto);
 
       // Build a created response
       return ResponseEntity.created(new URI("/order/" + newOrder.getId())).body(newOrder);
