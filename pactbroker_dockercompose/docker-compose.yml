@@ -20,11 +20,16 @@ services:
       - "9292:9292"
     depends_on:
       - postgres
+    links:
+      - postgres
     environment:
       PACT_BROKER_PORT: '9292'
       PACT_BROKER_DATABASE_URL: "postgres://postgres:password@postgres/postgres"
       PACT_BROKER_LOG_LEVEL: INFO
       PACT_BROKER_SQL_LOG_LEVEL: DEBUG
+      PACT_BROKER_DATABASE_HOST: postgres
+      PACT_BROKER_DATABASE_USERNAME: postgres
+      PACT_BROKER_DATABASE_PASSWORD: password
 
 volumes:
   postgres-volume:
