@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import com.ecommerceapp.inventory.model.Category;
 import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.shop.dto.request.OrderDto;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
@@ -107,7 +108,7 @@ class OrderServiceTest {
     doReturn(order).when(repository).save(any());
 
     // Act: Call the service method create product
-    Order createdOrder = service.createOrder(order);
+    Order createdOrder = service.createOrder(new OrderDto(order.getProducts()));
 
     // Assert: verify the returned product
     Assertions.assertNotNull(createdOrder, "The saved order should not be null");
@@ -117,13 +118,12 @@ class OrderServiceTest {
   @Test
   @DisplayName("createOrder Empty - should return an error")
   void testCreateOrderEmpty() {
-    // Arrange: Setup our mock
     Order order = new Order();
 
     Assertions.assertThrows(
         EmptyOrderException.class,
         () -> {
-          service.createOrder(order);
+          service.createOrder(new OrderDto(order.getProducts()));
         });
   }
 
@@ -139,7 +139,7 @@ class OrderServiceTest {
     Assertions.assertThrows(
         InvalidParameterException.class,
         () -> {
-          service.createOrder(order);
+          service.createOrder(new OrderDto(order.getProducts()));
         });
   }
 
@@ -157,7 +157,7 @@ class OrderServiceTest {
     Assertions.assertThrows(
         InvalidParameterException.class,
         () -> {
-          service.createOrder(order);
+          service.createOrder(new OrderDto(order.getProducts()));
         });
   }
 
@@ -175,7 +175,7 @@ class OrderServiceTest {
     Assertions.assertThrows(
         StockUpdateException.class,
         () -> {
-          service.createOrder(order);
+          service.createOrder(new OrderDto(order.getProducts()));
         });
   }
 
@@ -194,12 +194,12 @@ class OrderServiceTest {
     doReturn(order).when(repository).save(any());
 
     // Act: Call the services to save a product and then update it
-    service.createOrder(order);
+    service.createOrder(new OrderDto(order.getProducts()));
     order.getProducts().add(new Product(productName, quantity, category));
     Order updatedOrder = service.updateOrder(order);
 
     // Assert: verify the updated product
-    Mockito.verify(repository, Mockito.times(2)).save(order);
+    Mockito.verify(repository, Mockito.times(1)).save(order);
     Assertions.assertEquals(updatedOrder, order);
   }
 }
