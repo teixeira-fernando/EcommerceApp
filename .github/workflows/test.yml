@@ -66,6 +66,8 @@ jobs:
         run: mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
       - name: Consumer Tests - Shipment
         run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+      - name: check running containers
+        run: docker ps -a
       - name: Provider tests - Inventory
         run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
       - name: Provider Tests - Shop
