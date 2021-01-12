@@ -49,7 +49,7 @@ mvn -f shipment/ spring-boot:run
 
 ## QA Strategy
 
-* Unit Tests: <b>Junit5</b>
+* Unit Tests: <b>Junit5 and Mockito</b>
 * Integration tests: <b>Spring Boot Test and EmbeddedKafka</b> (when testing asynchronous events)
 * Quality Metrics:
   * Mutation Tests/Mutation Coverage: <b>PITest</b>
@@ -117,3 +117,7 @@ mvn spotless::check (in the sub-module directory)
 ``` 
 mvn spotless::apply (in the sub-module directory)
 ```
+
+# Articles with more info related to this project
+
+https://medium.com/assertqualityassurance/creating-a-test-strategy-for-asynchronous-microservices-applications-1397f7755e85
