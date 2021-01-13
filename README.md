@@ -50,7 +50,7 @@ mvn -f shipment/ spring-boot:run
 ## QA Strategy
 
 * Unit Tests: <b>Junit5 and Mockito</b>
-* Integration tests: <b>Spring Boot Test and EmbeddedKafka</b> (when testing asynchronous events)
+* Integration tests: <b>Spring Boot Test, WireMock and EmbeddedKafka</b> (when testing asynchronous events)
 * Quality Metrics:
   * Mutation Tests/Mutation Coverage: <b>PITest</b>
   * Code Coverage: <b>Jacoco</b>
