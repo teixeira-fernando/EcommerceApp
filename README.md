@@ -21,7 +21,13 @@ The initial objective of this project was to further study the differences in th
 
 The docker-compose file contains the pre-requisites to run the application: MongoDB and Kafka
 
-So, first run: 
+It's also neccessary to generate some depencies jars from the modules:
+
+```
+mvn clean install
+```
+
+Now, you can bring up the docker-compose: 
 
 ```
 docker-compose up -d
