@@ -64,6 +64,9 @@ jobs:
           mvn -f inventory/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
           mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
           mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+          mvn -f inventory/ pact:publish
+          mvn -f shop/ pact:publish
+          mvn -f shipment/ pact:publish
           mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
           mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
           mvn -f shipment/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
