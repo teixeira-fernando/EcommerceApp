@@ -68,7 +68,7 @@ jobs:
           mvn -f shop/ pact:publish
           mvn -f shipment/ pact:publish
           docker ps
-          curl http://localhost:9292/pacts/latest
+          curl http://localhost:80/pacts/latest
           mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
           mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
           mvn -f shipment/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false

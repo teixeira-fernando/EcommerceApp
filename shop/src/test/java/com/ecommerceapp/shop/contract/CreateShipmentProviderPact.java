@@ -21,7 +21,8 @@ import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @Provider("OrderModule")
-@PactBroker(host = "localhost", port = "9292")
+@PactBroker(host = "${pactbroker.hostname}",
+        port = "${pactbroker.port}")
 @VerificationReports
 @IgnoreNoPactsToVerify
 class CreateShipmentProviderPact {
