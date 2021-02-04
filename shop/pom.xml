@@ -132,7 +132,7 @@
                 <artifactId>pact-jvm-provider-maven</artifactId>
                 <version>4.0.6</version>
                 <configuration>
-                    <pactBrokerUrl>http://${pact-broker-host}:9292</pactBrokerUrl>
+                    <pactBrokerUrl>http://${pact-broker-host}:80</pactBrokerUrl>
                     <pactDirectory>target/pacts</pactDirectory>
                     <tags>
                         <tag>master</tag>
