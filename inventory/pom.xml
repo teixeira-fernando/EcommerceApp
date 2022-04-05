@@ -243,7 +243,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
         <relativePath/>
-        <version>2.3.2.RELEASE</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
+        <version>2.6.6</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
     </parent>
 
     <properties>
