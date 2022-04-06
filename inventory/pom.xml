@@ -252,7 +252,7 @@
         <sonar.coverage.jacoco.xmlReportPaths>
             ${project.basedir}/../inventory/target/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
         <pact.provider.name>ProductModule</pact.provider.name>
     </properties>
