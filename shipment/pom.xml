@@ -153,7 +153,7 @@
             <plugin>
                 <groupId>au.com.dius</groupId>
                 <artifactId>pact-jvm-provider-maven</artifactId>
-                <version>4.0.6</version>
+                <version>4.0.10</version>
                 <configuration>
                     <pactBrokerUrl>http://${pact-broker-host}:9292</pactBrokerUrl>
                     <pactDirectory>target/pacts</pactDirectory>
