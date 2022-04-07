@@ -4,8 +4,19 @@
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
+      "automerge": true,
+      "automergeType": "pr",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin", 
+        "digest"
+      ],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
     }
   ]
 }
