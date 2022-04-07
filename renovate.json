@@ -2,6 +2,9 @@
   "extends": [
     "config:base"
   ],
+  "separateMajorMinor": true,
+  "separateMultipleMajor": true,
+  "branchPrefix": "renovate/",
   "packageRules": [
     {
       "automerge": true,
