@@ -1,0 +1,78 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: 'ecommerceapp-mongodb'
+    ports:
+      - "27017:27017"
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    ports:
+      - target: 9092
+        published: 9092
+        protocol: tcp
+        mode: host
+    environment:
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9091,OUTSIDE://_{HOSTNAME_COMMAND}:9092
+      KAFKA_LISTENERS: INSIDE://:9091,OUTSIDE://:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - zookeeper
+
+  inventory:
+    image: teixeirafernando/ecommerceapp-inventory:latest
+    container_name: inventory
+    ports:
+      - "7080:7080"
+    environment:
+      - MONGODB_HOST=mongodb
+    depends_on:
+      - mongodb
+      - zookeeper
+      - kafka
+
+  shop:
+    image: teixeirafernando/ecommerceapp-shop:latest
+    container_name: shop
+    ports:
+      - "7081:7081"
+    environment:
+      - MONGODB_HOST=mongodb
+      - INVENTORY_HOST=inventory
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=9092
+    links:
+      - kafka:kafka
+    depends_on:
+      - mongodb
+      - zookeeper
+      - kafka
+      - inventory
+
+  shipment:
+    image: teixeirafernando/ecommerceapp-shipment:latest
+    container_name: shipment
+    ports:
+      - "7082:7082"
+    environment:
+      - MONGODB_HOST=mongodb
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=9092
+    depends_on:
+      - mongodb
+      - zookeeper
+      - kafka
+      - inventory
