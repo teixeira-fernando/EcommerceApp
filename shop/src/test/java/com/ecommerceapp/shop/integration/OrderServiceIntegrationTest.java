@@ -48,10 +48,13 @@ class OrderServiceIntegrationTest {
   @Value(value = "${inventory.port}")
   private String port;
 
+  @Value(value = "${kafka.port}")
+  private String kafkaPort;
+
   @BeforeAll
   public void setup() {
-    embeddedKafkaBroker.setZkPort(63178);
-    embeddedKafkaBroker.kafkaPorts(63178);
+    embeddedKafkaBroker.setZkPort(Integer.parseInt(kafkaPort));
+    embeddedKafkaBroker.kafkaPorts(Integer.parseInt(kafkaPort));
   }
 
   @BeforeEach

@@ -1,7 +1,6 @@
 package com.ecommerceapp.inventory.dto.request;
 
 import com.ecommerceapp.inventory.model.Category;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import lombok.Getter;

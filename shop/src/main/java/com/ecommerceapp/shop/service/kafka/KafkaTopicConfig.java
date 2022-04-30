@@ -16,7 +16,7 @@ public class KafkaTopicConfig {
 
   private static final Logger logger = LogManager.getLogger(KafkaTopicConfig.class);
 
-  @Value(value = "${kafka.bootstrapAddress}")
+  @Value(value = "${kafka.host}" + ":" + "${kafka.port}")
   private String bootstrapAddress;
 
   @Value(value = "${message.topic.name}")

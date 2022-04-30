@@ -18,7 +18,7 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 @Configuration
 public class KafkaConsumerConfig {
 
-  @Value(value = "${kafka.bootstrapAddress}")
+  @Value(value = "${kafka.host}" + ":" + "${kafka.port}")
   private String bootstrapAddress;
 
   @Value(value = "${kafka.groupId}")

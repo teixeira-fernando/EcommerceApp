@@ -16,7 +16,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 @Configuration
 public class KafkaProducerConfig {
 
-  @Value(value = "${kafka.bootstrapAddress}")
+  @Value(value = "${kafka.host}" + ":" + "${kafka.port}")
   private String bootstrapAddress;
 
   @Bean
