@@ -8,12 +8,11 @@ import au.com.dius.pact.consumer.MockServer;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
 import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.time.Duration;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.fluent.Request;
@@ -25,18 +24,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(PactConsumerTestExt.class)
-@PactTestFor(providerName = "ProductModule")
+@PactTestFor(providerName = "ProductModule", pactVersion = PactSpecVersion.V3)
 class UpdateStockConsumerPact {
-
-  private HttpClient client;
-
-  public UpdateStockConsumerPact() {
-    client =
-        HttpClient.newBuilder()
-            .connectTimeout(Duration.ofSeconds(10))
-            .version(HttpClient.Version.HTTP_2)
-            .build();
-  }
 
   @BeforeAll
   public static void config() {

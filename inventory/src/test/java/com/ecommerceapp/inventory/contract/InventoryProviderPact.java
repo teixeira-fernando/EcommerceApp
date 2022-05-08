@@ -9,6 +9,7 @@ import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;
 import au.com.dius.pact.provider.junitsupport.VerificationReports;
 import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
+import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth;
 import au.com.dius.pact.provider.junitsupport.loader.VersionSelector;
 import au.com.dius.pact.provider.spring.junit5.PactVerificationSpringProvider;
 import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
@@ -30,9 +31,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Provider("ProductModule")
 @PactBroker(
-    consumerVersionSelectors = {@VersionSelector(tag = "master", latest = "true")},
-    host = "${pactbroker.hostname}",
-    port = "${pactbroker.port}")
+    url = "${pactbroker.url}",
+    consumerVersionSelectors = {@VersionSelector(latest = "true")},
+    authentication = @PactBrokerAuth(token = "${pactbroker.token}"))
 @VerificationReports
 @IgnoreNoPactsToVerify
 class InventoryProviderPact {
@@ -43,9 +44,7 @@ class InventoryProviderPact {
 
   @BeforeEach
   void setUp(PactVerificationContext context) throws MalformedURLException {
-    if (context != null) {
-      context.setTarget(HttpTestTarget.fromUrl(new URL("http://localhost:" + localServerPort)));
-    }
+    context.setTarget(HttpTestTarget.fromUrl(new URL("http://localhost:" + localServerPort)));
   }
 
   @TestTemplate

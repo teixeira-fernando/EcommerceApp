@@ -20,7 +20,8 @@
     <properties>
         <java.version>11</java.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <pact-broker-host>localhost</pact-broker-host>
+        <pact-broker-url>https://teixeirafernando.pactflow.io</pact-broker-url>
+        <pact-broker-token>CZvbudBzx-EPCopSjNcsPw</pact-broker-token>
     </properties>
 
 
@@ -155,7 +156,8 @@
                 <artifactId>pact-jvm-provider-maven</artifactId>
                 <version>4.0.6</version>
                 <configuration>
-                    <pactBrokerUrl>http://${pact-broker-host}:9292</pactBrokerUrl>
+                    <pactBrokerUrl>${pact-broker-url}</pactBrokerUrl>
+                    <pactBrokerToken>${pact-broker-token}</pactBrokerToken>
                     <pactDirectory>target/pacts</pactDirectory>
                     <tags>
                         <tag>master</tag>
@@ -263,9 +265,16 @@
         </dependency>
 
         <dependency>
-            <groupId>au.com.dius.pact.consumer</groupId>
-            <artifactId>junit5</artifactId>
-            <version>4.1.0</version>
+            <groupId>au.com.dius</groupId>
+            <artifactId>pact-jvm-consumer-junit5</artifactId>
+            <version>4.0.10</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
