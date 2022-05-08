@@ -37,3 +37,7 @@ db/data/*
 #shop
 /shop/target/
 /shop/shop.iml
+
+#shipment
+/shipment/target/
+/shipment/shipment.iml

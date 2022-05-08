@@ -19,9 +19,8 @@
 
     <properties>
         <java.version>11</java.version>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <pact-broker-url>https://teixeirafernando.pactflow.io</pact-broker-url>
-        <pact-broker-token>CZvbudBzx-EPCopSjNcsPw</pact-broker-token>
+        <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
+        <pact-broker-host>localhost</pact-broker-host>
     </properties>
 
 
@@ -30,7 +29,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>2.22.1</version>
                 <executions>
                     <execution>
                         <id>apply</id>
@@ -77,7 +76,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.2</version>
+                <version>3.2.2</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
@@ -93,7 +92,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.8</version>
                 <executions>
                     <execution>
                         <goals>
@@ -122,7 +121,7 @@
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.5.2</version>
+                <version>1.7.5</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
@@ -154,10 +153,9 @@
             <plugin>
                 <groupId>au.com.dius</groupId>
                 <artifactId>pact-jvm-provider-maven</artifactId>
-                <version>4.0.6</version>
+                <version>4.0.10</version>
                 <configuration>
-                    <pactBrokerUrl>${pact-broker-url}</pactBrokerUrl>
-                    <pactBrokerToken>${pact-broker-token}</pactBrokerToken>
+                    <pactBrokerUrl>http://${pact-broker-host}:9292</pactBrokerUrl>
                     <pactDirectory>target/pacts</pactDirectory>
                     <tags>
                         <tag>master</tag>
@@ -210,7 +208,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
+            <version>1.18.22</version>
             <scope>provided</scope>
         </dependency>
 
@@ -218,7 +216,7 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>2.0.0.Final</version>
+            <version>2.0.1.Final</version>
         </dependency>
 
         <dependency>
@@ -253,7 +251,7 @@
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
-            <version>4.0.2</version>
+            <version>4.2.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -261,20 +259,13 @@
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
-            <version>0.17.2</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>
-            <groupId>au.com.dius</groupId>
-            <artifactId>pact-jvm-consumer-junit5</artifactId>
-            <version>4.0.10</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>au.com.dius.pact.consumer</groupId>
+            <artifactId>junit5</artifactId>
+            <version>4.3.6</version>
         </dependency>
 
     </dependencies>

@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "separateMajorMinor": true,
+  "separateMultipleMajor": true,
+  "branchPrefix": "renovate/",
+  "packageRules": [
+    {
+      "automerge": true,
+      "automergeType": "pr",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin", 
+        "digest"
+      ],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
+    }
+  ]
+}
