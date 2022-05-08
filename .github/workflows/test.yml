@@ -88,13 +88,17 @@ jobs:
             ${{ runner.os }}-maven-
       - name: Generate test jars for dependencies
         run: mvn clean install
-      - name: Execute contract tests
-        run: |
-          mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-          mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-          mvn -f shop/ pact:publish
-          mvn -f shipment/ pact:publish
-          mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
-          mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+      - name: Shop Consumer Tests
+        run: mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+      - name: Shipment Consumer Tests
+        run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+      - name: Shop Publish Pacts
+        run: mvn -f shop/ pact:publish
+      - name: Shipment Publish Pacts
+        run: mvn -f shipment/ pact:publish
+      - name: Inventory Provider Tests
+        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+      - name: Shop Provider Tests
+        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
 
 
