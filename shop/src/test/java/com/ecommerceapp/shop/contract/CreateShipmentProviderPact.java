@@ -21,11 +21,10 @@ import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @Provider("OrderModule")
-@PactBroker(host = "${pactbroker.hostname}",
-        port = "${pactbroker.port}")
+@PactBroker(host = "localhost", port = "80")
 @VerificationReports
 @IgnoreNoPactsToVerify
-class CreateShipmentProviderPact {
+public class CreateShipmentProviderPact {
 
   static ObjectMapper mapper = new ObjectMapper();
 
@@ -43,7 +42,7 @@ class CreateShipmentProviderPact {
 
   @TestTemplate
   @ExtendWith(PactVerificationInvocationContextProvider.class)
-  void pactVerificationTestTemplate(PactVerificationContext context) {
+  public void pactVerificationTestTemplate(PactVerificationContext context) {
     context.setTarget(new AmpqTestTarget());
     context.verifyInteraction();
   }
