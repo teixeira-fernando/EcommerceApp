@@ -127,12 +127,14 @@
                     <timestampedReports>false</timestampedReports>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>au.com.dius</groupId>
                 <artifactId>pact-jvm-provider-maven</artifactId>
                 <version>4.0.10</version>
                 <configuration>
-                    <pactBrokerUrl>http://${pact-broker-host}:9292</pactBrokerUrl>
+                    <pactBrokerUrl>${pact-broker-url}</pactBrokerUrl>
+                    <pactBrokerToken>${pact-broker-token}</pactBrokerToken>
                     <pactDirectory>target/pacts</pactDirectory>
                     <tags>
                         <tag>master</tag>
@@ -223,13 +225,6 @@
 
         <dependency>
             <groupId>au.com.dius</groupId>
-            <artifactId>pact-jvm-provider</artifactId>
-            <version>4.0.10</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-provider-junit5</artifactId>
             <version>4.0.10</version>
             <scope>test</scope>
@@ -311,8 +306,9 @@
 
     <properties>
         <java.version>11</java.version>
-        <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
-        <pact-broker-host>localhost</pact-broker-host>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <pact-broker-url>https://teixeirafernando.pactflow.io</pact-broker-url>
+        <pact-broker-token>CZvbudBzx-EPCopSjNcsPw</pact-broker-token>
     </properties>
 
     <version>0.0.1-SNAPSHOT</version>
