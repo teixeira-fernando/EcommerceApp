@@ -135,21 +135,6 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M6</version>
-                <configuration>
-                    <systemPropertyVariables>
-                        <pact.provider.name>${pact.provider.name}</pact.provider.name>
-                        <pact.verifier.publishResults>true</pact.verifier.publishResults>
-                        <pact.provider.tag>master</pact.provider.tag>
-                    </systemPropertyVariables>
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                </configuration>
-            </plugin>
-
-
         </plugins>
     </build>
 
@@ -191,26 +176,13 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>provided</scope>
+            <version>1.18.24</version>
         </dependency>
 
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/au.com.dius.pact.provider/junit5 -->
-        <dependency>
-            <groupId>au.com.dius.pact.provider</groupId>
-            <artifactId>junit5</artifactId>
-            <version>4.3.6</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>au.com.dius</groupId>
-            <artifactId>pact-jvm-provider-junit5-spring</artifactId>
-            <version>4.0.10</version>
         </dependency>
 
         <dependency>
@@ -231,6 +203,12 @@
             <version>3.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>au.com.dius.pact.provider</groupId>
+            <artifactId>junit5spring</artifactId>
+            <version>4.3.6</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -254,7 +232,6 @@
         </sonar.coverage.jacoco.xmlReportPaths>
         <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
-        <pact.provider.name>ProductModule</pact.provider.name>
     </properties>
 
     <version>0.0.1-SNAPSHOT</version>
