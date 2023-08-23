@@ -72,6 +72,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
+      PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+
     steps:
       - name: Download repository
         uses: actions/checkout@v3
