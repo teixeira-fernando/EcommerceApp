@@ -23,10 +23,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @Provider("OrderModule")
 @PactBroker(
-        scheme = "https",
-        host = "${pactbroker.url}",
-        consumerVersionSelectors = {@VersionSelector(tag = "master"), @VersionSelector(tag = "prod")},
-        authentication = @PactBrokerAuth(token = "${pactbroker.token}"))
+    scheme = "https",
+    host = "${pactbroker.host}",
+    consumerVersionSelectors = {@VersionSelector(tag = "master"), @VersionSelector(tag = "prod")},
+    authentication = @PactBrokerAuth(token = "${pactbroker.token}"))
 public class CreateShipmentProviderPact {
 
   static ObjectMapper mapper = new ObjectMapper();
