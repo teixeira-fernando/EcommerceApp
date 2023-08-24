@@ -31,9 +31,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Provider("ProductModule")
 @PactBroker(
-    url = "${pactbroker.url}",
+    url = "${PACT_BROKER_URL}",
     consumerVersionSelectors = {@VersionSelector(latest = "true")},
-    authentication = @PactBrokerAuth(token = "${pactbroker.token}"))
+    authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 @VerificationReports
 @IgnoreNoPactsToVerify
 class InventoryProviderPact {
