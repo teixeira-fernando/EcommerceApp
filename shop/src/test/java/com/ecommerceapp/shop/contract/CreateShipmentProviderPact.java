@@ -23,10 +23,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @Provider("OrderModule")
 @PactBroker(
-        scheme = "https",
-        host = "teixeirafernando.pactflow.io",
-        consumerVersionSelectors = {@VersionSelector(tag = "master"), @VersionSelector(tag = "prod")},
-        authentication = @PactBrokerAuth(token = "CZvbudBzx-EPCopSjNcsPw"))
+    scheme = "https",
+    host = "${PACT_BROKER_HOST}",
+    consumerVersionSelectors = {@VersionSelector(tag = "master")},
+    authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 public class CreateShipmentProviderPact {
 
   static ObjectMapper mapper = new ObjectMapper();
@@ -45,7 +45,8 @@ public class CreateShipmentProviderPact {
 
   @TestTemplate
   @ExtendWith(PactVerificationInvocationContextProvider.class)
-  void pactVerificationTestTemplate(Pact pact, Interaction interaction, PactVerificationContext context) {
+  void pactVerificationTestTemplate(
+      Pact pact, Interaction interaction, PactVerificationContext context) {
     context.verifyInteraction();
   }
 
