@@ -79,6 +79,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
+          distribution: 'adopt'
       - name: Cache
         uses: actions/cache@v3.3.1
         with:
