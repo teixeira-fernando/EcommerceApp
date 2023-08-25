@@ -19,7 +19,6 @@
 
     <properties>
         <java.version>11</java.version>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
     </properties>
 
     <build>
@@ -59,12 +58,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.3.2.RELEASE</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -178,10 +178,12 @@
         <dependency>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <groupId>org.springframework.boot</groupId>
+            <version>2.3.2.RELEASE</version>
         </dependency>
         <dependency>
             <artifactId>spring-boot-starter-web</artifactId>
             <groupId>org.springframework.boot</groupId>
+            <version>2.3.12.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -194,6 +196,7 @@
             </exclusions>
             <groupId>org.springframework.boot</groupId>
             <scope>test</scope>
+            <version>2.3.2.RELEASE</version>
         </dependency>
         <dependency>
             <artifactId>persistence-api</artifactId>
@@ -204,6 +207,7 @@
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <groupId>de.flapdoodle.embed</groupId>
             <scope>test</scope>
+            <version>2.2.0</version>
         </dependency>
 
         <dependency>
@@ -211,7 +215,6 @@
             <artifactId>lombok</artifactId>
             <version>1.18.24</version>
         </dependency>
-
 
         <dependency>
             <groupId>javax.validation</groupId>
@@ -240,12 +243,14 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+            <version>2.7.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
+            <version>2.7.2</version>
         </dependency>
 
         <dependency>
