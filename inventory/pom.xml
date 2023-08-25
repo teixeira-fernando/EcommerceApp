@@ -40,12 +40,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.1.2</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
+                <version>3.10.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -55,6 +56,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
@@ -143,10 +145,12 @@
         <dependency>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <groupId>org.springframework.boot</groupId>
+            <version>2.7.14</version>
         </dependency>
         <dependency>
             <artifactId>spring-boot-starter-web</artifactId>
             <groupId>org.springframework.boot</groupId>
+            <version>2.7.14</version>
         </dependency>
 
         <dependency>
@@ -158,6 +162,7 @@
                 </exclusion>
             </exclusions>
             <groupId>org.springframework.boot</groupId>
+            <version>3.1.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -168,11 +173,13 @@
         <dependency>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
             <groupId>org.springframework.boot</groupId>
+            <version>3.1.2</version>
         </dependency>
         <dependency>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <groupId>de.flapdoodle.embed</groupId>
             <scope>test</scope>
+            <version>2.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -227,12 +234,9 @@
 
     <properties>
         <java.version>11</java.version>
-        <maven.compiler.release>11</maven.compiler.release>
         <sonar.coverage.jacoco.xmlReportPaths>
             ${project.basedir}/../inventory/target/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
-        <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
-        <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
     </properties>
 
     <version>0.0.1-SNAPSHOT</version>
