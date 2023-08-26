@@ -1,14 +1,14 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Tests and Sonar Cloud
+name: PR pipeline
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build:
+  build-and-tests:
 
     runs-on: ubuntu-latest
 
@@ -26,14 +26,15 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Test with Maven
-        #run: mvn -B test --file pom.xml
+      - name: Test with Maven - Unit and Integration Tests
         run: mvn clean test surefire-report:report -Daggregate=true
       - name: Publish Test Report
+        if: always()
         uses: scacap/action-surefire-report@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Archive test results
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: test-results-report
@@ -76,6 +77,9 @@ jobs:
       PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
       PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
       PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+      PACT_BROKER_PUBLISH_VERIFICATION_RESULTS: true
+      GIT_COMMIT: ${{ github.SHA }}
+
 
     steps:
       - name: Download repository
@@ -103,8 +107,8 @@ jobs:
       - name: Shipment Publish Pacts
         run: mvn -f shipment/ pact:publish
       - name: Inventory Provider Tests
-        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${{ github.HEAD_REF }}
       - name: Shop Provider Tests
-        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${{ github.HEAD_REF }}
 
 
