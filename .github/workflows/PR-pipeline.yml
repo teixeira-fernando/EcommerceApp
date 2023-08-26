@@ -107,8 +107,8 @@ jobs:
       - name: Shipment Publish Pacts
         run: mvn -f shipment/ pact:publish
       - name: Inventory Provider Tests
-        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${GITHUB_REF}
       - name: Shop Provider Tests
-        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false
+        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${GITHUB_REF}
 
 
