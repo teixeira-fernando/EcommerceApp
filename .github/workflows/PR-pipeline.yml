@@ -79,7 +79,7 @@ jobs:
       PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
       PACT_BROKER_PUBLISH_VERIFICATION_RESULTS: true
       GIT_COMMIT: ${{ github.SHA }}
-      GITHUB_REF: ${{ github.GITHUB_REF_NAME }}
+
 
     steps:
       - name: Download repository
@@ -107,8 +107,8 @@ jobs:
       - name: Shipment Publish Pacts
         run: mvn -f shipment/ pact:publish
       - name: Inventory Provider Tests
-        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${GITHUB_REF}
+        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${{ github.HEAD_REF }}
       - name: Shop Provider Tests
-        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${GITHUB_REF}
+        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${{ github.HEAD_REF }}
 
 
