@@ -140,11 +140,9 @@
                     <pactBrokerUrl>${env.PACT_BROKER_URL}</pactBrokerUrl>
                     <!--suppress UnresolvedMavenProperty -->
                     <pactBrokerToken>${env.PACT_BROKER_TOKEN}</pactBrokerToken>
-                    <!--suppress UnresolvedMavenProperty -->
-                    <pacticipantVersion>${env.GITHUB_SHA}</pacticipantVersion>
                     <tags>
                         <!--suppress UnresolvedMavenProperty -->
-                        <tag>${env.GITHUB_REF_NAME}</tag>
+                        <tag>${env.HEAD_REF}</tag>
                     </tags>
                     <trimSnapshot>true</trimSnapshot>
                 </configuration>

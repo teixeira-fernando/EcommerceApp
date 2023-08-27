@@ -103,12 +103,12 @@ jobs:
       - name: Shipment Consumer Tests
         run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
       - name: Shop Publish Pacts
-        run: mvn -f shop/ pact:publish
+        run: mvn -f shop/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=${{ github.HEAD_REF }}
       - name: Shipment Publish Pacts
-        run: mvn -f shipment/ pact:publish
+        run: mvn -f shipment/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=${{ github.HEAD_REF }}
       - name: Inventory Provider Tests
         run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${{ github.HEAD_REF }}
       - name: Shop Provider Tests
-        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${{ github.HEAD_REF }}
+        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=${{ github.HEAD_REF }} -Dpact.provider.tag=${{ github.HEAD_REF }}
 
 
