@@ -140,10 +140,6 @@
                     <pactBrokerUrl>${env.PACT_BROKER_URL}</pactBrokerUrl>
                     <!--suppress UnresolvedMavenProperty -->
                     <pactBrokerToken>${env.PACT_BROKER_TOKEN}</pactBrokerToken>
-                    <tags>
-                        <!--suppress UnresolvedMavenProperty -->
-                        <tag>${env.HEAD_REF}</tag>
-                    </tags>
                     <trimSnapshot>true</trimSnapshot>
                 </configuration>
             </plugin>
