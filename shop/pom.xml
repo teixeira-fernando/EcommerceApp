@@ -140,6 +140,8 @@
                     <pactBrokerUrl>${env.PACT_BROKER_URL}</pactBrokerUrl>
                     <!--suppress UnresolvedMavenProperty -->
                     <pactBrokerToken>${env.PACT_BROKER_TOKEN}</pactBrokerToken>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <projectVersion>${env.GIT_COMMIT}</projectVersion>
                     <trimSnapshot>true</trimSnapshot>
                 </configuration>
             </plugin>
