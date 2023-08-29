@@ -172,6 +172,6 @@ jobs:
       - name: Shipment Consumer Tests
         run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
       - name: Shop Publish Pacts
-        run: mvn -f shop/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=${{ github.HEAD_REF }} -Dpact.consumer.tags=${{ github.HEAD_REF }} -DtoEnvironment=production
+        run: mvn -f shop/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=master -Dpact.consumer.tags=master -DtoEnvironment=production
       - name: Shipment Publish Pacts
-        run: mvn -f shipment/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=${{ github.HEAD_REF }} -Dpact.consumer.tags=${{ github.HEAD_REF }} -DtoEnvironment=production
+        run: mvn -f shipment/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=master -Dpact.consumer.tags=master -DtoEnvironment=production
