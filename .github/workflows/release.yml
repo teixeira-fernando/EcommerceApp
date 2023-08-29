@@ -137,3 +137,41 @@ jobs:
         run: docker image tag ecommerceapp/shipment teixeirafernando/ecommerceapp-shipment:latest
       - name: Push Docker Image - shipment
         run: docker image push teixeirafernando/ecommerceapp-shipment:latest
+
+
+  pact-record-deployment:
+
+    runs-on: ubuntu-latest
+
+    env:
+      PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
+      PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
+      PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+      PACT_BROKER_PUBLISH_VERIFICATION_RESULTS: true
+      GIT_COMMIT: ${{ github.SHA }}
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: 'adopt'
+      - name: Cache
+        uses: actions/cache@v3.3.1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Generate test jars for dependencies
+        run: mvn clean install
+      - name: Shop Consumer Tests
+        run: mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+      - name: Shipment Consumer Tests
+        run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+      - name: Shop Publish Pacts
+        run: mvn -f shop/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=${{ github.HEAD_REF }} -Dpact.consumer.tags=${{ github.HEAD_REF }} -DtoEnvironment=production
+      - name: Shipment Publish Pacts
+        run: mvn -f shipment/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=${{ github.HEAD_REF }} -Dpact.consumer.tags=${{ github.HEAD_REF }} -DtoEnvironment=production
