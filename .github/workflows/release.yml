@@ -6,6 +6,13 @@ on:
   release:
     branches: [ master ]
 
+env:
+  PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
+  PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
+  PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+  PACT_BROKER_PUBLISH_VERIFICATION_RESULTS: true
+  GIT_COMMIT: ${{ github.SHA }}
+
 jobs:
 
   quality-metrics:
@@ -139,16 +146,24 @@ jobs:
         run: docker image push teixeirafernando/ecommerceapp-shipment:latest
 
 
+  pact-record-deployment-with-make:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker pull pactfoundation/pact-cli:latest
+      - name: Pact record-deployment - ShipmentModule
+        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=${ShipmentModule} make record_deployment
+        if: github.ref == 'refs/heads/master'
+      - name: Pact record-deployment - OrderModule
+        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=${OrderModule} make record_deployment
+        if: github.ref == 'refs/heads/master'
+      - name: Pact record-deployment - ProductModule
+        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=${ProductModule} make record_deployment
+        if: github.ref == 'refs/heads/master'
+
   pact-record-deployment:
 
     runs-on: ubuntu-latest
-
-    env:
-      PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
-      PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
-      PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
-      PACT_BROKER_PUBLISH_VERIFICATION_RESULTS: true
-      GIT_COMMIT: ${{ github.SHA }}
 
     steps:
       - name: Download repository
@@ -172,6 +187,6 @@ jobs:
       - name: Shipment Consumer Tests
         run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
       - name: Shop Publish Pacts
-        run: mvn -f shop/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=${{ github.HEAD_REF }} -Dpact.consumer.tags=${{ github.HEAD_REF }} -DtoEnvironment=production
+        run: mvn -f shop/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=master -Dpact.consumer.tags=master -DtoEnvironment=production
       - name: Shipment Publish Pacts
-        run: mvn -f shipment/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=${{ github.HEAD_REF }} -Dpact.consumer.tags=${{ github.HEAD_REF }} -DtoEnvironment=production
+        run: mvn -f shipment/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=master -Dpact.consumer.tags=master -DtoEnvironment=production
