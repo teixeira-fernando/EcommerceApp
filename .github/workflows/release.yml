@@ -149,7 +149,7 @@ jobs:
   pact-record-deployment-with-make:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: docker pull pactfoundation/pact-cli:latest
       - name: Pact record-deployment - ShipmentModule
         run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=${ShipmentModule} make record_deployment
