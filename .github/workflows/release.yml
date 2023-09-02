@@ -145,22 +145,6 @@ jobs:
       - name: Push Docker Image - shipment
         run: docker image push teixeirafernando/ecommerceapp-shipment:latest
 
-
-  pact-record-deployment-with-make:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: docker pull pactfoundation/pact-cli:latest
-      - name: Pact record-deployment - ShipmentModule
-        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=ShipmentModule make record_deployment
-        if: github.ref == 'refs/heads/master'
-      - name: Pact record-deployment - OrderModule
-        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=OrderModule make record_deployment
-        if: github.ref == 'refs/heads/master'
-      - name: Pact record-deployment - ProductModule
-        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=ProductModule make record_deployment
-        if: github.ref == 'refs/heads/master'
-
   pact-record-deployment:
 
     runs-on: ubuntu-latest
@@ -190,3 +174,12 @@ jobs:
         run: mvn -f shop/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=master -Dpact.consumer.tags=master -DtoEnvironment=production
       - name: Shipment Publish Pacts
         run: mvn -f shipment/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=master -Dpact.consumer.tags=master -DtoEnvironment=production
+      - name: Pact record-deployment - ShipmentModule
+        run: GIT_BRANCH=master PACTICIPANT=ShipmentModule make record_deployment
+        if: github.ref == 'refs/heads/master'
+      - name: Pact record-deployment - OrderModule
+        run: GIT_BRANCH=master PACTICIPANT=OrderModule make record_deployment
+        if: github.ref == 'refs/heads/master'
+      - name: Pact record-deployment - ProductModule
+        run: GIT_BRANCH=master PACTICIPANT=ProductModule make record_deployment
+        if: github.ref == 'refs/heads/master'
