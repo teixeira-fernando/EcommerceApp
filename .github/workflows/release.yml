@@ -152,13 +152,13 @@ jobs:
       - uses: actions/checkout@v2
       - run: docker pull pactfoundation/pact-cli:latest
       - name: Pact record-deployment - ShipmentModule
-        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=${ShipmentModule} make record_deployment
+        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=ShipmentModule make record_deployment
         if: github.ref == 'refs/heads/master'
       - name: Pact record-deployment - OrderModule
-        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=${OrderModule} make record_deployment
+        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=OrderModule make record_deployment
         if: github.ref == 'refs/heads/master'
       - name: Pact record-deployment - ProductModule
-        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=${ProductModule} make record_deployment
+        run: GIT_BRANCH=${GITHUB_REF:11} PACTICIPANT=ProductModule make record_deployment
         if: github.ref == 'refs/heads/master'
 
   pact-record-deployment:
