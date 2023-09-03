@@ -1,7 +1,9 @@
 package com.ecommerceapp.shop.contract;
 
+import au.com.dius.pact.core.model.Interaction;
+import au.com.dius.pact.core.model.Pact;
 import au.com.dius.pact.provider.PactVerifyProvider;
-import au.com.dius.pact.provider.junit5.MessageTestTarget;
+import au.com.dius.pact.provider.junit5.AmpqTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
 import au.com.dius.pact.provider.junitsupport.*;
