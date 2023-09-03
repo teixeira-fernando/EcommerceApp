@@ -175,5 +175,5 @@ jobs:
       - name: Run pact record-deployment
         run: |
           GIT_BRANCH=master PACTICIPANT=ShipmentModule make record_deployment
-          GIT_BRANCH=master PACTICIPANT=OrderModule make record_deployment
-          GIT_BRANCH=master PACTICIPANT=ProductModule make record_deployment
+          GIT_BRANCH=master PACTICIPANT=ShopModule make record_deployment
+          GIT_BRANCH=master PACTICIPANT=InventoryModule make record_deployment
