@@ -21,11 +21,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@Provider("OrderModule")
+@Provider("ShopModule")
 @PactBroker(
     scheme = "https",
     host = "${PACT_BROKER_HOST}",
-    consumerVersionSelectors = {@VersionSelector(tag = "master")},
+    consumerVersionSelectors = {
+      @VersionSelector(latest = "true")
+    },
     authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 public class CreateShipmentProviderPact {
 

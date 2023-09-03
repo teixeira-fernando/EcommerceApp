@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(PactConsumerTestExt.class)
-@PactTestFor(providerName = "ProductModule", pactVersion = PactSpecVersion.V3)
+@PactTestFor(providerName = "InventoryModule", pactVersion = PactSpecVersion.V3)
 class UpdateStockConsumerPact {
 
   @BeforeAll
@@ -37,7 +37,7 @@ class UpdateStockConsumerPact {
     assertThat(mockServer, is(notNullValue()));
   }
 
-  @Pact(provider = "ProductModule", consumer = "OrderModule")
+  @Pact(provider = "InventoryModule", consumer = "ShopModule")
   public RequestResponsePact updateStock(PactDslWithProvider builder) {
     return builder
         .given("trying to update the stock of a product by id")

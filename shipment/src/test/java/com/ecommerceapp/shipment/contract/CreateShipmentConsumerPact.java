@@ -27,7 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(PactConsumerTestExt.class)
 @PactTestFor(
-    providerName = "OrderModule",
+    providerName = "ShopModule",
     providerType = ProviderType.ASYNCH,
     pactVersion = PactSpecVersion.V3)
 class CreateShipmentConsumerPact {
@@ -50,7 +50,7 @@ class CreateShipmentConsumerPact {
     System.setProperty("pact.verifier.publishResults", "true");
   }
 
-  @Pact(provider = "OrderModule", consumer = "ShipmentModule")
+  @Pact(provider = "ShopModule", consumer = "ShipmentModule")
   public MessagePact createPactJsonMessage(MessagePactBuilder builder) {
     String id = "1";
     String productName = "Samsung TV Led";
