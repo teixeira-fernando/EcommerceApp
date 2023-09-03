@@ -166,24 +166,14 @@ jobs:
             ${{ runner.os }}-maven-
       - name: Generate test jars for dependencies
         run: mvn clean install
-      - name: Shop Consumer Tests
-        run: mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-      - name: Shipment Consumer Tests
-        run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-      - name: Shop Publish Pacts
-        run: mvn -f shop/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=master -Dpact.consumer.tags=master -DtoEnvironment=production
-      - name: Shipment Publish Pacts
-        run: mvn -f shipment/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=master -Dpact.consumer.tags=master -DtoEnvironment=production
+      - name: Run Pact Consumer Tests
+        run: make run-pact-consumer-tests
+      - name: Publish Pacts to PactFlow
+        run: GIT_BRANCH=${{ github.HEAD_REF }} make publish-pacts
       - name: Inventory Provider Tests
-        run: mvn -f inventory/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=master -Dpact.provider.tag=master
-      - name: Shop Provider Tests
-        run: mvn -f shop/ -Dtest=**/contract/*ProviderPact test -DfailIfNoTests=false -Dpact.provider.version=${GIT_COMMIT} -Dpact.provider.branch=master -Dpact.provider.tag=master
-      - name: Pact record-deployment - ShipmentModule
-        run: GIT_BRANCH=master PACTICIPANT=ShipmentModule make record_deployment
-        if: github.ref == 'refs/heads/master'
-      - name: Pact record-deployment - OrderModule
-        run: GIT_BRANCH=master PACTICIPANT=OrderModule make record_deployment
-        if: github.ref == 'refs/heads/master'
-      - name: Pact record-deployment - ProductModule
-        run: GIT_BRANCH=master PACTICIPANT=ProductModule make record_deployment
-        if: github.ref == 'refs/heads/master'
+        run: GIT_BRANCH=${{ github.HEAD_REF }} make run-pact-provider-tests
+      - name: Run pact record-deployment
+        run: |
+          GIT_BRANCH=master PACTICIPANT=ShipmentModule make record_deployment
+          GIT_BRANCH=master PACTICIPANT=OrderModule make record_deployment
+          GIT_BRANCH=master PACTICIPANT=ProductModule make record_deployment
