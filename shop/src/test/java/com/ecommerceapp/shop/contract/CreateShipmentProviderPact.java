@@ -26,8 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
     scheme = "https",
     host = "${PACT_BROKER_HOST}",
     consumerVersionSelectors = {
-      @VersionSelector(latest = "true"),
-      @VersionSelector(tag = "master", latest = "true")
+      @VersionSelector(latest = "true")
     },
     authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 public class CreateShipmentProviderPact {
