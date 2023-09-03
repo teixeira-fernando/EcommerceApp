@@ -32,7 +32,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @Provider("InventoryModule")
 @PactBroker(
     url = "${PACT_BROKER_URL}",
-    consumerVersionSelectors = {@VersionSelector(latest = "true")},
+    consumerVersionSelectors = {
+      @VersionSelector(latest = "true"),
+      @VersionSelector(tag = "master", latest = "true")
+    },
     authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 @VerificationReports
 @IgnoreNoPactsToVerify
