@@ -46,14 +46,18 @@ class InventoryProviderPact {
 
   @BeforeEach
   void setUp(PactVerificationContext context) throws MalformedURLException {
-    context.setTarget(HttpTestTarget.fromUrl(new URL("http://localhost:" + localServerPort)));
+    if (context != null){
+      context.setTarget(HttpTestTarget.fromUrl(new URL("http://localhost:" + localServerPort)));
+    }
   }
 
   @TestTemplate
   @ExtendWith(PactVerificationSpringProvider.class)
   void pactVerificationTestTemplate(PactVerificationContext context) {
-    System.setProperty("pact.verifier.publishResults", "true");
-    context.verifyInteraction();
+    if (context != null) {
+      System.setProperty("pact.verifier.publishResults", "true");
+      context.verifyInteraction();
+    }
   }
 
   @State("trying to get a product by id")
