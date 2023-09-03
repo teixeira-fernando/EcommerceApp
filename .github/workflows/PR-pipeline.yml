@@ -97,10 +97,8 @@ jobs:
             ${{ runner.os }}-maven-
       - name: Generate test jars for dependencies
         run: mvn clean install
-      - name: Shop Consumer Tests
-        run: mvn -f shop/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
-      - name: Shipment Consumer Tests
-        run: mvn -f shipment/ -Dtest=**/contract/*ConsumerPact test -DfailIfNoTests=false
+      - name: Run Pact Consumer Tests
+        run: make run-pact-consumer-tests
       - name: Shop Publish Pacts
         run: mvn -f shop/ pact:publish -Dpact.publish.consumer.version=${GIT_COMMIT} -Dpact.publish.consumer.branchName=${{ github.HEAD_REF }} -Dpact.consumer.tags=${{ github.HEAD_REF }}
       - name: Shipment Publish Pacts
