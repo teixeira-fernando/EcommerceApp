@@ -169,9 +169,9 @@ jobs:
       - name: Run Pact Consumer Tests
         run: make run-pact-consumer-tests
       - name: Publish Pacts to PactFlow
-        run: GIT_BRANCH=${{ github.HEAD_REF }} make publish-pacts
+        run: GIT_BRANCH=master make publish-pacts
       - name: Inventory Provider Tests
-        run: GIT_BRANCH=${{ github.HEAD_REF }} make run-pact-provider-tests
+        run: GIT_BRANCH=master make run-pact-provider-tests
       - name: Run pact record-deployment
         run: |
           GIT_BRANCH=master PACTICIPANT=ShipmentModule make record_deployment
