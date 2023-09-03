@@ -205,7 +205,7 @@
         <dependency>
             <groupId>au.com.dius.pact.provider</groupId>
             <artifactId>junit5</artifactId>
-            <version>4.1.7</version>
+            <version>4.1.35</version>
             <scope>test</scope>
         </dependency>
 
