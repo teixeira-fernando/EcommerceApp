@@ -33,8 +33,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @PactBroker(
     url = "${PACT_BROKER_URL}",
     consumerVersionSelectors = {
-      @VersionSelector(latest = "true"),
-      @VersionSelector(tag = "master", latest = "true")
+      @VersionSelector(latest = "true")
     },
     authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 @VerificationReports
