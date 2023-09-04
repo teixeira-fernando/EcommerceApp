@@ -77,12 +77,21 @@ mvn -f shipment/ spring-boot:run
 
 ## Instructions for contract tests with Pact
 
-This project contains contract tests using Pact. In order to run it, first you need to bring up the pact broker.
-To run the pact-broker using Docker, execute:
+This project contains contract tests using Pact. You need to setup your [PactFlow](https://pactflow.io/) account in order to use it.
 
-``` 
-docker-compose -f pactbroker_dockercompose/docker-compose.yml up -d
-```
+
+PS: Be aware of some environment variables you may need to run some of the commands below and also the pipeline:
+
+* PACT_BROKER_URL
+  * Correspond to the url of your personal pact flow account
+* PACT_BROKER_TOKEN
+  * Correspond to the token from your pact flow account with full rights to read and write
+* PACT_BROKER_HOST
+  * Correspond to the host value of your Pact flow account
+
+### Running the pact tests locally
+
+Besides the CI configuration where the tests are configured to run. You can also run them locally. You need first to also set some of the variables mentioned above.
 
 Then you can go to the producer module and execute the contract tests, to generate the contracts. The pact files will be
 written in the target/pact folder. It is configured to automatically publish the pacts into the pact broker.
