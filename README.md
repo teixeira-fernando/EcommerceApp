@@ -21,7 +21,7 @@ The initial objective of this project was to further study the differences in th
 
 The docker-compose file contains the pre-requisites to run the application: MongoDB and Kafka
 
-It's also neccessary to generate some depencies jars from the modules:
+It's also necessary to generate some dependencies jars from the modules:
 
 ```
 mvn clean install
@@ -74,6 +74,13 @@ mvn -f shipment/ spring-boot:run
 * MongoDB
 * Github Actions
 * Docker
+
+## Pipeline configuration
+
+This repository includes 2 pipelines.
+
+* PR_Pipeline: Runs a build for every created PR, executing the different test suites of the project and validating the code quality of the introduced changes
+* release-pipeline: Run after every merge to master branch. It does the release process, including creating and publishing docker images for every project module, tagging the pacts, etc. 
 
 ## Instructions for contract tests with Pact
 
