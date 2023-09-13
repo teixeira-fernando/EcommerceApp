@@ -8,14 +8,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.ecommerceapp.inventory.controller.InventoryController;
-import com.ecommerceapp.inventory.model.Category;
-import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.controller.OrderController;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.model.OrderStatus;
+import com.ecommerceapp.shop.model.inventory.Category;
+import com.ecommerceapp.shop.model.inventory.Product;
 import com.ecommerceapp.shop.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.InvalidParameterException;
@@ -30,7 +29,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest({OrderController.class, InventoryController.class})
+@WebMvcTest({OrderController.class})
 class OrderControllerTest {
 
   @MockBean private OrderService service;

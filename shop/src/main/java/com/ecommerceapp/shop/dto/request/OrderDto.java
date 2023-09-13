@@ -1,6 +1,6 @@
 package com.ecommerceapp.shop.dto.request;
 
-import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.shop.model.inventory.Product;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;

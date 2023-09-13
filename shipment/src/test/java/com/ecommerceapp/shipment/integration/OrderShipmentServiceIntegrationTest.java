@@ -2,12 +2,12 @@ package com.ecommerceapp.shipment.integration;
 
 import static org.awaitility.Awaitility.await;
 
-import com.ecommerceapp.inventory.model.Category;
-import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shipment.model.OrderShipment;
+import com.ecommerceapp.shipment.model.inventory.Category;
+import com.ecommerceapp.shipment.model.inventory.Product;
+import com.ecommerceapp.shipment.model.shop.Order;
 import com.ecommerceapp.shipment.service.kafka.KafkaConsumerConfig;
 import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
-import com.ecommerceapp.shop.model.Order;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
