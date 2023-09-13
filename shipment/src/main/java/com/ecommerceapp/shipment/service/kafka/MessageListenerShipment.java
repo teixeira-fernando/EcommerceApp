@@ -1,7 +1,7 @@
 package com.ecommerceapp.shipment.service.kafka;
 
+import com.ecommerceapp.shipment.model.shop.Order;
 import com.ecommerceapp.shipment.service.ShipmentService;
-import com.ecommerceapp.shop.model.Order;
 import java.util.concurrent.CountDownLatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

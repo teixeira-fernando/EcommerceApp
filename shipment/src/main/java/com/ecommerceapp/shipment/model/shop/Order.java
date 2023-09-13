@@ -1,6 +1,6 @@
-package com.ecommerceapp.shop.model;
+package com.ecommerceapp.shipment.model.shop;
 
-import com.ecommerceapp.shop.model.inventory.Product;
+import com.ecommerceapp.shipment.model.inventory.Product;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.Date;

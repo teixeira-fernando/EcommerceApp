@@ -1,6 +1,6 @@
 package com.ecommerceapp.shipment.service.kafka;
 
-import com.ecommerceapp.shop.model.Order;
+import com.ecommerceapp.shipment.model.shop.Order;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

@@ -7,13 +7,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-import com.ecommerceapp.inventory.model.Category;
-import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shipment.controller.ShipmentController;
 import com.ecommerceapp.shipment.model.Location;
 import com.ecommerceapp.shipment.model.OrderShipment;
+import com.ecommerceapp.shipment.model.inventory.Category;
+import com.ecommerceapp.shipment.model.inventory.Product;
+import com.ecommerceapp.shipment.model.shop.Order;
 import com.ecommerceapp.shipment.service.ShipmentService;
-import com.ecommerceapp.shop.model.Order;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;

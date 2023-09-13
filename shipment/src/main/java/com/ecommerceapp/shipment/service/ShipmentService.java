@@ -2,9 +2,9 @@ package com.ecommerceapp.shipment.service;
 
 import com.ecommerceapp.shipment.model.Location;
 import com.ecommerceapp.shipment.model.OrderShipment;
+import com.ecommerceapp.shipment.model.shop.Order;
 import com.ecommerceapp.shipment.repository.OrderShipmentRepository;
 import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
-import com.ecommerceapp.shop.model.Order;
 import com.github.javafaker.Faker;
 import java.time.LocalDate;
 import java.util.List;

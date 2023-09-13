@@ -168,12 +168,6 @@
 
     <dependencies>
         <dependency>
-            <artifactId>shop</artifactId>
-            <groupId>com.ecommerceapp</groupId>
-            <version>0.0.1-SNAPSHOT</version>
-            <classifier>qa</classifier>
-        </dependency>
-        <dependency>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <groupId>org.springframework.boot</groupId>
             <version>2.3.2.RELEASE</version>
@@ -183,6 +177,12 @@
             <groupId>org.springframework.boot</groupId>
             <version>2.5.12</version>
         </dependency>
+
+      <dependency>
+        <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <version>3.1.2</version>
+      </dependency>
 
         <dependency>
             <artifactId>spring-boot-starter-test</artifactId>

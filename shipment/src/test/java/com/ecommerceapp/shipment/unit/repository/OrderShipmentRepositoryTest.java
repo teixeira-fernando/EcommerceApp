@@ -1,11 +1,11 @@
 package com.ecommerceapp.shipment.unit.repository;
 
-import com.ecommerceapp.inventory.model.Category;
-import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shipment.model.Location;
 import com.ecommerceapp.shipment.model.OrderShipment;
+import com.ecommerceapp.shipment.model.inventory.Category;
+import com.ecommerceapp.shipment.model.inventory.Product;
+import com.ecommerceapp.shipment.model.shop.Order;
 import com.ecommerceapp.shipment.repository.OrderShipmentRepository;
-import com.ecommerceapp.shop.model.Order;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

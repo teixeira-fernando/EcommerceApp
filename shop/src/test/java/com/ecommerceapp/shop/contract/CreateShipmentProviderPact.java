@@ -10,9 +10,9 @@ import au.com.dius.pact.provider.junitsupport.*;
 import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
 import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth;
 import au.com.dius.pact.provider.junitsupport.loader.VersionSelector;
-import com.ecommerceapp.inventory.model.Category;
-import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.shop.model.Order;
+import com.ecommerceapp.shop.model.inventory.Category;
+import com.ecommerceapp.shop.model.inventory.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,9 +25,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @PactBroker(
     scheme = "https",
     host = "${PACT_BROKER_HOST}",
-    consumerVersionSelectors = {
-      @VersionSelector(latest = "true")
-    },
+    consumerVersionSelectors = {@VersionSelector(latest = "true")},
     authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 public class CreateShipmentProviderPact {
 
