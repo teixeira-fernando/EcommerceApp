@@ -9,6 +9,7 @@
         <module>shop</module>
         <module>inventory</module>
         <module>shipment</module>
+      <module>base-domain</module>
     </modules>
     <packaging>pom</packaging>
 

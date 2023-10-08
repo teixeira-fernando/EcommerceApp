@@ -1,9 +1,9 @@
 package com.ecommerceapp.inventory.service;
 
+import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
 import com.ecommerceapp.inventory.dto.request.ProductDto;
 import com.ecommerceapp.inventory.dto.request.StockOperation;
-import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
 import java.util.List;
 import java.util.NoSuchElementException;

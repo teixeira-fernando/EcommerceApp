@@ -8,13 +8,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.ecommerceapp.domain.Category;
+import com.ecommerceapp.domain.Order;
+import com.ecommerceapp.domain.OrderStatus;
+import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.shop.controller.OrderController;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
-import com.ecommerceapp.shop.model.Order;
-import com.ecommerceapp.shop.model.OrderStatus;
-import com.ecommerceapp.shop.model.inventory.Category;
-import com.ecommerceapp.shop.model.inventory.Product;
 import com.ecommerceapp.shop.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.InvalidParameterException;

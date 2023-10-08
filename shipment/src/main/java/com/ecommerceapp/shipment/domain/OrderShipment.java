@@ -1,6 +1,6 @@
-package com.ecommerceapp.shipment.model;
+package com.ecommerceapp.shipment.domain;
 
-import com.ecommerceapp.shipment.model.shop.Order;
+import com.ecommerceapp.domain.Order;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.Date;

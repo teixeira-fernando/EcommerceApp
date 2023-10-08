@@ -1,7 +1,7 @@
 package com.ecommerceapp.inventory.unit.repository;
 
-import com.ecommerceapp.inventory.model.Category;
-import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.domain.Category;
+import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
 import java.util.List;
 import java.util.Optional;

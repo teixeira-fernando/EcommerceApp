@@ -1,8 +1,8 @@
 package com.ecommerceapp.shipment.service;
 
-import com.ecommerceapp.shipment.model.Location;
-import com.ecommerceapp.shipment.model.OrderShipment;
-import com.ecommerceapp.shipment.model.shop.Order;
+import com.ecommerceapp.domain.Order;
+import com.ecommerceapp.shipment.domain.Location;
+import com.ecommerceapp.shipment.domain.OrderShipment;
 import com.ecommerceapp.shipment.repository.OrderShipmentRepository;
 import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
 import com.github.javafaker.Faker;

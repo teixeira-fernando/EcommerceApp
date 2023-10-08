@@ -148,6 +148,11 @@
         </plugins>
     </build>
     <dependencies>
+      <dependency>
+        <groupId>com.ecommerceapp</groupId>
+        <artifactId>base-domain</artifactId>
+        <version>1.0.0</version>
+      </dependency>
         <dependency>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <groupId>org.springframework.boot</groupId>
@@ -292,9 +297,6 @@
           <version>1.0.2</version>
           <scope>compile</scope>
         </dependency>
-
-
-
     </dependencies>
     <description>Ecommerce Shop</description>
     <groupId>com.ecommerceapp</groupId>

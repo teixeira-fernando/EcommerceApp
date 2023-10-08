@@ -1,10 +1,10 @@
 package com.ecommerceapp.shop.controller;
 
+import com.ecommerceapp.domain.Order;
+import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.shop.dto.request.OrderDto;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
-import com.ecommerceapp.shop.model.Order;
-import com.ecommerceapp.shop.model.inventory.Product;
 import com.ecommerceapp.shop.service.OrderService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

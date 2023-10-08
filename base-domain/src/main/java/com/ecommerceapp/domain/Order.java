@@ -1,19 +1,21 @@
-package com.ecommerceapp.shipment.model.shop;
+package com.ecommerceapp.domain;
 
-import com.ecommerceapp.shipment.model.inventory.Product;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Document(collection = "Order")
 @Entity
+@Repository
 public class Order {
 
   @Id
