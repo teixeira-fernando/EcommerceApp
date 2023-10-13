@@ -1,4 +1,4 @@
-package com.ecommerceapp.shop.model.inventory;
+package com.ecommerceapp.domain;
 
 public enum Category {
   ELECTRONICS,

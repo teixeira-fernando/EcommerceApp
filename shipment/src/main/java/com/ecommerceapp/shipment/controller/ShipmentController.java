@@ -1,6 +1,6 @@
 package com.ecommerceapp.shipment.controller;
 
-import com.ecommerceapp.shipment.model.OrderShipment;
+import com.ecommerceapp.shipment.domain.OrderShipment;
 import com.ecommerceapp.shipment.service.ShipmentService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

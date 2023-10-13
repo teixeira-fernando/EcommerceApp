@@ -1,10 +1,10 @@
 package com.ecommerceapp.shop.service;
 
+import com.ecommerceapp.domain.Order;
 import com.ecommerceapp.shop.dto.request.ChangeStockDto;
 import com.ecommerceapp.shop.dto.request.OrderDto;
 import com.ecommerceapp.shop.dto.request.StockOperation;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
-import com.ecommerceapp.shop.model.Order;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import com.ecommerceapp.shop.service.kafka.MessageProducer;
 import java.net.URISyntaxException;

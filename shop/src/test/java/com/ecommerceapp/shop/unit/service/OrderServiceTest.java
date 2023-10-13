@@ -4,12 +4,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
+import com.ecommerceapp.domain.Category;
+import com.ecommerceapp.domain.Order;
+import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.shop.dto.request.OrderDto;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
-import com.ecommerceapp.shop.model.Order;
-import com.ecommerceapp.shop.model.inventory.Category;
-import com.ecommerceapp.shop.model.inventory.Product;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import com.ecommerceapp.shop.service.InventoryClient;
 import com.ecommerceapp.shop.service.OrderService;

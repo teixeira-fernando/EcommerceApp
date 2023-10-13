@@ -2,9 +2,9 @@ package com.ecommerceapp.shipment.integration;
 
 import static org.awaitility.Awaitility.await;
 
-import com.ecommerceapp.shipment.model.inventory.Category;
-import com.ecommerceapp.shipment.model.inventory.Product;
-import com.ecommerceapp.shipment.model.shop.Order;
+import com.ecommerceapp.domain.Category;
+import com.ecommerceapp.domain.Order;
+import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.shipment.repository.OrderShipmentRepository;
 import com.ecommerceapp.shipment.service.ShipmentService;
 import com.ecommerceapp.shipment.service.kafka.KafkaConsumerConfig;

@@ -6,11 +6,11 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.ecommerceapp.domain.Category;
+import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.inventory.controller.InventoryController;
 import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
 import com.ecommerceapp.inventory.dto.request.StockOperation;
-import com.ecommerceapp.inventory.model.Category;
-import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;

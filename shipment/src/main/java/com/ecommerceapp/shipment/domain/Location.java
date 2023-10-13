@@ -1,4 +1,4 @@
-package com.ecommerceapp.shipment.model;
+package com.ecommerceapp.shipment.domain;
 
 import javax.persistence.Entity;
 import lombok.Getter;

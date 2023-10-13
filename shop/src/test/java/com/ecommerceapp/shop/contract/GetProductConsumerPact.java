@@ -13,7 +13,7 @@ import au.com.dius.pact.consumer.junit5.PactTestFor;
 import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
-import com.ecommerceapp.shop.model.inventory.Category;
+import com.ecommerceapp.domain.Category;
 import java.io.IOException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;

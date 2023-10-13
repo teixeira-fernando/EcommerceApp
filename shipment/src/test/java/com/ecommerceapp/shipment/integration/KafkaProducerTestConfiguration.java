@@ -1,6 +1,6 @@
 package com.ecommerceapp.shipment.integration;
 
-import com.ecommerceapp.shipment.model.shop.Order;
+import com.ecommerceapp.domain.Order;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;

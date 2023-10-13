@@ -1,6 +1,6 @@
 package com.ecommerceapp.shop.service.kafka;
 
-import com.ecommerceapp.shop.model.Order;
+import com.ecommerceapp.domain.Order;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

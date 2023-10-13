@@ -1,8 +1,8 @@
 package com.ecommerceapp.inventory.controller;
 
+import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
 import com.ecommerceapp.inventory.dto.request.ProductDto;
-import com.ecommerceapp.inventory.model.Product;
 import com.ecommerceapp.inventory.service.InventoryService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

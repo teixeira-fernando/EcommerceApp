@@ -1,6 +1,6 @@
 package com.ecommerceapp.inventory.repository;
 
-import com.ecommerceapp.inventory.model.Product;
+import com.ecommerceapp.domain.Product;
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

@@ -167,6 +167,11 @@
     </build>
 
     <dependencies>
+      <dependency>
+        <groupId>com.ecommerceapp</groupId>
+        <artifactId>base-domain</artifactId>
+        <version>1.0.0</version>
+      </dependency>
         <dependency>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <groupId>org.springframework.boot</groupId>
