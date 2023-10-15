@@ -304,6 +304,14 @@
     <name>shop</name>
     <packaging>jar</packaging>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>my-maven-packages</name>
+      <url>https://maven.pkg.github.com/teixeira-fernando/ecommerceapp</url>
+    </repository>
+  </distributionManagement>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

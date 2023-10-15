@@ -17,6 +17,14 @@
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>my-maven-packages</name>
+      <url>https://maven.pkg.github.com/teixeira-fernando/ecommerceapp</url>
+    </repository>
+  </distributionManagement>
+
     <properties>
         <java.version>11</java.version>
     </properties>

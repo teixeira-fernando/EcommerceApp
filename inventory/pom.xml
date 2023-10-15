@@ -226,7 +226,13 @@
     </dependencies>
 
 
-
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>my-maven-packages</name>
+      <url>https://maven.pkg.github.com/teixeira-fernando/ecommerceapp</url>
+    </repository>
+  </distributionManagement>
 
     <description>Ecommerce Inventory</description>
     <groupId>com.ecommerceapp</groupId>
