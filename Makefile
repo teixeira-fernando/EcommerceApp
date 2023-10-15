@@ -14,3 +14,9 @@ run-pact-provider-tests:
 
 record_deployment:
 	@"${PACT_CLI}" pact-broker record_deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production --broker-base-url=${PACT_BROKER_URL} --broker-token=${PACT_BROKER_TOKEN}
+
+publish_all_packages:
+	mvn -f inventory/ deploy -s settings.xml -Dserver.github.password=${GITHUB_TOKEN}
+	mvn -f shop/ deploy -s settings.xml -Dserver.github.password=${GITHUB_TOKEN}
+	mvn -f shipment/ deploy -s settings.xml -Dserver.github.password=${GITHUB_TOKEN}
+	mvn -f base-domain/ deploy -s settings.xml -Dserver.github.password=${GITHUB_TOKEN}
