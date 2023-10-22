@@ -2,11 +2,11 @@ package com.ecommerceapp.shipment.domain;
 
 import com.ecommerceapp.domain.Order;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
