@@ -24,10 +24,11 @@ import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Provider("InventoryModule")
 @PactBroker(
     url = "${PACT_BROKER_URL}",
@@ -37,11 +38,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @IgnoreNoPactsToVerify
 class InventoryProviderPact {
 
+  @LocalServerPort private int localServerPort;
+
   @MockBean private InventoryService inventoryService;
 
   @BeforeEach
   void setUp(PactVerificationContext context) throws MalformedURLException {
-    context.setTarget(HttpTestTarget.fromUrl(new URL("http://localhost:" + 7080)));
+    context.setTarget(HttpTestTarget.fromUrl(new URL("http://localhost:" + localServerPort)));
   }
 
   @TestTemplate
