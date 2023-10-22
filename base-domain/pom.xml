@@ -49,7 +49,7 @@
     <dependency>
       <artifactId>spring-boot-starter-data-mongodb</artifactId>
       <groupId>org.springframework.boot</groupId>
-      <version>2.7.14</version>
+      <version>3.1.2</version>
     </dependency>
     <dependency>
       <artifactId>de.flapdoodle.embed.mongo</artifactId>
@@ -73,9 +73,9 @@
   </distributionManagement>
 
   <properties>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <java.version>11</java.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.plugin.validation>VERBOSE</maven.plugin.validation>
     <revision>1.0.0-SNAPSHOT</revision>

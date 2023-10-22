@@ -8,7 +8,6 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.22.1</version>
                 <executions>
                     <execution>
                         <id>apply</id>
@@ -40,13 +39,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.2.RELEASE</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -150,12 +147,10 @@
         <dependency>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <groupId>org.springframework.boot</groupId>
-            <version>2.7.14</version>
         </dependency>
         <dependency>
             <artifactId>spring-boot-starter-web</artifactId>
             <groupId>org.springframework.boot</groupId>
-            <version>2.7.14</version>
         </dependency>
 
         <dependency>
@@ -167,25 +162,19 @@
                 </exclusion>
             </exclusions>
             <groupId>org.springframework.boot</groupId>
-            <version>3.1.2</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <artifactId>persistence-api</artifactId>
-            <groupId>javax.persistence</groupId>
-            <version>1.0.2</version>
         </dependency>
         <dependency>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
             <groupId>org.springframework.boot</groupId>
-            <version>3.1.2</version>
+          <version>3.1.2</version>
         </dependency>
-        <dependency>
-            <artifactId>de.flapdoodle.embed.mongo</artifactId>
-            <groupId>de.flapdoodle.embed</groupId>
-            <scope>test</scope>
-            <version>2.2.0</version>
-        </dependency>
+      <dependency>
+        <artifactId>de.flapdoodle.embed.mongo</artifactId>
+        <groupId>de.flapdoodle.embed</groupId>
+        <scope>test</scope>
+        <version>3.5.4</version>
+      </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -193,26 +182,8 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>2.0.1.Final</version>
-        </dependency>
-
-        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
             <version>3.0.0</version>
         </dependency>
 
@@ -243,11 +214,11 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
         <relativePath/>
-        <version>2.3.2.RELEASE</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
+        <version>3.1.2</version>
     </parent>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <sonar.coverage.jacoco.xmlReportPaths>
             ${project.basedir}/../inventory/target/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
