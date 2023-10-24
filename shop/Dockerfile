@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine-slim
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
