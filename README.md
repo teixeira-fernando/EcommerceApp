@@ -3,6 +3,13 @@
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=teixeira-fernando_EcommerceApp&metric=bugs)](https://sonarcloud.io/dashboard?id=teixeira-fernando_EcommerceApp)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=teixeira-fernando_EcommerceApp&metric=sqale_index)](https://sonarcloud.io/dashboard?id=teixeira-fernando_EcommerceApp)
 
+![Shipment module Pact verification](https://img.shields.io/badge/shipmentmodule%2Fshopmodule%20pact-verified-brightgreen.svg)
+![Inventory module Pact verification](https://teixeirafernando.pactflow.io/pacts/provider/InventoryModule/consumer/ShopModule/latest/badge.svg)
+
+
+
+
+
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=teixeira-fernando_EcommerceApp)](https://sonarcloud.io/dashboard?id=teixeira-fernando_EcommerceApp)
 
 # E-commerce App - Exploring QA strategies for microservices with Synchronous and Asynchronous communication 
