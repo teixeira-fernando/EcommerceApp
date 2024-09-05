@@ -22,7 +22,15 @@ The initial objective of this project was to further study the differences in th
 * Inventory
 * Shipment
 
-![alt text](images/EcommerceappDiagram.png "EcommerceApp modules comunication")
+![alt text](images/EcommerceappDiagram.png "EcommerceApp modules communication")
+
+
+## Requirements to run it locally
+
+To run it locally, you have two options:
+
+* To Run it using Docker, you need only Docker and Docker compose installed on your machine
+* To run using your IDE, you need Java 17 and Maven configured on your machine
 
 ## Instructions to run the project
 
@@ -40,7 +48,7 @@ Now, you can bring up the docker-compose:
 docker-compose up -d
 ```
 
-Then, you can run the application modules:
+Or you can also run each application module individually:
 
 Run Inventory:
 
@@ -75,7 +83,7 @@ mvn -f shipment/ spring-boot:run
 
 * Development:
   * Spring Boot 
-  * Java
+  * Java 17
   * Maven
 * Kafka
 * MongoDB
