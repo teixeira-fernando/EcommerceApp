@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM openjdk:17.0.2-jdk-slim
 WORKDIR /app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
