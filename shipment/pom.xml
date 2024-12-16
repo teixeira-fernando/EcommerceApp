@@ -254,14 +254,14 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-            <version>2.7.2</version>
+            <version>3.3.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
-            <version>2.7.2</version>
+            <version>3.3.1</version>
         </dependency>
 
         <dependency>
