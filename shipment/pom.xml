@@ -6,7 +6,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
         <relativePath/>
-        <version>2.3.3.RELEASE</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
+        <version>2.3.2.RELEASE</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -64,9 +64,14 @@
             </plugin>
 
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.2.RELEASE</version>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-maven-plugin</artifactId>
+              <version>2.3.3.RELEASE</version>
+              <configuration>
+                <image>
+                  <builder>paketobuildpacks/builder:base</builder>
+                </image>
+              </configuration>
             </plugin>
 
             <plugin>
