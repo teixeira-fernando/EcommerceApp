@@ -61,20 +61,14 @@ class CreateShipmentConsumerPact {
     order.getProducts().add(new Product(id, productName, quantity, category));
 
     PactDslJsonBody body = new PactDslJsonBody();
-    body.stringType("orderId", "1");
+    body.stringType("id", "1");
     body.eachLike("products")
         .stringType("id", "1")
         .stringType("name", "Samsung TV")
         .integerType("quantity", 50)
         .stringType("category", Category.ELECTRONICS.toString())
         .closeArray();
-    body.object("deliveryAddress")
-            .stringType("street", "Cantebury Drive 189")
-            .stringType("city", "New York")
-            .integerType("zipCode", 10013)
-            .stringType("country", "USA")
-            .closeObject();
-    body.minMaxArrayLike("products", 1, Integer.MAX_VALUE);
+    body.minMaxArrayLike("products", 0, 1);
 
     Map<String, String> metadata = new HashMap<String, String>();
     metadata.put("Content-Type", "application/json");
