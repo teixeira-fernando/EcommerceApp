@@ -28,7 +28,7 @@ jobs:
           java-version: 17
           distribution: 'adopt'
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -84,13 +84,13 @@ jobs:
           java-version: 17
           distribution: 'adopt'
       - name: Cache SonarCloud packages
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -114,7 +114,7 @@ jobs:
           java-version: 17
           distribution: 'adopt'
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -158,7 +158,7 @@ jobs:
           java-version: 17
           distribution: 'adopt'
       - name: Cache
-        uses: actions/cache@v4.0.2
+        uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
