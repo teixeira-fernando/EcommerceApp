@@ -17,7 +17,7 @@
 
     <properties>
       <java.version>17</java.version>
-      <sonar.version>4.0.0.4121</sonar.version>
+      <sonar.version>5.1.0.4751</sonar.version>
       <sonar.projectKey>teixeira-fernando_EcommerceApp</sonar.projectKey>
       <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
       <sonar.organization>teixeira-fernando</sonar.organization>
