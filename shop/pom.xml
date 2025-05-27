@@ -191,7 +191,7 @@
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <groupId>de.flapdoodle.embed</groupId>
             <scope>test</scope>
-            <version>2.2.0</version>
+            <version>3.5.4</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
