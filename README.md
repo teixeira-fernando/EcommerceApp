@@ -6,7 +6,6 @@
 ![Can I Deploy - Inventory](https://teixeirafernando.pactflow.io/pacticipants/InventoryModule/branches/master/latest-version/can-i-deploy/to-environment/production/badge)
 
 
-
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=teixeira-fernando_EcommerceApp)](https://sonarcloud.io/dashboard?id=teixeira-fernando_EcommerceApp)
 
 # E-commerce App - Exploring QA strategies for microservices with Synchronous and Asynchronous communication 
