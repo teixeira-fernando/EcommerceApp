@@ -29,7 +29,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.24</version>
+      <version>1.18.38</version>
     </dependency>
     <dependency>
       <groupId>io.springfox</groupId>
@@ -49,7 +49,7 @@
     <dependency>
       <artifactId>spring-boot-starter-data-mongodb</artifactId>
       <groupId>org.springframework.boot</groupId>
-      <version>3.1.2</version>
+      <version>3.5.0</version>
     </dependency>
     <dependency>
       <artifactId>de.flapdoodle.embed.mongo</artifactId>
@@ -60,7 +60,7 @@
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-deploy-plugin</artifactId>
-      <version>3.1.1</version>
+      <version>3.1.4</version>
     </dependency>
   </dependencies>
 

@@ -8,7 +8,7 @@
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>2.35.0</version>
+        <version>2.44.5</version>
         <executions>
           <execution>
             <id>apply</id>
@@ -40,7 +40,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.3.3.RELEASE</version>
+        <version>2.7.18</version>
         <configuration>
           <image>
             <builder>paketobuildpacks/builder:base</builder>
@@ -51,7 +51,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
+        <version>3.14.0</version>
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
@@ -61,7 +61,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.4.2</version>
         <executions>
           <execution>
             <phase>prepare-package</phase>
@@ -83,7 +83,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.8</version>
+        <version>0.8.13</version>
         <executions>
           <execution>
             <goals>
@@ -113,12 +113,12 @@
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>1.7.5</version>
+        <version>1.19.5</version>
         <dependencies>
           <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-junit5-plugin</artifactId>
-            <version>0.12</version>
+            <version>0.16</version>
           </dependency>
         </dependencies>
         <configuration>
@@ -155,12 +155,12 @@
     <dependency>
       <artifactId>spring-boot-starter-actuator</artifactId>
       <groupId>org.springframework.boot</groupId>
-      <version>2.7.14</version>
+      <version>2.7.18</version>
     </dependency>
     <dependency>
       <artifactId>spring-boot-starter-web</artifactId>
       <groupId>org.springframework.boot</groupId>
-      <version>2.7.14</version>
+      <version>2.7.18</version>
     </dependency>
 
     <dependency>
@@ -172,7 +172,7 @@
         </exclusion>
       </exclusions>
       <groupId>org.springframework.boot</groupId>
-      <version>3.1.2</version>
+      <version>3.5.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -183,7 +183,7 @@
     <dependency>
       <artifactId>spring-boot-starter-data-mongodb</artifactId>
       <groupId>org.springframework.boot</groupId>
-      <version>3.1.2</version>
+      <version>3.5.0</version>
     </dependency>
     <dependency>
       <artifactId>de.flapdoodle.embed.mongo</artifactId>
@@ -194,7 +194,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.24</version>
+      <version>1.18.38</version>
     </dependency>
 
     <dependency>
@@ -224,7 +224,7 @@
     <dependency>
       <groupId>au.com.dius.pact.provider</groupId>
       <artifactId>junit5spring</artifactId>
-      <version>4.3.6</version>
+      <version>4.6.17</version>
       <scope>test</scope>
     </dependency>
 
@@ -248,7 +248,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <relativePath/>
-    <version>2.3.2.RELEASE</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
+    <version>2.7.18</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
   </parent>
 
   <properties>
