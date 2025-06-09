@@ -40,7 +40,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.3.3.RELEASE</version>
+        <version>3.5.0</version>
         <configuration>
           <image>
             <builder>paketobuildpacks/builder:base</builder>
@@ -155,12 +155,12 @@
     <dependency>
       <artifactId>spring-boot-starter-actuator</artifactId>
       <groupId>org.springframework.boot</groupId>
-      <version>2.7.14</version>
+      <version>3.5.0</version>
     </dependency>
     <dependency>
       <artifactId>spring-boot-starter-web</artifactId>
       <groupId>org.springframework.boot</groupId>
-      <version>2.7.14</version>
+      <version>3.5.0</version>
     </dependency>
 
     <dependency>
@@ -248,7 +248,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <relativePath/>
-    <version>2.3.2.RELEASE</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
+    <version>3.5.0</version> <!-- lookup parent from com.ecommerceapp.shipment.repository -->
   </parent>
 
   <properties>
