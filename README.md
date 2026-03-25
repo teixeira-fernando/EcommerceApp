@@ -12,6 +12,7 @@
 
 The initial objective of this project was to further study the differences in the development and implementation of quality strategies for microservices with synchronous and asynchronous communication. I decided to do all the development of the application and the tests from scratch to be able to better observe some details in practice.
 
+
 ## Microservices
 
 * Shop
