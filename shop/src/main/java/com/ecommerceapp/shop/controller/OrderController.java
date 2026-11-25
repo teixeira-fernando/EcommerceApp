@@ -1,13 +1,12 @@
 package com.ecommerceapp.shop.controller;
 
 import com.ecommerceapp.domain.Order;
-import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.shop.dto.request.OrderDto;
 import com.ecommerceapp.shop.exceptions.EmptyOrderException;
 import com.ecommerceapp.shop.exceptions.StockUpdateException;
 import com.ecommerceapp.shop.service.OrderService;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
@@ -37,12 +36,9 @@ public class OrderController {
    */
   @ApiResponses(
       value = {
-        @ApiResponse(
-            code = 200,
-            message = "Expected order to a valid request",
-            response = Product.class),
-        @ApiResponse(code = 404, message = "Order not found", response = Error.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+        @ApiResponse(responseCode = "200", description = "Expected order to a valid request"),
+        @ApiResponse(responseCode = "404", description = "Order not found"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   @GetMapping("/order/{id}")
   public ResponseEntity<Order> getOrder(@PathVariable String id) {
@@ -65,8 +61,8 @@ public class OrderController {
    */
   @ApiResponses(
       value = {
-        @ApiResponse(code = 200, message = "List of Orders", response = Product.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+        @ApiResponse(responseCode = "200", description = "List of Orders"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   @GetMapping("/orders")
   public List<Order> getOrders() {
@@ -82,15 +78,11 @@ public class OrderController {
   @PostMapping("/order")
   @ApiResponses(
       value = {
+        @ApiResponse(responseCode = "200", description = "Expected order to a valid request"),
         @ApiResponse(
-            code = 200,
-            message = "Expected order to a valid request",
-            response = Product.class),
-        @ApiResponse(
-            code = 400,
-            message = "There is a problem with the request parameters",
-            response = Error.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+            responseCode = "400",
+            description = "There is a problem with the request parameters"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   public ResponseEntity<Order> createOrder(@RequestBody OrderDto orderDto) {
     logger.info("Creating new order");

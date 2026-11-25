@@ -4,13 +4,13 @@ import com.ecommerceapp.domain.Product;
 import com.ecommerceapp.inventory.dto.request.ChangeStockDto;
 import com.ecommerceapp.inventory.dto.request.ProductDto;
 import com.ecommerceapp.inventory.service.InventoryService;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityExistsException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.NoSuchElementException;
-import javax.persistence.EntityExistsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +35,9 @@ public class InventoryController {
    */
   @ApiResponses(
       value = {
-        @ApiResponse(
-            code = 200,
-            message = "Expected product to a valid request",
-            response = Product.class),
-        @ApiResponse(code = 404, message = "Product not found", response = Error.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+        @ApiResponse(responseCode = "200", description = "Expected product to a valid request"),
+        @ApiResponse(responseCode = "404", description = "Product not found"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   @GetMapping("/product/{id}")
   public ResponseEntity<Product> getProduct(@PathVariable String id) {
@@ -63,10 +60,9 @@ public class InventoryController {
   @ApiResponses(
       value = {
         @ApiResponse(
-            code = 200,
-            message = "Expected list of products to a valid request",
-            response = List.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+            responseCode = "200",
+            description = "Expected list of products to a valid request"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   @GetMapping("/products")
   public List<Product> getProducts() {
@@ -81,12 +77,11 @@ public class InventoryController {
    */
   @ApiResponses(
       value = {
-        @ApiResponse(code = 201, message = "Product created", response = Product.class),
+        @ApiResponse(responseCode = "201", description = "Product created"),
         @ApiResponse(
-            code = 400,
-            message = "There is a problem with the request parameters",
-            response = Error.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+            responseCode = "400",
+            description = "There is a problem with the request parameters"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   @PostMapping("/product")
   public ResponseEntity<Product> createProduct(@RequestBody @Validated ProductDto productDto) {
@@ -112,12 +107,9 @@ public class InventoryController {
 
   @ApiResponses(
       value = {
-        @ApiResponse(code = 200, message = "Product stock updated", response = Product.class),
-        @ApiResponse(
-            code = 404,
-            message = "The product referenced was not found",
-            response = Error.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+        @ApiResponse(responseCode = "200", description = "Product stock updated"),
+        @ApiResponse(responseCode = "404", description = "The product referenced was not found"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   @PostMapping("/product/{id}/changeStock")
   public ResponseEntity<?> changeStock(
@@ -134,12 +126,9 @@ public class InventoryController {
 
   @ApiResponses(
       value = {
-        @ApiResponse(code = 200, message = "Product deleted", response = Product.class),
-        @ApiResponse(
-            code = 404,
-            message = "The product referenced was not found",
-            response = Error.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+        @ApiResponse(responseCode = "200", description = "Product deleted"),
+        @ApiResponse(responseCode = "404", description = "The product referenced was not found"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   @DeleteMapping("/product/{id}")
   public ResponseEntity<?> deleteProduct(@PathVariable String id) {

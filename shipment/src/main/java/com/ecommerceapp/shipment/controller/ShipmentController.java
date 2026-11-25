@@ -2,8 +2,8 @@ package com.ecommerceapp.shipment.controller;
 
 import com.ecommerceapp.shipment.domain.OrderShipment;
 import com.ecommerceapp.shipment.service.ShipmentService;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -24,11 +24,8 @@ public class ShipmentController {
 
   @ApiResponses(
       value = {
-        @ApiResponse(
-            code = 200,
-            message = "List of Order Shipments",
-            response = OrderShipment.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+        @ApiResponse(responseCode = "200", description = "List of Order Shipments"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   @GetMapping("/shipments")
   public List<OrderShipment> getOrderShipments() {
@@ -38,11 +35,10 @@ public class ShipmentController {
   @ApiResponses(
       value = {
         @ApiResponse(
-            code = 200,
-            message = "Expected shipment order to a valid request",
-            response = OrderShipment.class),
-        @ApiResponse(code = 404, message = "Shipment order not found", response = Error.class),
-        @ApiResponse(code = 500, message = "unexpected server error", response = Error.class)
+            responseCode = "200",
+            description = "Expected shipment order to a valid request"),
+        @ApiResponse(responseCode = "404", description = "Shipment order not found"),
+        @ApiResponse(responseCode = "500", description = "Unexpected server error")
       })
   @GetMapping("/shipment/{id}")
   public ResponseEntity<OrderShipment> getShipmentOrder(@PathVariable String id) {

@@ -1,6 +1,6 @@
 package com.ecommerceapp.shipment.domain;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
