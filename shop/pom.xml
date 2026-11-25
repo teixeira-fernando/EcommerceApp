@@ -172,7 +172,7 @@
       <dependency>
         <artifactId>spring-boot-starter-data-mongodb</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>3.1.2</version>
+        <version>3.5.16</version>
       </dependency>
 
         <dependency>
@@ -188,10 +188,10 @@
             <version>3.5.16</version>
         </dependency>
         <dependency>
-            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
             <groupId>de.flapdoodle.embed</groupId>
             <scope>test</scope>
-            <version>2.2.0</version>
+            <version>4.33.0</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -207,9 +207,9 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>2.0.1.Final</version>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
         </dependency>
 
         <dependency>
@@ -233,20 +233,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.6.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-core-model</artifactId>
             <version>4.0.10</version>
@@ -261,35 +247,21 @@
         </dependency>
 
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.8.17</version>
         </dependency>
 
         <!--kafka-->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-            <version>2.7.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
-            <version>2.6.3</version>
         </dependency>
         <dependency>
           <groupId>org.codehaus.groovy</groupId>
@@ -297,9 +269,9 @@
           <version>3.0.19</version>
         </dependency>
         <dependency>
-          <groupId>javax.persistence</groupId>
-          <artifactId>persistence-api</artifactId>
-          <version>1.0.2</version>
+          <groupId>jakarta.persistence</groupId>
+          <artifactId>jakarta.persistence-api</artifactId>
+          <version>3.1.0</version>
           <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -325,7 +297,7 @@
     </parent>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <version>0.0.1-SNAPSHOT</version>

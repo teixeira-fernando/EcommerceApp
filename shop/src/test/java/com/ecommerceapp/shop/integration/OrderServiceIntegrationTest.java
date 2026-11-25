@@ -26,7 +26,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -40,22 +39,12 @@ import org.springframework.test.web.servlet.MockMvc;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class OrderServiceIntegrationTest {
 
-  final EmbeddedKafkaBroker embeddedKafkaBroker = new EmbeddedKafkaBroker(1);
   @Autowired private MockMvc mockMvc;
   @Autowired private MongoTemplate mongoTemplate;
   private WireMockServer wireMockServer;
 
   @Value(value = "${inventory.port}")
   private String port;
-
-  @Value(value = "${kafka.port}")
-  private String kafkaPort;
-
-  @BeforeAll
-  public void setup() {
-    embeddedKafkaBroker.setZkPort(Integer.parseInt(kafkaPort));
-    embeddedKafkaBroker.kafkaPorts(Integer.parseInt(kafkaPort));
-  }
 
   @BeforeEach
   void configureSystemUnderTest() {

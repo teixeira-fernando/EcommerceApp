@@ -1,16 +1,16 @@
 package com.ecommerceapp.domain;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Document(collection = "Product")
 @Entity
@@ -19,22 +19,24 @@ public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Getter
-  @ApiModelProperty(required = false, notes = "Auto generated id")
+  @Schema(description = "Auto generated id")
   private String id;
 
-  @ApiModelProperty(notes = "Product name", required = true)
+  @Schema(description = "Product name", requiredMode = Schema.RequiredMode.REQUIRED)
   @Getter
   @Setter
   @NotNull
   private String name;
 
-  @ApiModelProperty(notes = "Product quantity", required = true)
+  @Schema(description = "Product quantity", requiredMode = Schema.RequiredMode.REQUIRED)
   @Getter
   @Positive
   @NotNull
   private Integer quantity;
 
-  @ApiModelProperty(notes = "Product category according to Enum Category", required = true)
+  @Schema(
+      description = "Product category according to Enum Category",
+      requiredMode = Schema.RequiredMode.REQUIRED)
   @Getter
   @Setter
   @NotNull

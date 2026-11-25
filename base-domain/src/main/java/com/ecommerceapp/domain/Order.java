@@ -1,6 +1,6 @@
 package com.ecommerceapp.domain;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -8,7 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,15 +22,17 @@ public class Order {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Getter
   @Setter
-  @ApiModelProperty(required = false, notes = "Auto generated id")
+  @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED, description = "Auto generated id")
   private String id;
 
-  @ApiModelProperty(required = true, notes = "List of products included in this order")
+  @Schema(
+      description = "List of products included in this order",
+      requiredMode = Schema.RequiredMode.REQUIRED)
   @Getter
   @Setter
   private List<Product> products;
 
-  @ApiModelProperty(required = false, notes = "Auto generated status for the order")
+  @Schema(description = "Auto generated status for the order")
   @Getter
   @Setter
   private OrderStatus status;
@@ -39,14 +41,14 @@ public class Order {
   @Column(name = "created_at")
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
-  @ApiModelProperty(required = false, notes = "Auto generated date for the order")
+  @Schema(description = "Auto generated date for the order")
   private Date createDate = new Date();
 
   @LastModifiedDate
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   @Getter
-  @ApiModelProperty(required = false, notes = "Auto generated date for the order")
+  @Schema(description = "Auto generated date for the order")
   private Date updateDate = new Date();
 
   public Order(String id, List<Product> products) {
