@@ -3,6 +3,7 @@ package com.ecommerceapp.shop.unit.repository;
 import com.ecommerceapp.domain.Category;
 import com.ecommerceapp.domain.Order;
 import com.ecommerceapp.domain.Product;
+import com.ecommerceapp.shop.EmbeddedMongoInitializer;
 import com.ecommerceapp.shop.repository.OrderRepository;
 import java.util.List;
 import java.util.Optional;
@@ -13,8 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.ContextConfiguration;
 
 @DataMongoTest
+@ContextConfiguration(initializers = EmbeddedMongoInitializer.class)
 @ExtendWith(MongoSpringExtension.class)
 class OrderRepositoryTest {
 

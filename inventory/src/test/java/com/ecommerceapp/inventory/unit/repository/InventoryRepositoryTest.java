@@ -2,6 +2,7 @@ package com.ecommerceapp.inventory.unit.repository;
 
 import com.ecommerceapp.domain.Category;
 import com.ecommerceapp.domain.Product;
+import com.ecommerceapp.inventory.EmbeddedMongoInitializer;
 import com.ecommerceapp.inventory.repository.InventoryRepository;
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +13,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.ContextConfiguration;
 
 @DataMongoTest
+@ContextConfiguration(initializers = EmbeddedMongoInitializer.class)
 @ExtendWith(MongoSpringExtension.class)
 class InventoryRepositoryTest {
 

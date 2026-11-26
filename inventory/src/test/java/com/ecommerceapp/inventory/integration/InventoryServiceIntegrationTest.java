@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.ecommerceapp.domain.Category;
 import com.ecommerceapp.domain.Product;
+import com.ecommerceapp.inventory.EmbeddedMongoInitializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,11 +19,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith({SpringExtension.class})
 @SpringBootTest
+@ContextConfiguration(initializers = EmbeddedMongoInitializer.class)
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 class InventoryServiceIntegrationTest {

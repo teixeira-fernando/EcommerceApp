@@ -5,6 +5,7 @@ import static org.awaitility.Awaitility.await;
 import com.ecommerceapp.domain.Category;
 import com.ecommerceapp.domain.Order;
 import com.ecommerceapp.domain.Product;
+import com.ecommerceapp.shipment.EmbeddedMongoInitializer;
 import com.ecommerceapp.shipment.domain.OrderShipment;
 import com.ecommerceapp.shipment.service.kafka.KafkaConsumerConfig;
 import com.ecommerceapp.shipment.service.kafka.MessageListenerShipment;
@@ -22,10 +23,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith({SpringExtension.class})
 @SpringBootTest
+@ContextConfiguration(initializers = EmbeddedMongoInitializer.class)
 @EmbeddedKafka(ports = 9092, partitions = 1)
 @DirtiesContext
 @Import({
