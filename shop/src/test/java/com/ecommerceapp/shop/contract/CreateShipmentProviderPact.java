@@ -9,7 +9,6 @@ import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvide
 import au.com.dius.pact.provider.junitsupport.*;
 import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
 import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth;
-import au.com.dius.pact.provider.junitsupport.loader.VersionSelector;
 import com.ecommerceapp.domain.Category;
 import com.ecommerceapp.domain.Order;
 import com.ecommerceapp.domain.Product;
@@ -26,7 +25,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
     scheme = "https",
     host = "${PACT_BROKER_HOST}",
     enablePendingPacts = "true",
-        providerTags = "master",
+    providerTags = "master",
     authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 public class CreateShipmentProviderPact {
 

@@ -13,6 +13,7 @@ import com.ecommerceapp.domain.Category;
 import com.ecommerceapp.domain.Order;
 import com.ecommerceapp.domain.OrderStatus;
 import com.ecommerceapp.domain.Product;
+import com.ecommerceapp.shop.EmbeddedMongoInitializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -29,11 +30,13 @@ import org.springframework.http.MediaType;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith({SpringExtension.class})
 @SpringBootTest
+@ContextConfiguration(initializers = EmbeddedMongoInitializer.class)
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @EmbeddedKafka(ports = 63178)
